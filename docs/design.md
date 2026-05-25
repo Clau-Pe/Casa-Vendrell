@@ -29,14 +29,7 @@ Una carpeta por página de la aplicación. Cada página usa los componentes ante
 
 ## GESTIÓN DEL ESTADO
 
-| Tipo de estado | Solución | Justificación |
-
-| Idioma activo | Context API | Necesita ser accesible desde cualquier componente |
-| Autenticación admin | Context API + JWT | El token debe estar disponible en toda la app |
-| Datos de la carta | useEffect + fetch | Se carga desde la API al montar el componente |
-| Datos de eventos | useEffect + fetch | Se carga desde la API al montar el componente |
-| Formulario login | useState | Estado local del formulario |
-| Loading/Error | useState | Estado local de cada petición |
+![alt text](image-1.png)
 
 Se ha elegido Context API en lugar de librerías externas como Redux porque la aplicación no tiene una complejidad de estado que justifique añadir una dependencia adicional. Context API es suficiente para gestionar el idioma y la autenticación.
 
@@ -47,17 +40,7 @@ Se ha elegido Context API en lugar de librerías externas como Redux porque la a
 Todos los endpoints siguen el estándar REST. Las rutas de administración están protegidas por JWT — el cliente debe enviar el token en el header 
 `Authorization: Bearer <token>`.
 
-| Método | Endpoint | Descripción | Acceso |
-
-| POST | /api/v1/auth/login | Login administrador | Público |
-| GET | /api/v1/menu | Obtener carta completa | Público |
-| POST | /api/v1/menu | Crear ítem de carta | Admin |
-| PATCH | /api/v1/menu/:id | Actualizar ítem de carta | Admin |
-| DELETE | /api/v1/menu/:id | Eliminar ítem de carta | Admin |
-| GET | /api/v1/events | Obtener eventos | Público |
-| POST | /api/v1/events | Crear evento | Admin |
-| PATCH | /api/v1/events/:id | Actualizar evento | Admin |
-| DELETE | /api/v1/events/:id | Eliminar evento | Admin |
+![alt text](image-2.png)
 
 Las RESERVAS no tienen endpoint propio. Se gestionan directamente mediante WhatsApp y email desde la página de contacto.
 
@@ -66,34 +49,13 @@ Las RESERVAS no tienen endpoint propio. Se gestionan directamente mediante Whats
 ## BASE DE DATOS MYSQL
 
 ### Tabla menu_items
-| Campo | Tipo | Descripción |
-
-| id | INT AUTO_INCREMENT | Identificador único |
-| category | VARCHAR(100) | Categoría del ítem |
-| name | VARCHAR(200) | Nombre del plato o vino |
-| description | TEXT | Descripción opcional |
-| price | DECIMAL(10,2) | Precio en euros |
-| available | BOOLEAN | Si está disponible |
-| created_at | TIMESTAMP | Fecha de creación |
+![alt text](image-3.png)
 
 ### Tabla events
-| Campo | Tipo | Descripción |
-
-| id | INT AUTO_INCREMENT | Identificador único |
-| title | VARCHAR(200) | Título del evento |
-| description | TEXT | Descripción del evento |
-| date | DATE | Fecha del evento |
-| time | TIME | Hora del evento |
-| image_url | VARCHAR(500) | URL de la imagen |
-| created_at | TIMESTAMP | Fecha de creación |
+![alt text](image-4.png)
 
 ### Tabla admins
-| Campo | Tipo | Descripción |
-
-| id | INT AUTO_INCREMENT | Identificador único |
-| email | VARCHAR(200) | Email del administrador |
-| password_hash | VARCHAR(500) | Contraseña encriptada |
-| created_at | TIMESTAMP | Fecha de creación |
+![alt text](image-5.png)
 
 ---
 
