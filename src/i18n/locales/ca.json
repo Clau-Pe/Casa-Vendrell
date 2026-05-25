@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Inici",
+    "menu": "Carta",
+    "events": "Esdeveniments",
+    "contact": "Contacte"
+  },
+  "home": {
+    "hero_subtitle": "Bar de vins a Barcelona",
+    "menu_preview": "La nostra Carta",
+    "menu_link": "Veure carta completa",
+    "history_title": "Casa Vèndrell",
+    "contact_title": "Contacta'ns",
+    "whatsapp_btn": "Reservar per WhatsApp",
+    "email_btn": "Reservar per email"
+  },
+  "menu": {
+    "title": "La Carta",
+    "categories": {
+      "vermut": "Vermut",
+      "espumos": "Escumosos",
+      "vinos_copa": "Vins per Copa",
+      "vins_blancs": "Vins Blancs",
+      "vins_rosats": "Vins Rosats",
+      "vins_negres": "Vins Negres",
+      "fortificats": "Fortificats",
+      "vins_licors_postre": "Vins i Licors de Postre",
+      "destilats": "Destil·lats",
+      "cocktail": "Cocktail",
+      "cerveses": "Cerveses",
+      "begudes_sense_alcohol": "Begudes sense Alcohol",
+      "per_acompanyar": "Per Acompanyar"
+    }
+  },
+  "events": {
+    "title": "Esdeveniments",
+    "no_events": "No hi ha esdeveniments pròxims"
+  },
+"contact": {
+  "title": "Contacte",
+  "address": "Adreça",
+  "schedule": "Horari",
+  "whatsapp": "WhatsApp",
+  "email": "Email",
+  "reservations_title": "Reserves",
+  "reservations_btn": "Reservar per WhatsApp",
+  "consultoria_title": "Consultoria",
+  "consultoria_btn": "Contactar per email"
+},
+"newsletter": {
+  "title": "Vols estar al dia?",
+  "subtitle": "Subscriu-te i rep novetats, esdeveniments i ofertes exclusives",
+  "placeholder": "El teu email",
+  "btn": "Subscriure'm",
+  "success": "Gràcies! T'has subscrit correctament.",
+  "error": "S'ha produït un error. Si us plau torna-ho a intentar.",
+  "duplicate": "Aquest email ja està subscrit."
+},
+  "footer": {
+    "rights": "Tots els drets reservats"
+  },
+  "admin": {
+    "title": "Panel d'Administració",
+    "login": "Accedir",
+    "password": "Contrasenya",
+    "back_web": "← Tornar a la web",
+    "logout": "← Web",
+    "tabs": {
+      "products": "Productes",
+      "add": "+ Afegir",
+      "translations": "Traduccions"
+    },
+    "form": {
+      "section": "Secció",
+      "name": "Nom (Castellà)",
+      "vintage": "Anyada · Celler · D.O.",
+      "description": "Descripció (Castellà)",
+      "price_copa": "Preu Copa (€)",
+      "price_bottle": "Preu Ampolla (€)",
+      "submit": "Afegir i Traduir"
+    },
+    "hint": "Introduïu les dades en castellà. Les traduccions a CA / EN · FR · DE es generaran automàticament amb IA."
+  },
+  "errors": {
+    "loading": "Error en carregar les dades",
+    "retry": "Tornar a intentar"
+  }
+}

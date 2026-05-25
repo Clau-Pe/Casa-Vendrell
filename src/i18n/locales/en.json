@@ -1,0 +1,88 @@
+{
+  "nav": {
+    "home": "Home",
+    "menu": "Menu",
+    "events": "Events",
+    "contact": "Contact"
+  },
+  "home": {
+    "hero_subtitle": "Wine bar in Barcelona",
+    "menu_preview": "Our Menu",
+    "menu_link": "View full menu",
+    "history_title": "Casa Vèndrell",
+    "contact_title": "Contact us",
+    "whatsapp_btn": "Book via WhatsApp",
+    "email_btn": "Book via email"
+  },
+  "menu": {
+    "title": "The Menu",
+    "categories": {
+      "vermut": "Vermouth",
+      "espumos": "Sparkling Wines",
+      "vinos_copa": "Wines by the Glass",
+      "vins_blancs": "White Wines",
+      "vins_rosats": "Rosé Wines",
+      "vins_negres": "Red Wines",
+      "fortificats": "Fortified Wines",
+      "vins_licors_postre": "Dessert Wines & Liqueurs",
+      "destilats": "Spirits",
+      "cocktail": "Cocktails",
+      "cerveses": "Beers",
+      "begudes_sense_alcohol": "Non-Alcoholic Drinks",
+      "per_acompanyar": "To Accompany"
+    }
+  },
+  "events": {
+    "title": "Events",
+    "no_events": "No upcoming events"
+  },
+"contact": {
+  "title": "Contact",
+  "address": "Address",
+  "schedule": "Schedule",
+  "whatsapp": "WhatsApp",
+  "email": "Email",
+  "reservations_title": "Reservations",
+  "reservations_btn": "Book via WhatsApp",
+  "consultoria_title": "Consultancy",
+  "consultoria_btn": "Contact via email"
+},
+"newsletter": {
+  "title": "Stay up to date",
+  "subtitle": "Subscribe and receive news, events and exclusive offers",
+  "placeholder": "Your email",
+  "btn": "Subscribe",
+  "success": "Thank you! You have successfully subscribed.",
+  "error": "An error occurred. Please try again.",
+  "duplicate": "This email is already subscribed."
+},
+  "footer": {
+    "rights": "All rights reserved"
+  },
+  "admin": {
+    "title": "Administration Panel",
+    "login": "Login",
+    "password": "Password",
+    "back_web": "← Back to website",
+    "logout": "← Web",
+    "tabs": {
+      "products": "Products",
+      "add": "+ Add",
+      "translations": "Translations"
+    },
+    "form": {
+      "section": "Section",
+      "name": "Name (Spanish)",
+      "vintage": "Vintage · Cellar · D.O.",
+      "description": "Description (Spanish)",
+      "price_copa": "Glass Price (€)",
+      "price_bottle": "Bottle Price (€)",
+      "submit": "Add & Translate"
+    },
+    "hint": "Enter data in Spanish. Translations to CA / EN · FR · DE will be generated automatically with AI."
+  },
+  "errors": {
+    "loading": "Error loading data",
+    "retry": "Retry"
+  }
+}
