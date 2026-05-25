@@ -8,76 +8,7 @@ Casa Vèndrell es una aplicación web fullstack para un bar de vinos en Barcelon
 
 ## ESTRUCTURA DE COMPONENTES
 
-src/
-│
-├── components/
-│   ├── ui/
-│   │   ├── Button.tsx              # Botón con variantes (primary, secondary, ghost)
-│   │   ├── Card.tsx                # Tarjeta de contenido genérica
-│   │   └── Modal.tsx               # Ventana emergente (para admin)
-│   │
-│   ├── layout/
-│   │   ├── Header.tsx              # Logo + navegación + selector de idioma
-│   │   ├── Footer.tsx              # Links + contacto + redes sociales
-│   │   └── Layout.tsx              # Envuelve todas las páginas públicas
-│   │
-│   └── shared/
-│       ├── LanguageSelector.tsx    # Selector ES/CA/EN/FR
-│       ├── MenuCard.tsx            # Tarjeta de un ítem de la carta
-│       ├── EventCard.tsx           # Tarjeta de un evento
-│       ├── ContactButtons.tsx      # Botones WhatsApp + Email
-│       └── AdminLayout.tsx         # Layout exclusivo del panel admin
-│
-├── pages/
-│   ├── Home/
-│   │   └── index.tsx              # Hero + Historia + Carta preview + Contacto
-│   ├── Menu/
-│   │   └── index.tsx              # Carta completa por categorías
-│   ├── Events/
-│   │   └── index.tsx              # Lista de eventos
-│   ├── Contact/
-│   │   └── index.tsx              # Mapa + WhatsApp + Email
-│   ├── Admin/
-│   │   ├── index.tsx              # Dashboard admin
-│   │   ├── Login.tsx              # Login con JWT
-│   │   ├── MenuManager.tsx        # Gestión carta y precios
-│   │   └── EventsManager.tsx      # Gestión eventos
-│   └── NotFound/
-│       └── index.tsx              # Página 404
-│
-├── hooks/
-│   ├── useMenu.ts                 # Carga y gestiona datos de la carta
-│   ├── useEvents.ts               # Carga y gestiona los eventos
-│   ├── useAuth.ts                 # Gestiona autenticación del admin
-│   └── useLanguage.ts             # Gestiona el idioma activo
-│
-├── context/
-│   ├── AuthContext.tsx            # Token JWT + usuario admin + login/logout
-│   └── LanguageContext.tsx        # Idioma activo + función para cambiarlo
-│
-├── api/
-│   ├── client.ts                  # Configuración base de fetch (URL, headers, token)
-│   ├── menu.ts                    # Funciones para /api/v1/menu
-│   └── events.ts                  # Funciones para /api/v1/events
-│
-├── types/
-│   ├── menu.ts                    # Interface MenuItem, MenuCategory
-│   ├── events.ts                  # Interface Event
-│   ├── auth.ts                    # Interface Admin, LoginCredentials
-│   └── api.ts                     # Interface ApiResponse<T>
-│
-├── utils/
-│   ├── contact.ts                 # Datos de contacto 
-│   ├── formatPrice.ts             # Formatea precios: 12.5 → "12,50 €"
-│   └── formatDate.ts              # Formatea fechas según idioma activo
-│
-└── i18n/
-    ├── config.ts                  # Configuración de i18next
-    └── locales/
-        ├── es.json                # Textos en español
-        ├── ca.json                # Textos en catalán
-        ├── en.json                # Textos en inglés
-        └── fr.json                # Textos en francés
+![alt text](image.png)
 
 
 La arquitectura de componentes sigue el principio de separación de responsabilidades. Cada carpeta tiene un propósito único y claro, lo que facilita el mantenimiento y la escalabilidad del proyecto.
