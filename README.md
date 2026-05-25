@@ -1,4 +1,4 @@
-# Casa Vèndrell
+# Casa Vendrell
 
 Aplicación web fullstack para el bar de vinos Casa Vèndrell en Barcelona.
 
