@@ -14,7 +14,7 @@ export default function Footer() {
 
           {/* LOGO TEXTO */}
           <img
-            src="src/assets/diseño/Nom-log.png"
+            src="public/images/hero/Nom-log.png"
             alt="Casa Vèndrell"
             style={{ width: '194px', height: '21.46px' }}
           />
@@ -220,7 +220,7 @@ export default function Footer() {
           className="hover:opacity-100 transition-opacity"
         >
           <img
-            src="src/assets/diseño/Icon-Admin.png"
+            src="public/images/hero/Icon-Admin.png"
             alt="Administración"
             style={{ width: '26px', height: '26px' }}
           />
