@@ -5,15 +5,17 @@
     "events": "Eventos",
     "contact": "Contacto"
   },
-  "home": {
-    "hero_subtitle": "Bar de vinos en Barcelona",
-    "menu_preview": "Nuestra Carta",
-    "menu_link": "Ver carta completa",
-    "history_title": "Casa Vèndrell",
-    "contact_title": "Contáctanos",
-    "whatsapp_btn": "Reservar por WhatsApp",
-    "email_btn": "Reservar por email"
-  },
+"home": {
+  "hero_subtitle": "BAR DE VINOS",
+  "menu_preview": "Nuestra Carta",
+  "menu_link": "Ver carta completa",
+  "history_text": "Casa Vendrell nace en una antigua bodega de 1934 restaurada, donde cada decisión buscó preservar la esencia y los elementos originales del espacio. El resultado es un lugar con historia propia, en el corazón de l'Eixample. Un bar de vinos atendido por sus propios dueños, apasionados y enfocados en guiar la experiencia en cada visita. Una gran selección de vinos y una carta de tapas donde cada plato acompaña y complementa al protagonista.",
+  "consultoria_text": "Ofrecemos un servicio de consultoría personalizado para eventos privados, maridajes y selección de vinos para empresas y particulares.",
+  "cta_text": "¿Quieres hacer una reserva?",
+  "whatsapp_btn": "Reservar por WhatsApp",
+  "email_btn": "Reservar por email",
+  "contact_title": "Contáctanos"
+},
   "menu": {
     "title": "La Carta",
     "categories": {
