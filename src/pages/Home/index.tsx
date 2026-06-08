@@ -1,9 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { getWhatsAppLink, getConsultoriaMailLink } from '../../utils/contact'
+import {getConsultoriaMailLink } from '../../utils/contact'
 
 export default function Home() {
-  const { t } = useTranslation()
+
 
   return (
     <main style={{ backgroundColor: '#FAFAFA' }}>
