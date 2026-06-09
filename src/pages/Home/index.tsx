@@ -13,7 +13,7 @@ export default function Home() {
   className="w-full grid grid-cols-2 gap-2"
 >
   <img
-    src="public/images/hero/bODY1.png"
+    src="/images/hero/body1.png"
     alt="Casa Vèndrell interior"
     className="w-full object-cover"
     style={{ aspectRatio: '836/1024' }}
