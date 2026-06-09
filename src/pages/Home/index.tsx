@@ -19,7 +19,7 @@ export default function Home() {
     style={{ aspectRatio: '836/1024' }}
   />
   <img
-    src="public/images/hero/bODY2.png"
+    src="/images/hero/bODY2.png"
     alt="Casa Vèndrell vinos"
     className="w-full object-cover"
     style={{ aspectRatio: '830/1024' }}
@@ -46,7 +46,7 @@ export default function Home() {
   </h2>
 
   <img
-    src="public/images/hero/bODY3.png"
+    src="/images/hero/bODY3.png"
     alt="Casa Vèndrell"
     className="w-full object-cover"
     style={{ aspectRatio: '1061/569', maxWidth: '1061px' }}
@@ -221,7 +221,7 @@ export default function Home() {
   {['foto-galeria-1', 'foto-galeria-2', 'foto-galeria-3', 'foto-galeria-4'].map(foto => (
     <img
       key={foto}
-      src={`public/images/gallery/${foto}.png`}
+      src={`/images/gallery/${foto}.png`}
       alt={`Casa Vèndrell ${foto}`}
       className="w-full object-cover"
       style={{ aspectRatio: '414/698' }}

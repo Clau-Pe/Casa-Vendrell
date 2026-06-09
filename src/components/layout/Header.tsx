@@ -35,7 +35,7 @@ export default function Header() {
         {/* LOGO IZQUIERDA */}
         <Link to="/" className="flex items-center" style={{ marginTop: '26px' }}>
           <img
-            src="public/images/hero/Logo-Izq.png"
+            src="/images/hero/Logo-Izq.png"
             alt="Casa Vèndrell"
             style={{ width: '147px', height: '16.26px' }}
             className="brightness-0 invert"
@@ -119,7 +119,7 @@ export default function Header() {
 
     {/* È LOGO */}
     <img
-      src="public/images/hero/E.png"
+      src="/images/hero/E.png"
       alt="È"
       style={{
         width: '82.44px',
@@ -131,7 +131,7 @@ export default function Header() {
 
     {/* CASA VÈNDRELL */}
     <img
-      src="public/images/hero/Nom-log.png"
+      src="/images/hero/Nom-log.png"
       alt="Casa Vèndrell"
       style={{
         width: '235.07px',
