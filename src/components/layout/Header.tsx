@@ -12,9 +12,9 @@ const LANGUAGES: { code: Language; label: string }[] = [
 ]
 
 const NAV_LINKS = [
-  { path: '/', label: 'EL BAR' },
-  { path: '/carta', label: 'NUESTRA CARTA' },
-  { path: '/contacto', label: 'RESERVAS' },
+  { path: '/', label: 'EL BAR', external: false, href: null },
+  { path: '/carta', label: 'NUESTRA CARTA', external: false, href: null },
+  { path: '/contacto', label: 'RESERVAS', external: true, href: 'https://wa.me/34634938879' },
 ]
 
 export default function Header() {
@@ -23,6 +23,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const isMenu = location.pathname === '/carta'
 
   return (
     <header style={{ backgroundColor: '#411F10' }} className="w-full text-white">
@@ -33,13 +34,12 @@ export default function Header() {
         style={{ paddingLeft: '42px', paddingRight: '42px', paddingTop: '20px', paddingBottom: '20px' }}
       >
         {/* LOGO IZQUIERDA */}
-        <Link to="/" className="flex items-center" style={{ marginTop: '26px' }}>
-          <img
-            src="/images/hero/Logo-Izq.png"
-            alt="Casa Vèndrell"
-            style={{ width: '147px', height: '16.26px' }}
-            className="brightness-0 invert"
-          />
+        <Link to="/" className="mt-1">
+        <img
+        src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+        alt="Casa Vèndrell"
+        style={{ height: '16px', marginTop: '28px'}}
+        />
         </Link>
 
         {/* DERECHA — Idiomas arriba + Nav abajo */}
@@ -94,24 +94,24 @@ export default function Header() {
       </div>
 
       {/* ===== BARRA MÓVIL ===== */}
-      <div className="md:hidden flex items-center justify-between px-6 py-4">
-        <Link to="/">
-          <img
-            src="/logo/logo-text.svg"
-            alt="Casa Vèndrell"
-            className="h-4 brightness-0 invert"
-          />
-        </Link>
-        <button
-          className="flex flex-col gap-1.5"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Abrir menú"
-        >
-          <span className="block w-6 h-px bg-white"></span>
-          <span className="block w-6 h-px bg-white"></span>
-          <span className="block w-6 h-px bg-white"></span>
-        </button>
-      </div>
+<div className="md:hidden flex items-center justify-between" style={{ padding: '16px' }}>
+  <Link to="/">
+    <img
+      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+      alt="Casa Vèndrell"
+      style={{ height: '16px' }}
+    />
+  </Link>
+  <button
+    className="flex flex-col gap-1.5"
+    onClick={() => setMenuOpen(!menuOpen)}
+    aria-label="Abrir menú"
+  >
+    <span className="block w-6 h-px bg-white"></span>
+    <span className="block w-6 h-px bg-white"></span>
+    <span className="block w-6 h-px bg-white"></span>
+  </button>
+</div>
 
       {/* ===== HERO — solo en Home ===== */}
 {isHome && (
@@ -244,42 +244,84 @@ export default function Header() {
   </div>
 )}
 
-      {/* ===== MENÚ MÓVIL ===== */}
-      {menuOpen && (
-        <div
-          style={{ backgroundColor: '#411F10' }}
-          className="md:hidden px-6 py-6 flex flex-col gap-5 border-t border-white/10"
-        >
-          {NAV_LINKS.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setMenuOpen(false)}
-              className="text-sm tracking-widest uppercase"
-              style={{ color: location.pathname === link.path ? '#C65427' : '#D9D9D9' }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="flex gap-4 pt-4 border-t border-white/10">
-            {LANGUAGES.map(lang => (
-              <button
-                key={lang.code}
-                onClick={() => {
-                  changeLanguage(lang.code)
-                  setMenuOpen(false)
-                }}
-                style={{
-                  fontSize: '12px',
-                  color: language === lang.code ? '#C65427' : 'rgba(217,217,217,0.7)',
-                }}
-              >
-                {lang.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+{/* ===== MENÚ MÓVIL — OVERLAY PANTALLA COMPLETA ===== */}
+<div
+  style={{
+    backgroundColor: '#411F10',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 9999,
+    transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+    transition: 'transform 0.35s ease-in-out',
+    visibility: menuOpen ? 'visible' : 'hidden',
+  }}
+  className="md:hidden flex flex-col px-8 py-8"
+>
+  {/* Header con cerrar */}
+<div className="flex justify-between items-center" style={{ marginBottom: '60px' }}>
+  <Link to="/" onClick={() => setMenuOpen(false)}>
+    <img
+      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+      alt="Casa Vèndrell"
+      style={{ height: '16px' }}
+    />
+  </Link>
+  <button
+    onClick={() => setMenuOpen(false)}
+    style={{ color: '#FFFFFF', fontSize: '28px', lineHeight: '1' }}
+    aria-label="Cerrar menú"
+  >
+    ✕
+  </button>
+</div>
+
+  {/* Links */}
+  <nav className="flex flex-col" style={{ gap: '32px' }}>
+    {NAV_LINKS.map(link => (
+      <Link
+        key={link.path}
+        to={link.path}
+        onClick={() => setMenuOpen(false)}
+        style={{
+          fontSize: '22px',
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          color: location.pathname === link.path ? '#C65427' : '#D9D9D9',
+          paddingBottom: '16px',
+          borderBottom: '1px solid rgba(217,217,217,0.15)',
+        }}
+      >
+        {link.label}
+      </Link>
+    ))}
+  </nav>
+
+  {/* Idiomas */}
+  <div
+    className="flex gap-8"
+    style={{ marginTop: 'auto', paddingTop: '32px', borderTop: '1px solid rgba(217,217,217,0.2)' }}
+  >
+    {LANGUAGES.map(lang => (
+      <button
+        key={lang.code}
+        onClick={() => {
+          changeLanguage(lang.code)
+          setMenuOpen(false)
+        }}
+        style={{
+          fontSize: '14px',
+          letterSpacing: '0.15em',
+          color: language === lang.code ? '#C65427' : 'rgba(217,217,217,0.6)',
+        }}
+      >
+        {lang.label}
+      </button>
+    ))}
+  </div>
+</div>
     </header>
   )
 }
