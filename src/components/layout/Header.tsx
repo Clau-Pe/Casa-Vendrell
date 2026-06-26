@@ -129,26 +129,40 @@ export default function Header() {
             ))}
           </div>
 
-          {/* NAV LINKS — Y:43 */}
-          <nav className="flex items-center" style={{ gap: '47px' }}>
-            {NAV_LINKS.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="transition-colors whitespace-nowrap"
-                style={{
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  color: location.pathname === link.path
-                    ? '#C65427'
-                    : '#D9D9D9',
-                  letterSpacing: '0.05em',
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+{/* NAV LINKS — Y:43 */}
+<nav className="flex items-center" style={{ gap: '47px' }}>
+  {NAV_LINKS.map(link =>
+    link.external
+      ? <a
+          key={link.label}
+          href={link.href!}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-colors whitespace-nowrap"
+          style={{
+            fontSize: '14px',
+            fontWeight: '600',
+            color: '#D9D9D9',
+            letterSpacing: '0.05em',
+          }}
+        >
+          {link.label}
+        </a>
+      : <Link
+          key={link.path}
+          to={link.path}
+          className="transition-colors whitespace-nowrap"
+          style={{
+            fontSize: '14px',
+            fontWeight: '600',
+            color: location.pathname === link.path ? '#C65427' : '#D9D9D9',
+            letterSpacing: '0.05em',
+          }}
+        >
+          {link.label}
+        </Link>
+  )}
+</nav>
         </div>
       </div>
 

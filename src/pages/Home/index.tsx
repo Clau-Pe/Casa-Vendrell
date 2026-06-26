@@ -73,7 +73,8 @@ export default function Home() {
   </h2>
   <div className="flex flex-col items-center gap-4">
     <Link
-      to="/carta?categoria=vinos_copa"
+      to="/carta"
+      state={{ openCategory: 'vinos_por_copa' }}
       className="hover:opacity-70 transition-opacity flex items-center gap-1"
       style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
     >

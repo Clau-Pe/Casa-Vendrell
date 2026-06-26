@@ -3,6 +3,7 @@ import { useLanguage } from '../../hooks/useLanguage'
 import type { Language } from '../../context/LanguageContext'
 import { menuData } from '../../data/menuData'
 import type { MenuCategory, MenuItem } from '../../data/menuData'
+import { useLocation } from 'react-router-dom'
 
 type View = 'index' | 'category'
 type PriceFilter = 'all' | 'copa' | 'bottle'
@@ -88,6 +89,15 @@ export default function Menu() {
   const [priceFilter, setPriceFilter] = useState<PriceFilter>('all')
   const [searchQuery, setSearchQuery] = useState<string>('') 
   const [searchOpen, setSearchOpen] = useState<boolean>(false)
+  const location = useLocation()
+
+  useState(() => {
+  const state = location.state as { openCategory?: string } | null
+  if (state?.openCategory) {
+    setActiveCategory(state.openCategory)
+    setView('category')
+  }
+})
 
   const getCategoryName = (cat: MenuCategory) =>
     (cat[`name_${lang}` as keyof MenuCategory] as string) || cat.name_es
