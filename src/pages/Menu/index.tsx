@@ -98,9 +98,9 @@ export default function Menu() {
   const activeData = menuData.categories.find(c => c.id === activeCategory)
   const isVinosPorCopa = activeCategory === VINOS_POR_COPA_ID
 
-  const currentItems = isVinosPorCopa
-    ? menuData.categories.flatMap(cat => cat.items).filter(i => i.price_copa !== null && i.available)
-    : activeData?.items.filter(i => i.available) ?? []
+const currentItems = isVinosPorCopa
+  ? menuData.categories.flatMap(cat => cat.items as MenuItem[]).filter((i: MenuItem) => i.price_copa !== null && i.available)
+  : activeData?.items.filter((i: MenuItem) => i.available) ?? []
 
   const currentTitle = isVinosPorCopa
     ? lang === 'ca' ? 'VINS PER COPA'
@@ -182,7 +182,7 @@ if (view === 'index') {
     // Vista búsqueda global
     <div className="w-full">
       {menuData.categories.map(cat => {
-        const results = searchItems(cat.items.filter(i => i.available))
+        const results = searchItems(cat.items.filter((i: MenuItem) => i.available))
         if (results.length === 0) return null
         return (
           <div key={cat.id} className="w-full mb-6">
