@@ -6,6 +6,7 @@ export const menuData = {
       "name_ca": "Vermut",
       "name_en": "Vermouth",
       "name_fr": "Vermouth",
+      showPriceColumns: 'none',
       "items": [
         { "id": 1, "name_es": "Dos Déus Vermut Blanc / Negre", "vintage_cellar_do": null, "description_es": "Vermut de aromas mediterráneos (moscatel, saúco, tomillo) con toques especiados. Boca dulce, fresca y voluminosa, equilibrada por acidez y ligero amargor. Final limpio y persistente.", "price_copa": 4.50, "price_bottle": null, "available": true },
         { "id": 2, "name_es": "Olave", "vintage_cellar_do": null, "description_es": "Color caoba brillante con reflejos anaranjados. Aromas intensos a hierbas y especias con notas balsámicas. En boca, cálido, equilibrado y aterciopelado gracias a su mayor grado alcohólico.", "price_copa": 5.70, "price_bottle": null, "available": true },
@@ -22,6 +23,7 @@ export const menuData = {
       "name_ca": "Escumosos",
       "name_en": "Sparkling Wines",
       "name_fr": "Vins Pétillants",
+      showPriceColumns: 'both',
       "items": [
         { "id": 8, "name_es": "Maria Casanovas Brut de Brut", "vintage_cellar_do": "Maria Casanovas · Cava", "description_es": "Espumoso fresco y elegante, con notas de fruta blanca y flores. Buena acidez y fondo sutil de crianza.", "price_copa": 5.50, "price_bottle": 28.00, "available": true },
         { "id": 9, "name_es": "Llopart Brut Nature", "vintage_cellar_do": "2022 · Llopart · Corpinnat", "description_es": "Espumoso de burbuja fina, aromas cítricos y tostados. Crianza superior a 30 meses.", "price_copa": null, "price_bottle": 31.00, "available": true },
@@ -36,6 +38,7 @@ export const menuData = {
       "name_ca": "Vins Blancs",
       "name_en": "White Wines",
       "name_fr": "Vins Blancs",
+      showPriceColumns: 'both',
       "items": [
         { "id": 13, "name_es": "Marqués de Vizhoja", "vintage_cellar_do": "2025 · Marqués de Vizhoja · Galicia", "description_es": "Blanco fresco y afrutado, con notas de manzana, pera y cítricos suaves.", "price_copa": 4.00, "price_bottle": 16.00, "available": true },
         { "id": 14, "name_es": "Blanco Nieva", "vintage_cellar_do": "2024 · Martúe · Rueda", "description_es": "Aromas intensos de fruta de la pasión y pera, con notas florales y herbáceas. Sauvignon Blanc.", "price_copa": null, "price_bottle": 16.00, "available": true },
@@ -66,6 +69,7 @@ export const menuData = {
       "name_ca": "Vins Rosats",
       "name_en": "Rosé Wines",
       "name_fr": "Vins Rosés",
+      showPriceColumns: 'both',
       "items": [
         { "id": 34, "name_es": "Barbazul Rosado", "vintage_cellar_do": "2024 · Huerta de Albalá · Vino de la Tierra de Cádiz", "description_es": "100% Merlot, color cebolla pálido. Aromas de fruta roja, grosella y pomelo.", "price_copa": 4.70, "price_bottle": 22.00, "available": true },
         { "id": 35, "name_es": "Mart", "vintage_cellar_do": "2024 · Gramona · Penedès", "description_es": "Rosado aromático con notas de pomelo, melocotón y hierbas. Xarel·lo Vermell ecológico.", "price_copa": null, "price_bottle": 28.00, "available": true }
@@ -77,6 +81,7 @@ export const menuData = {
       "name_ca": "Vins Negres",
       "name_en": "Red Wines",
       "name_fr": "Vins Rouges",
+      showPriceColumns: 'both',
       "items": [
         { "id": 36, "name_es": "El Veïnat", "vintage_cellar_do": "2023 · Viñedos Singulares · Montsant", "description_es": "100% Garnacha negra, fruta roja y sutiles hierbas aromáticas.", "price_copa": 4.80, "price_bottle": 19.00, "available": true },
         { "id": 37, "name_es": "Finca Mores 3", "vintage_cellar_do": "2024 · Finca Mores · Montsant", "description_es": "Tinto joven con Garnacha, Cariñena, Syrah y Merlot. Aromático y afrutado.", "price_copa": null, "price_bottle": 19.00, "available": true },
@@ -113,6 +118,7 @@ export const menuData = {
       "name_ca": "Fortificats",
       "name_en": "Fortified Wines",
       "name_fr": "Vins Fortifiés",
+      showPriceColumns: 'copa_only',
       "items": [
         { "id": 63, "name_es": "Lustau Fino", "vintage_cellar_do": "Lustau · Jerez", "description_es": "Fino seco y salino con notas de almendra y tiza. Final largo y mineral.", "price_copa": 6.90, "price_bottle": null, "available": true },
         { "id": 64, "name_es": "Lustau Amontillado", "vintage_cellar_do": "Lustau · Jerez", "description_es": "Ámbar brillante, aromas de avellana, café y caramelo. Elegante y seco.", "price_copa": 7.20, "price_bottle": null, "available": true },
@@ -128,6 +134,7 @@ export const menuData = {
       "name_ca": "Vins i Licors de Postre",
       "name_en": "Dessert Wines & Liqueurs",
       "name_fr": "Vins et Liqueurs de Dessert",
+      showPriceColumns: 'none',
       "items": [
         { "id": 69, "name_es": "Sinols Moscatel de Oro", "vintage_cellar_do": "Sinols · Vino de Licor", "description_es": "Dulce y aromático, con notas de miel, flor blanca y uva moscatel madura.", "price_copa": 5.00, "price_bottle": null, "available": true },
         { "id": 70, "name_es": "Sinols Garnacha", "vintage_cellar_do": "Sinols · Vino de Licor", "description_es": "Vino dulce de solera, ámbar dorado, con aromas a frutas confitadas y caramelo.", "price_copa": 5.00, "price_bottle": null, "available": true },
@@ -141,6 +148,7 @@ export const menuData = {
       "name_ca": "Destil·lats",
       "name_en": "Spirits",
       "name_fr": "Spiritueux",
+      showPriceColumns: 'none',
       "items": [
         { "id": 73, "name_es": "Mascaró VO", "vintage_cellar_do": "Mascaró · Brandy de Penedès", "description_es": "Brandy ámbar, con notas de cacao y fruta confitada. Envejecido 3 años en roble francés.", "price_copa": 8.50, "price_bottle": null, "available": true },
         { "id": 74, "name_es": "Mascaró Narciso", "vintage_cellar_do": "Mascaró · Brandy de Penedès", "description_es": "Brandy elegante con toques de vainilla, avellana y madera fina. Envejecido desde 2007.", "price_copa": 11.00, "price_bottle": null, "available": true },
@@ -153,6 +161,7 @@ export const menuData = {
       "name_ca": "Cocktails",
       "name_en": "Cocktails",
       "name_fr": "Cocktails",
+      showPriceColumns: 'none',
       "items": [
         { "id": 76, "name_es": "Aperol con Cava", "vintage_cellar_do": null, "description_es": "Aperol, cava y soda en equilibrio amargo y refrescante, con final seco y burbujeante.", "price_copa": 10.50, "price_bottle": null, "available": true },
         { "id": 77, "name_es": "Gintonic Beefeater London Dry", "vintage_cellar_do": null, "description_es": "El clásico de siempre. Gin seco con notas de enebro y cítricos.", "price_copa": 10.00, "price_bottle": null, "available": true },
@@ -165,6 +174,7 @@ export const menuData = {
       "name_ca": "Cerveses",
       "name_en": "Beers",
       "name_fr": "Bières",
+      showPriceColumns: 'none',
       "items": [
         { "id": 79, "name_es": "Estrella Damm (Barril 20cl)", "vintage_cellar_do": null, "description_es": "Cerveza de malta de cebada, arroz y lúpulo. Receta original de 1876.", "price_copa": 2.80, "price_bottle": null, "available": true },
         { "id": 80, "name_es": "Estrella Damm (Barril 33cl)", "vintage_cellar_do": null, "description_es": "Cerveza de malta de cebada, arroz y lúpulo. Receta original de 1876.", "price_copa": 3.50, "price_bottle": null, "available": true },
@@ -186,6 +196,7 @@ export const menuData = {
       "name_ca": "Begudes sense Alcohol",
       "name_en": "Non-Alcoholic Drinks",
       "name_fr": "Boissons sans Alcool",
+      showPriceColumns: 'none',
       "items": [
         { "id": 91, "name_es": "Free Damm", "vintage_cellar_do": null, "description_es": "Cerveza sin alcohol. Fresca, ligera y de amargor equilibrado.", "price_copa": 4.00, "price_bottle": null, "available": true },
         { "id": 92, "name_es": "Coca Cola", "vintage_cellar_do": null, "description_es": null, "price_copa": 3.00, "price_bottle": null, "available": true },
@@ -207,6 +218,7 @@ export const menuData = {
       "name_ca": "Per Acompanyar",
       "name_en": "To Accompany",
       "name_fr": "Pour Accompagner",
+      showPriceColumns: 'none',
       "items": [
         { "id": 103, "name_es": "Chips de Patatas", "vintage_cellar_do": null, "description_es": null, "price_copa": 3.00, "price_bottle": null, "available": true },
         { "id": 104, "name_es": "Chips de Patatas Gruesas", "vintage_cellar_do": null, "description_es": null, "price_copa": 4.50, "price_bottle": null, "available": true },

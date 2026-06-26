@@ -17,6 +17,65 @@ const NAV_LINKS = [
   { path: '/contacto', label: 'RESERVAS', external: true, href: 'https://wa.me/34634938879' },
 ]
 
+function LanguageSelector({ language, changeLanguage }: {
+  language: Language
+  changeLanguage: (lang: Language) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const others = (['ca', 'es', 'en', 'fr'] as Language[]).filter(l => l !== language)
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          fontSize: '12px',
+          fontWeight: '600',
+          color: '#C65427',
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+        }}
+      >
+        {language.toUpperCase()} ▾
+      </button>
+      {open && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '28px',
+            right: 0,
+            backgroundColor: '#411F10',
+            border: '1px solid rgba(217,217,217,0.2)',
+            padding: '8px 0',
+            zIndex: 100,
+            minWidth: '60px',
+          }}
+        >
+          {others.map(l => (
+            <button
+              key={l}
+              onClick={() => {
+                changeLanguage(l)
+                setOpen(false)
+              }}
+              className="block w-full text-center py-2 hover:opacity-70"
+              style={{
+                fontSize: '12px',
+                fontWeight: '400',
+                color: 'rgba(217,217,217,0.7)',
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+              }}
+            >
+              {l.toUpperCase()}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Header() {
   const { t } = useTranslation()
   const { language, changeLanguage } = useLanguage()
@@ -93,7 +152,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ===== BARRA MÓVIL ===== */}
+{/* ===== BARRA MÓVIL ===== */}
 <div className="md:hidden flex items-center justify-between" style={{ padding: '16px' }}>
   <Link to="/">
     <img
@@ -102,15 +161,18 @@ export default function Header() {
       style={{ height: '16px' }}
     />
   </Link>
-  <button
-    className="flex flex-col gap-1.5"
-    onClick={() => setMenuOpen(!menuOpen)}
-    aria-label="Abrir menú"
-  >
-    <span className="block w-6 h-px bg-white"></span>
-    <span className="block w-6 h-px bg-white"></span>
-    <span className="block w-6 h-px bg-white"></span>
-  </button>
+  <div className="flex items-center gap-4">
+    <LanguageSelector language={language} changeLanguage={changeLanguage} />
+    <button
+      className="flex flex-col gap-1.5"
+      onClick={() => setMenuOpen(!menuOpen)}
+      aria-label="Abrir menú"
+    >
+      <span className="block w-6 h-px bg-white"></span>
+      <span className="block w-6 h-px bg-white"></span>
+      <span className="block w-6 h-px bg-white"></span>
+    </button>
+  </div>
 </div>
 
       {/* ===== HERO — solo en Home ===== */}

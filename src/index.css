@@ -47,3 +47,8 @@ button {
   background-color: #D9D9D9 !important;
   color: #411F10 !important;
 }
+
+@keyframes expandWidth {
+  from { width: 0; opacity: 0; }
+  to { width: 160px; opacity: 1; }
+}
