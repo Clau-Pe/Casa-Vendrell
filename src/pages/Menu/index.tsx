@@ -4,6 +4,27 @@ import type { Language } from '../../context/LanguageContext'
 import { menuData } from '../../data/menuData'
 import type { MenuCategory, MenuItem } from '../../data/menuData'
 import { useLocation } from 'react-router-dom'
+import { useSupabaseMenu } from '../../hooks/useSupabaseMenu'
+import type { CategoryWithItems } from '../../hooks/useSupabaseMenu'
+
+// Adapta CategoryWithItems de Supabase al formato que usa el componente
+const adaptCategory = (cat: CategoryWithItems) => ({
+  id: cat.id,
+  name_es: cat.name_es,
+  name_ca: cat.name_ca ?? cat.name_es,
+  name_en: cat.name_en ?? cat.name_es,
+  name_fr: cat.name_fr ?? cat.name_es,
+  showPriceColumns: cat.show_price_columns as 'both' | 'copa_only' | 'none',
+  items: cat.items.map(item => ({
+    id: item.id,
+    name_es: item.name_es,
+    vintage_cellar_do: item.vintage_cellar_do,
+    description_es: item.description_es,
+    price_copa: item.price_copa,
+    price_bottle: item.price_bottle,
+    available: item.available,
+  }))
+})
 
 type View = 'index' | 'category'
 type PriceFilter = 'all' | 'copa' | 'bottle'
@@ -90,6 +111,7 @@ export default function Menu() {
   const [searchQuery, setSearchQuery] = useState<string>('') 
   const [searchOpen, setSearchOpen] = useState<boolean>(false)
   const location = useLocation()
+  const { categories: dbCategories, loading, error } = useSupabaseMenu()
 
   useState(() => {
   const state = location.state as { openCategory?: string } | null
@@ -105,11 +127,11 @@ export default function Menu() {
   const getItemName = (item: MenuItem) => item.name_es
   const getItemDescription = (item: MenuItem) => item.description_es
 
-  const activeData = menuData.categories.find(c => c.id === activeCategory)
+  const activeData = dbCategories.map(adaptCategory).find(c => c.id === activeCategory)
   const isVinosPorCopa = activeCategory === VINOS_POR_COPA_ID
 
 const currentItems = isVinosPorCopa
-  ? menuData.categories.flatMap(cat => cat.items as MenuItem[]).filter((i: MenuItem) => i.price_copa !== null && i.available)
+  ? dbCategories.map(adaptCategory).flatMap(cat => cat.items as MenuItem[]).filter((i: MenuItem) => i.price_copa !== null && i.available)
   : activeData?.items.filter((i: MenuItem) => i.available) ?? []
 
   const currentTitle = isVinosPorCopa
@@ -161,7 +183,24 @@ const searchItems = (items: MenuItem[]) => {  // ← AQUÍ
 
 // ===== ÍNDICE =====
 if (view === 'index') {
-  return (
+    if (loading) return (
+
+  <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.3em' }}>
+        CARGANDO...
+      </p>
+    </div>
+  )
+
+    if (error) return (
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#C65427', letterSpacing: '0.3em' }}>
+        ERROR AL CARGAR LA CARTA
+      </p>
+    </div>
+  )
+
+  return(
     <div className="min-h-screen w-full flex flex-col" style={{ backgroundColor: '#FAFAFA' }}>
       <div
         className="w-full flex flex-col items-center flex-1"
@@ -191,7 +230,7 @@ if (view === 'index') {
   {searchQuery ? (
     // Vista búsqueda global
     <div className="w-full">
-      {menuData.categories.map(cat => {
+      {dbCategories.map(adaptCategory).map(cat => {
         const results = searchItems(cat.items.filter((i: MenuItem) => i.available))
         if (results.length === 0) return null
         return (
@@ -253,7 +292,7 @@ if (view === 'index') {
   ) : (
     // Vista normal — lista categorías
     <>
-      {menuData.categories.map((cat) => (
+      {dbCategories.map(adaptCategory).map((cat) => (
         <div key={cat.id} className="w-full">
           <button
             onClick={() => handleCategoryClick(cat.id)}
@@ -390,7 +429,7 @@ if (view === 'index') {
               {vinosPorCopaLabel}
             </h2>
 
-            {menuData.categories
+            {dbCategories.map(adaptCategory)
               .filter(cat => cat.showPriceColumns === 'both' || cat.showPriceColumns === 'copa_only')
               .map(cat => {
                 const itemsCopa = cat.items.filter(i => i.available && i.price_copa !== null)
