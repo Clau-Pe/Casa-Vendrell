@@ -32,6 +32,8 @@ export type MenuItemDB = {
   price_copa: number | null
   price_bottle: number | null
   available: boolean
+  copa_available: boolean
+  bottle_available: boolean
   sort_order: number
   created_at: string
 }

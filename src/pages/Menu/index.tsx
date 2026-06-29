@@ -3,9 +3,9 @@ import { useLanguage } from '../../hooks/useLanguage'
 import type { Language } from '../../context/LanguageContext'
 import { menuData } from '../../data/menuData'
 import type { MenuCategory, MenuItem } from '../../data/menuData'
-import { useLocation } from 'react-router-dom'
 import { useSupabaseMenu } from '../../hooks/useSupabaseMenu'
 import type { CategoryWithItems } from '../../hooks/useSupabaseMenu'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
 // Adapta CategoryWithItems de Supabase al formato que usa el componente
 const adaptCategory = (cat: CategoryWithItems) => ({
@@ -20,8 +20,8 @@ const adaptCategory = (cat: CategoryWithItems) => ({
     name_es: item.name_es,
     vintage_cellar_do: item.vintage_cellar_do,
     description_es: item.description_es,
-    price_copa: item.price_copa,
-    price_bottle: item.price_bottle,
+    price_copa: item.copa_available ? item.price_copa : null,        // ← si copa desactivada → null
+    price_bottle: item.bottle_available ? item.price_bottle : null,  // ← si botella desactivada → null
     available: item.available,
   }))
 })
@@ -103,15 +103,16 @@ function SearchBar({
 }
 
 export default function Menu() {
-  const { language, changeLanguage } = useLanguage()
-  const lang = language
-  const [view, setView] = useState<View>('index')
-  const [activeCategory, setActiveCategory] = useState<string>('')
-  const [priceFilter, setPriceFilter] = useState<PriceFilter>('all')
-  const [searchQuery, setSearchQuery] = useState<string>('') 
-  const [searchOpen, setSearchOpen] = useState<boolean>(false)
-  const location = useLocation()
-  const { categories: dbCategories, loading, error } = useSupabaseMenu()
+const { language, changeLanguage } = useLanguage()
+const lang = language
+const [searchParams, setSearchParams] = useSearchParams()  // ← AÑADE
+const [view, setView] = useState<View>((searchParams.get('view') as View) ?? 'index')  // ← CAMBIA
+const [activeCategory, setActiveCategory] = useState<string>(searchParams.get('cat') ?? '')  // ← CAMBIA
+const [priceFilter, setPriceFilter] = useState<PriceFilter>('all')
+const [searchQuery, setSearchQuery] = useState<string>('')
+const [searchOpen, setSearchOpen] = useState<boolean>(false)
+const location = useLocation()
+const { categories: dbCategories, loading, error } = useSupabaseMenu()
 
   useState(() => {
   const state = location.state as { openCategory?: string } | null
@@ -159,22 +160,27 @@ const currentItems = isVinosPorCopa
   })
 }
 
-const searchItems = (items: MenuItem[]) => {  // ← AQUÍ
+const normalize = (str: string) =>
+  str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
+const searchItems = (items: MenuItem[]) => {
   if (!searchQuery.trim()) return items
-  const q = searchQuery.toLowerCase()
+  const q = normalize(searchQuery)
   return items.filter(item =>
-    item.name_es.toLowerCase().includes(q) ||
-    item.vintage_cellar_do?.toLowerCase().includes(q) ||
-    item.description_es?.toLowerCase().includes(q)
+    normalize(item.name_es).includes(q) ||
+    normalize(item.vintage_cellar_do ?? '').includes(q) ||
+    normalize(item.description_es ?? '').includes(q)
   )
 }
 
-  const handleCategoryClick = (id: string) => {
-    setActiveCategory(id)
-    setPriceFilter('all')
-    setSearchQuery('') 
-    setView('category')
-  }
+ const handleCategoryClick = (id: string) => {
+  setActiveCategory(id)
+  setPriceFilter('all')
+  setSearchQuery('')
+  setSearchOpen(false)
+  setView('category')
+  setSearchParams({ view: 'category', cat: id })
+}
 
   const vinosPorCopaLabel = lang === 'ca' ? 'VINS PER COPA'
     : lang === 'en' ? 'WINES BY THE GLASS'
@@ -362,7 +368,11 @@ if (view === 'index') {
 
           {/* VOLVER */}
           <button
-            onClick={() => setView('index')}
+  onClick={() => {
+    setView('index')
+    setActiveCategory('')
+    setSearchParams({})
+  }}
             aria-label="Volver al índice"
             style={{ fontSize: '22px', color: '#6A6A6A', justifySelf: 'start'}}
           >

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import type { CategoryDB, MenuItemDB } from '../lib/supabase'
 
@@ -10,6 +10,7 @@ export function useSupabaseMenu() {
   const [categories, setCategories] = useState<CategoryWithItems[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [trigger, setTrigger] = useState(0)
 
   useEffect(() => {
     let cancelled = false
@@ -51,7 +52,9 @@ export function useSupabaseMenu() {
 
     load()
     return () => { cancelled = true }
-  }, [])
+  }, [trigger])
 
-  return { categories, loading, error }
+  const refetch = useCallback(() => setTrigger(t => t + 1), [])
+
+  return { categories, loading, error, refetch }
 }
