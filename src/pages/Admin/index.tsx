@@ -5,6 +5,7 @@ import { useSupabaseAdmin } from '../../hooks/useSupabaseAdmin'
 import type { CategoryWithItems } from '../../hooks/useSupabaseMenu'
 import type { MenuItemDB } from '../../lib/supabase'
 import { supabase } from '../../lib/supabase'
+import { translateProduct } from '../../utils/translate'
 
 type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'
 
@@ -86,6 +87,19 @@ const tabStyle = (active: boolean) => ({
   try {
     await updateItem(id, { copa_available: !current })
     await logActivity(adminNombre, 'TOGGLE_COPA', 'menu_item', id, { copa_available: !current })
+    refetch()
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const handleToggleCategory = async (id: string, current: boolean) => {
+  try {
+    await supabase
+      .from('categories')
+      .update({ available: !current })
+      .eq('id', id)
+    await logActivity(adminNombre, 'TOGGLE_CATEGORY', 'category', undefined, { id, available: !current })
     refetch()
   } catch (err) {
     console.error(err)
@@ -200,6 +214,8 @@ const handleToggleBottle = async (id: number, current: boolean) => {
     </button>
   )}
 </div>
+
+
                 {/* Filtro */}
                 <select
                   value={filterCategory}
@@ -375,33 +391,87 @@ const handleToggleBottle = async (id: number, current: boolean) => {
           />
         )}
 
-        {/* ===== TAB CATEGORÍAS ===== */}
-    {tab === 'categorias' && (
-  <AddCategoryForm
-    categories={categories}
-    adminNombre={adminNombre}
-    onSave={async (newCat) => {
-  try {
-    // Reordena las categorías existentes para hacer espacio
-    const updates = categories
-      .filter(c => c.sort_order >= newCat.sort_order)
-      .map(c =>
-        supabase
-          .from('categories')
-          .update({ sort_order: c.sort_order + 1 })
-          .eq('id', c.id)
-      )
-    await Promise.all(updates)
-    await addCategory(newCat)
-    await logActivity(adminNombre, 'CREATE', 'category', undefined, newCat)
-    refetch()
-    setTab('productos')
-  } catch (err) {
-    console.error(err)
-  }
-}}
-    saving={saving}
-  />
+       {/* ===== TAB CATEGORÍAS ===== */}
+{tab === 'categorias' && (
+  <div>
+    {/* SECCIONES EXISTENTES */}
+    <p style={{
+      fontFamily: 'Nunito Sans, sans-serif',
+      fontSize: '10px', fontWeight: '600', color: '#9A8878',
+      letterSpacing: '0.25em', textTransform: 'uppercase',
+      marginBottom: '12px',
+    }}>
+      SECCIONES EXISTENTES
+    </p>
+    <div className="flex flex-col mb-8" style={{ gap: '2px' }}>
+      {categories.map(cat => (
+        <div
+          key={cat.id}
+          className="flex items-center justify-between"
+          style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
+        >
+          <span style={{
+            fontFamily: 'Nunito Sans, sans-serif',
+            fontSize: '13px',
+            color: cat.available ? '#1A1A1A' : '#9A8878',
+          }}>
+            {cat.name_es}
+          </span>
+          <div
+            onClick={() => handleToggleCategory(cat.id, cat.available)}
+            style={{
+              width: '40px', height: '22px', borderRadius: '11px',
+              backgroundColor: cat.available ? '#C65427' : '#D9D9D9',
+              position: 'relative', cursor: 'pointer',
+              transition: 'background-color 0.2s',
+            }}
+          >
+            <div style={{
+              width: '18px', height: '18px', borderRadius: '50%',
+              backgroundColor: '#FFFFFF', position: 'absolute', top: '2px',
+              left: cat.available ? '20px' : '2px', transition: 'left 0.2s',
+            }} />
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* SEPARADOR */}
+    <p style={{
+      fontFamily: 'Nunito Sans, sans-serif',
+      fontSize: '10px', fontWeight: '600', color: '#9A8878',
+      letterSpacing: '0.25em', textTransform: 'uppercase',
+      marginBottom: '12px', marginTop: '32px',
+    }}>
+      CREAR NUEVA SECCIÓN
+    </p>
+
+    {/* FORMULARIO NUEVA SECCIÓN */}
+    <AddCategoryForm
+      categories={categories}
+      adminNombre={adminNombre}
+      onSave={async (newCat) => {
+        try {
+          const updates = categories
+            .filter(c => c.sort_order >= newCat.sort_order)
+            .map(c =>
+              supabase
+                .from('categories')
+                .update({ sort_order: c.sort_order + 1 })
+                .eq('id', c.id)
+            )
+          await Promise.all(updates)
+          await addCategory(newCat)
+          await logActivity(adminNombre, 'CREATE', 'category', undefined, newCat)
+          refetch()
+          setTab('productos')
+        } catch (err) {
+          console.error(err)
+        }
+      }}
+      saving={saving}
+    />
+  </div>
 )}
 
         {/* ===== TAB TRADUCCIONES ===== */}
@@ -458,19 +528,41 @@ function AddEditForm({
     display: 'block', marginBottom: '6px',
   }
 
+  const [translating, setTranslating] = useState(false)
+  const [translated, setTranslated] = useState(false)
+
   const handleSubmit = async () => {
   if (!form.name_es || !form.category_id) return
+
+setTranslating(true)
+  
+  // Traduce automáticamente
+  const translations = await translateProduct({
+    name_es: form.name_es,
+    description_es: form.description_es || null,
+  })
+
+  setTranslating(false)
+  setTranslated(true)
+
+
   await onSave({
     category_id: form.category_id,
     name_es: form.name_es,
+    name_ca: translations.name_ca,
+    name_en: translations.name_en,
+    name_fr: translations.name_fr,
     vintage_cellar_do: form.vintage_cellar_do || null,
     description_es: form.description_es || null,
+    description_ca: translations.description_ca,
+    description_en: translations.description_en,
+    description_fr: translations.description_fr,
     price_copa: form.price_copa ? parseFloat(form.price_copa) : null,
     price_bottle: form.price_bottle ? parseFloat(form.price_bottle) : null,
     available: form.available,
-    copa_available: true,   // ← AÑADE ESTAS LÍNEAS
-    bottle_available: true, // ←
-    sort_order: 0,          // ←
+    copa_available: true,
+    bottle_available: true,
+    sort_order: 0,
   })
 }
 
@@ -551,13 +643,32 @@ function AddEditForm({
           >
             CANCELAR
           </button>
-          <button
-            onClick={handleSubmit}
-            disabled={saving || !form.name_es}
-            style={{ flex: 2, padding: '14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: saving ? '#9A8878' : '#C65427', color: '#FFFFFF', cursor: saving ? 'not-allowed' : 'pointer' }}
-          >
-            {saving ? 'GUARDANDO...' : editingItem ? 'GUARDAR CAMBIOS' : 'AÑADIR Y TRADUCIR'}
-          </button>
+       <button
+  onClick={handleSubmit}
+  disabled={saving || translating || !form.name_es}
+  style={{
+    flex: 2, padding: '14px',
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '13px', fontWeight: '600',
+    letterSpacing: '0.2em', textTransform: 'uppercase',
+    border: 'none',
+    backgroundColor: saving || translating ? '#9A8878' : '#C65427',
+    color: '#FFFFFF',
+    cursor: saving || translating ? 'not-allowed' : 'pointer',
+  }}
+>
+  {translating ? 'TRADUCIENDO...' : saving ? 'GUARDANDO...' : editingItem ? 'GUARDAR CAMBIOS' : 'AÑADIR Y TRADUCIR'}
+</button>
+
+{translated && !saving && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px', color: '#C65427',
+    letterSpacing: '0.2em', textAlign: 'center',
+  }}>
+    ✓ TRADUCIDO Y GUARDADO EN CA · EN · FR
+  </p>
+)}
         </div>
       </div>
       

@@ -36,7 +36,8 @@ export function useSupabaseMenu() {
         if (itemsError) throw itemsError
 
         // Agrupa productos por categoría
-        const result = (cats ?? []).map(cat => ({
+        const result = (cats ?? [])
+        .map(cat => ({
           ...cat,
           items: (items ?? []).filter(i => i.category_id === cat.id)
         }))

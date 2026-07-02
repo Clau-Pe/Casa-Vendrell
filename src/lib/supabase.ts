@@ -14,6 +14,7 @@ export type CategoryDB = {
   name_fr: string | null
   show_price_columns: 'both' | 'copa_only' | 'none'
   sort_order: number
+  available: boolean  // ← AÑADE
   created_at: string
 }
 
