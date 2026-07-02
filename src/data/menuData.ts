@@ -256,8 +256,14 @@ export const menuData = {
 export type MenuItem = {
   id: number
   name_es: string
+  name_ca: string | null
+  name_en: string | null
+  name_fr: string | null
   vintage_cellar_do: string | null
   description_es: string | null
+  description_ca: string | null
+  description_en: string | null
+  description_fr: string | null
   price_copa: number | null
   price_bottle: number | null
   available: boolean

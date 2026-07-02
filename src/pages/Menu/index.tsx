@@ -20,8 +20,14 @@ const adaptCategory = (cat: CategoryWithItems) => ({
   .map(item => ({
     id: item.id,
     name_es: item.name_es,
-    vintage_cellar_do: item.vintage_cellar_do,
-    description_es: item.description_es,
+      name_ca: item.name_ca,
+      name_en: item.name_en,
+      name_fr: item.name_fr,
+      vintage_cellar_do: item.vintage_cellar_do,
+      description_es: item.description_es,
+      description_ca: item.description_ca,
+      description_en: item.description_en,
+      description_fr: item.description_fr,
     price_copa: item.copa_available ? item.price_copa : null,        // ← si copa desactivada → null
     price_bottle: item.bottle_available ? item.price_bottle : null,  // ← si botella desactivada → null
     available: item.available&&
@@ -133,8 +139,13 @@ const { categories: dbCategories, loading, error } = useSupabaseMenu()
   const getCategoryName = (cat: MenuCategory) =>
     (cat[`name_${lang}` as keyof MenuCategory] as string) || cat.name_es
 
-  const getItemName = (item: MenuItem) => item.name_es
-  const getItemDescription = (item: MenuItem) => item.description_es
+const getItemName = (item: MenuItem) => {
+  return (item[`name_${lang}` as keyof MenuItem] as string) || item.name_es
+}
+
+const getItemDescription = (item: MenuItem) => {
+  return (item[`description_${lang}` as keyof MenuItem] as string) || item.description_es || ''
+}
 
   const activeData = adaptedCategories.find(c => c.id === activeCategory)
   const isVinosPorCopa = activeCategory === VINOS_POR_COPA_ID
