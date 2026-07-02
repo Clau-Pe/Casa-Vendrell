@@ -1,5 +1,3 @@
-// MODO SIMULADO — sin API key
-// Cuando quieras activar Claude real, cambia simulatedMode a false
 const simulatedMode = false
 
 export async function translateText(
@@ -13,29 +11,15 @@ export async function translateText(
     return `[${targetLang.toUpperCase()}] ${text}`
   }
 
-  // Claude real — activar cuando tengas API key
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  // Llama a la función serverless de Vercel
+  const response = await fetch('/api/translate', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-6',
-      max_tokens: 1000,
-      messages: [{
-        role: 'user',
-        content: `Traduce este texto al ${targetLang === 'ca' ? 'catalán' : targetLang === 'en' ? 'inglés' : 'francés'}. 
-        Responde SOLO con la traducción, sin explicaciones ni comillas.
-        Contexto: es una descripción de vino para una carta de restaurante en Barcelona.
-        Texto: ${text}`
-      }]
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text, targetLang })
   })
 
   const data = await response.json()
-  return data.content[0].text.trim()
+  return data.translation
 }
 
 export async function translateProduct(product: {
@@ -46,9 +30,7 @@ export async function translateProduct(product: {
   const results: Record<string, string | null> = {}
 
   for (const lang of langs) {
-    // El nombre NO se traduce — es un nombre comercial
     results[`name_${lang}`] = product.name_es
-    // Solo se traduce la descripción
     results[`description_${lang}`] = product.description_es
       ? await translateText(product.description_es, lang)
       : null
