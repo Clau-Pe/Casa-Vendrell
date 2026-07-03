@@ -6,6 +6,7 @@ import type { CategoryWithItems } from '../../hooks/useSupabaseMenu'
 import type { MenuItemDB } from '../../lib/supabase'
 import { supabase } from '../../lib/supabase'
 import { translateProduct } from '../../utils/translate'
+import { translateText } from '../../utils/translate'
 
 type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'
 
@@ -643,9 +644,10 @@ setTranslating(true)
           >
             CANCELAR
           </button>
+          
        <button
   onClick={handleSubmit}
-  disabled={saving || translating || !form.name_es}
+  disabled={saving || loading || !form.name_es || !form.id}
   style={{
     flex: 2, padding: '14px',
     fontFamily: 'Nunito Sans, sans-serif',
@@ -689,6 +691,9 @@ function AddCategoryForm({
   onSave: (data: any) => Promise<void>
   saving: boolean
 }) {
+
+  const [loading, setLoading] = useState(false)
+  
   const [form, setForm] = useState({
     id: '',
     name_es: '',
@@ -712,17 +717,28 @@ function AddCategoryForm({
   }
 
   const handleSubmit = async () => {
-    if (!form.name_es || !form.id) return
-    await onSave({
-      id: form.id.toLowerCase().replace(/\s+/g, '_'),
-      name_es: form.name_es,
-      name_ca: null,
-      name_en: null,
-      name_fr: null,
-      show_price_columns: form.show_price_columns,
-      sort_order: form.sort_order,
-    })
-  }
+  if (!form.name_es || !form.id) return
+
+  setLoading(true)
+
+  const [name_ca, name_en, name_fr] = await Promise.all([
+    translateText(form.name_es, 'ca'),
+    translateText(form.name_es, 'en'),
+    translateText(form.name_es, 'fr'),
+  ])
+
+  await onSave({
+    id: form.id.toLowerCase().replace(/\s+/g, '_'),
+    name_es: form.name_es,
+    name_ca,
+    name_en,
+    name_fr,
+    show_price_columns: form.show_price_columns,
+    sort_order: form.sort_order,
+  })
+
+  setLoading(false)
+}
 
   return (
     <div>
@@ -788,19 +804,23 @@ function AddCategoryForm({
         </div>
 
         {/* BOTÓN */}
-        <button
-          onClick={handleSubmit}
-          disabled={saving || !form.name_es || !form.id}
-          style={{
-            padding: '14px', fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em',
-            textTransform: 'uppercase', border: 'none',
-            backgroundColor: saving ? '#9A8878' : '#C65427',
-            color: '#FFFFFF', cursor: saving ? 'not-allowed' : 'pointer',
-          }}
-        >
-          {saving ? 'GUARDANDO...' : 'CREAR SECCIÓN'}
-        </button>
+       <button
+  onClick={handleSubmit}
+  disabled={saving || loading || !form.name_es || !form.id}
+  style={{
+    padding: '14px',
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '13px', fontWeight: '600',
+    letterSpacing: '0.2em', textTransform: 'uppercase',
+    border: 'none',
+    backgroundColor: saving || loading ? '#9A8878' : '#C65427',
+    color: '#FFFFFF',
+    cursor: saving || loading ? 'not-allowed' : 'pointer',
+    width: '100%',
+  }}
+>
+  {loading ? 'TRADUCIENDO...' : saving ? 'GUARDANDO...' : 'CREAR SECCIÓN'}
+</button>
       </div>
     </div>
   )

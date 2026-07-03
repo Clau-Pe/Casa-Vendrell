@@ -11,15 +11,23 @@ export async function translateText(
     return `[${targetLang.toUpperCase()}] ${text}`
   }
 
-  // Llama a la función serverless de Vercel
-  const response = await fetch('/api/translate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, targetLang })
-  })
+  try {
+    const response = await fetch('/api/translate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, targetLang })
+    })
 
-  const data = await response.json()
-  return data.translation
+    if (!response.ok) {
+      console.warn('API translate no disponible en local — usando simulado')
+      return `[${targetLang.toUpperCase()}] ${text}`
+    }
+
+    const data = await response.json()
+    return data.translation
+  } catch {
+    return `[${targetLang.toUpperCase()}] ${text}`
+  }
 }
 
 export async function translateProduct(product: {
