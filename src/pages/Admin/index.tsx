@@ -647,7 +647,7 @@ setTranslating(true)
           
        <button
   onClick={handleSubmit}
-  disabled={saving || loading || !form.name_es }
+  disabled={saving || translating || !form.name_es }
   style={{
     flex: 2, padding: '14px',
     fontFamily: 'Nunito Sans, sans-serif',
