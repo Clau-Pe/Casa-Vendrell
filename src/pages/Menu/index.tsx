@@ -6,6 +6,7 @@ import type { MenuCategory, MenuItem } from '../../data/menuData'
 import { useSupabaseMenu } from '../../hooks/useSupabaseMenu'
 import type { CategoryWithItems } from '../../hooks/useSupabaseMenu'
 import { useLocation, useSearchParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 // Adapta CategoryWithItems de Supabase al formato que usa el componente
 const adaptCategory = (cat: CategoryWithItems) => ({
@@ -49,12 +50,14 @@ function SearchBar({
   searchQuery, 
   setSearchQuery, 
   searchOpen, 
-  setSearchOpen 
+  setSearchOpen,
+  placeholder, 
 }: { 
   searchQuery: string
   setSearchQuery: (q: string) => void
   searchOpen: boolean
   setSearchOpen: (open: boolean) => void
+  placeholder: string
 }) {
   return (
     <div className="flex items-center justify-end" style={{ gap: '8px' }}>
@@ -64,7 +67,7 @@ function SearchBar({
           type="text"
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          placeholder="Bodega, D.O., uva..."
+          placeholder={placeholder} 
           style={{
             fontFamily: 'Nunito Sans, sans-serif',
             fontSize: '12px',
@@ -122,6 +125,7 @@ const [searchQuery, setSearchQuery] = useState<string>('')
 const [searchOpen, setSearchOpen] = useState<boolean>(false)
 const location = useLocation()
 const { categories: dbCategories, loading, error } = useSupabaseMenu()
+const { t } = useTranslation()
 
   // ← AQUÍ dentro del componente
   const adaptedCategories = dbCategories
@@ -146,6 +150,7 @@ const getItemName = (item: MenuItem) => {
 const getItemDescription = (item: MenuItem) => {
   return (item[`description_${lang}` as keyof MenuItem] as string) || item.description_es || ''
 }
+
 
   const activeData = adaptedCategories.find(c => c.id === activeCategory)
   const isVinosPorCopa = activeCategory === VINOS_POR_COPA_ID
@@ -201,10 +206,7 @@ const searchItems = (items: MenuItem[]) => {
   setSearchParams({ view: 'category', cat: id })
 }
 
-  const vinosPorCopaLabel = lang === 'ca' ? 'VINS PER COPA'
-    : lang === 'en' ? 'WINES BY THE GLASS'
-    : lang === 'fr' ? 'VINS AU VERRE'
-    : 'VINOS POR COPA'
+const vinosPorCopaLabel = t('carta.vinos_por_copa')
 
 // ===== ÍNDICE =====
 if (view === 'index') {
@@ -212,7 +214,7 @@ if (view === 'index') {
 
   <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
       <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.3em' }}>
-        CARGANDO...
+        {t('carta.cargando')}
       </p>
     </div>
   )
@@ -220,7 +222,7 @@ if (view === 'index') {
     if (error) return (
     <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#FAFAFA' }}>
       <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#C65427', letterSpacing: '0.3em' }}>
-        ERROR AL CARGAR LA CARTA
+        {t('carta.error')}
       </p>
     </div>
   )
@@ -242,13 +244,14 @@ if (view === 'index') {
             letterSpacing: '0.4em',
             textTransform: 'uppercase',
           }}>
-            CARTA
+           {t('carta.titulo')}
           </p>
           <SearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             searchOpen={searchOpen}
             setSearchOpen={setSearchOpen}
+            placeholder={t('carta.buscar_placeholder')} 
           />
         </div>
 <div className="w-full flex flex-col items-center">
@@ -415,7 +418,7 @@ if (view === 'index') {
                   padding: '4px 8px',
                 }}
               >
-                PER COPA
+                {t('carta.per_copa')}
               </button>
               <button
                 onClick={() => setPriceFilter(priceFilter === 'bottle' ? 'all' : 'bottle')}
@@ -431,7 +434,7 @@ if (view === 'index') {
                   padding: '4px 8px',
                 }}
               >
-                PER BOTELLA
+                {t('carta.per_botella')}
               </button>
             </div>
            ) : (
@@ -613,6 +616,7 @@ if (view === 'index') {
       setSearchQuery={setSearchQuery}
       searchOpen={searchOpen}
       setSearchOpen={setSearchOpen}
+      placeholder={t('carta.buscar_placeholder')}
     />
   </div>
 </div>

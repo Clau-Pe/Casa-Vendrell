@@ -3,18 +3,36 @@
     "home": "Inicio",
     "menu": "Carta",
     "events": "Eventos",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "el_bar": "EL BAR",
+  "nuestra_carta": "NUESTRA CARTA",
+  "reservas": "RESERVAS",
+  "carta_btn": "CARTA"
   },
+  "hero": {
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "schedule": "LUNES - SÁBADOS",
+  "instagram": "@CASAVENDRELL"
+},
 "home": {
   "hero_subtitle": "BAR DE VINOS",
-  "menu_preview": "Nuestra Carta",
-  "menu_link": "Ver carta completa",
-  "history_text": "Casa Vendrell nace en una antigua bodega de 1934 restaurada, donde cada decisión buscó preservar la esencia y los elementos originales del espacio. El resultado es un lugar con historia propia, en el corazón de l'Eixample. Un bar de vinos atendido por sus propios dueños, apasionados y enfocados en guiar la experiencia en cada visita. Una gran selección de vinos y una carta de tapas donde cada plato acompaña y complementa al protagonista.",
-  "consultoria_text": "Ofrecemos un servicio de consultoría personalizado para eventos privados, maridajes y selección de vinos para empresas y particulares.",
+  "casa_vendrell_title": "CASA VENDRELL",
+  "historia_p1": "Casa Vendrell nace en una antigua bodega de 1934 restaurada, donde cada decisión buscó preservar la esencia y los elementos originales del espacio. El resultado es un lugar con historia propia, en el corazón de l'Eixample.",
+  "historia_p2": "Un bar de vinos atendido por sus propios dueños, apasionados y enfocados en guiar la experiencia en cada visita. Una gran selección de vinos y una carta de tapas donde cada plato acompaña y complementa al protagonista.",
+  "nuestra_carta_title": "NUESTRA CARTA",
+  "vinos_por_copa": "VINOS POR COPA",
+  "carta_completa": "CARTA COMPLETA",
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "phone": "+34 634 938 879",
+  "email": "RESERVAS.CASAVENDRELL@GMAIL.COM",
+  "consultoria_title": "CONSULTORÍA",
+  "consultoria_p1": "Casa Vendrell surge de la suma de miradas distintas sobre un mismo objetivo.",
+  "consultoria_p2": "Esa misma visión es la que ofrecemos a quienes quieran dar vida a un proyecto propio: desde la idea inicial hasta la puesta en marcha, acompañando cada etapa del proceso con criterio, experiencia y sensibilidad.",
+  "contactanos": "Contáctanos",
+  "newsletter_text": "DEJA TU EMAIL PARA RECIBIR NUESTRAS NOVEDADES",
+  "newsletter_btn": "ENVIAR",
   "cta_text": "¿Quieres hacer una reserva?",
-  "whatsapp_btn": "Reservar por WhatsApp",
-  "email_btn": "Reservar por email",
-  "contact_title": "Contáctanos"
+  "whatsapp_btn": "Reservar por WhatsApp"
 },
   "menu": {
     "title": "La Carta",
@@ -59,8 +77,23 @@
   "duplicate": "Este email ya está suscrito."
 },
   "footer": {
-    "rights": "Todos los derechos reservados"
-  },
+  "rights": "®2026 Casa Vendrell",
+  "contacto": "CONTACTO",
+  "siguenos": "SÍGUENOS",
+  "el_bar": "EL BAR",
+  "consultoria": "CONSULTORÍA",
+  "nuestra_carta": "NUESTRA CARTA",
+  "reservas": "RESERVAS"
+},
+"carta": {
+  "titulo": "CARTA",
+  "per_copa": "POR COPA",
+  "per_botella": "POR BOTELLA",
+  "vinos_por_copa": "VINOS POR COPA",
+  "buscar_placeholder": "Bodega, D.O., uva...",
+  "cargando": "CARGANDO...",
+  "error": "ERROR AL CARGAR LA CARTA"
+},
   "admin": {
     "title": "Panel d'Administració",
     "login": "Acceder",

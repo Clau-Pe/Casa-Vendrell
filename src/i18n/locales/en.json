@@ -3,17 +3,37 @@
     "home": "Home",
     "menu": "Menu",
     "events": "Events",
-    "contact": "Contact"
-  },
-  "home": {
-    "hero_subtitle": "Wine bar",
-    "menu_preview": "Our Menu",
-    "menu_link": "View full menu",
-    "history_title": "Casa Vèndrell",
-    "contact_title": "Contact us",
-    "whatsapp_btn": "Book via WhatsApp",
-    "email_btn": "Book via email"
-  },
+    "contact": "Contact",
+  "el_bar": "THE BAR",
+  "nuestra_carta": "OUR MENU",
+  "reservas": "RESERVATIONS",
+  "carta_btn": "MENU"
+},
+"hero": {
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "schedule": "MONDAY - SATURDAY",
+  "instagram": "@CASAVENDRELL"
+},
+"home": {
+  "hero_subtitle": "WINE BAR",
+  "casa_vendrell_title": "CASA VENDRELL",
+  "historia_p1": "Casa Vendrell was born in a restored 1934 winery, where every decision sought to preserve the essence and original elements of the space. The result is a place with its own history, in the heart of l'Eixample.",
+  "historia_p2": "A wine bar run by its own owners, passionate and focused on guiding the experience on every visit. A great selection of wines and a tapas menu where each dish accompanies and complements the protagonist.",
+  "nuestra_carta_title": "OUR MENU",
+  "vinos_por_copa": "WINES BY THE GLASS",
+  "carta_completa": "FULL MENU",
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "phone": "+34 634 938 879",
+  "email": "RESERVAS.CASAVENDRELL@GMAIL.COM",
+  "consultoria_title": "CONSULTANCY",
+  "consultoria_p1": "Casa Vèndrell emerges from the sum of different perspectives on the same goal.",
+  "consultoria_p2": "That same vision is what we offer to those who want to bring their own project to life: from the initial idea to the launch, accompanying each stage of the process with criteria, experience and sensitivity.",
+  "contactanos": "Contact us",
+  "newsletter_text": "LEAVE YOUR EMAIL TO RECEIVE OUR UPDATES",
+  "newsletter_btn": "SEND",
+  "cta_text": "Would you like to make a reservation?",
+  "whatsapp_btn": "Book via WhatsApp"
+},
   "menu": {
     "title": "The Menu",
     "categories": {
@@ -56,9 +76,24 @@
   "error": "An error occurred. Please try again.",
   "duplicate": "This email is already subscribed."
 },
-  "footer": {
-    "rights": "All rights reserved"
-  },
+ "footer": {
+  "rights": "®2026 Casa Vèndrell",
+  "contacto": "CONTACT",
+  "siguenos": "FOLLOW US",
+  "el_bar": "THE BAR",
+  "consultoria": "CONSULTANCY",
+  "nuestra_carta": "OUR MENU",
+  "reservas": "RESERVATIONS"
+},
+"carta": {
+  "titulo": "MENU",
+  "per_copa": "BY THE GLASS",
+  "per_botella": "BY THE BOTTLE",
+  "vinos_por_copa": "WINES BY THE GLASS",
+  "buscar_placeholder": "Winery, D.O., grape...",
+   "cargando": "LOADING...",
+  "error": "ERROR LOADING MENU"
+},
   "admin": {
     "title": "Administration Panel",
     "login": "Login",

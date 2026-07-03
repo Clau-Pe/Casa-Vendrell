@@ -39,7 +39,7 @@ export default function Home() {
       lineHeight: '120%',
     }}
   >
-    CASA VENDRELL
+    {t('home.casa_vendrell_title')}
   </h2>
   <img
     src="/images/hero/bODY3.png"
@@ -49,10 +49,10 @@ export default function Home() {
   />
   <div className="w-full max-w-xl px-4 mt-12 md:mt-16 text-center">
     <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%' }}>
-      Casa Vendrell nace en una antigua bodega de 1934 restaurada, donde cada decisión buscó preservar la esencia y los elementos originales del espacio. El resultado es un lugar con historia propia, en el corazón de l'Eixample.
+      {t('home.historia_p1')}
     </p>
     <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%', marginTop: '24px' }}>
-      Un bar de vinos atendido por sus propios dueños, apasionados y enfocados en guiar la experiencia en cada visita. Una gran selección de vinos y una carta de tapas donde cada plato acompaña y complementa al protagonista.
+      {t('home.historia_p2')}
     </p>
   </div>
 </section>
@@ -69,7 +69,7 @@ export default function Home() {
       lineHeight: '120%',
     }}
   >
-    NUESTRA CARTA
+    {t('home.nuestra_carta_title')}
   </h2>
   <div className="flex flex-col items-center gap-4">
     <Link
@@ -78,14 +78,14 @@ export default function Home() {
       className="hover:opacity-70 transition-opacity flex items-center gap-1"
       style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
     >
-      VINOS POR COPA <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
+      {t('home.vinos_por_copa')} <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
     </Link>
     <Link
       to="/carta"
       className="hover:opacity-70 transition-opacity flex items-center gap-1"
       style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
     >
-      CARTA COMPLETA <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
+      {t('home.carta_completa')} <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
     </Link>
   </div>
 </section>
@@ -115,21 +115,21 @@ export default function Home() {
       className="hover:text-[#411F10] transition-colors"
       style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}
     >
-      DIPUTACIÓ 110. 08015 BARCELONA
+      {t('home.address')}
     </a>
     <a
       href="tel:+34634938879"
       className="hover:text-[#411F10] transition-colors"
       style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}
     >
-      +34 634 938 879
+      {t('home.phone')}
     </a>
     <a
       href="mailto:reservas.casavendrell@gmail.com"
       className="hover:text-[#411F10] transition-colors"
       style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}
     >
-      RESERVAS.CASAVENDRELL@GMAIL.COM
+      {t('home.email')}
     </a>
   </div>
 </section>
@@ -159,14 +159,14 @@ export default function Home() {
       lineHeight: '120%',
     }}
   >
-    CONSULTORÍA
+    {t('home.consultoria_title')}
   </h2>
   <div className="w-full max-w-xl text-center mb-10">
     <p style={{ fontSize: '16px', fontWeight: '500', color: '#411F10', lineHeight: '160%' }}>
-      Casa Vendrell surge de la suma de miradas distintas sobre un mismo objetivo.
+     {t('home.consultoria_p1')}
     </p>
     <p style={{ fontSize: '16px', fontWeight: '500', color: '#411F10', lineHeight: '160%', marginTop: '24px' }}>
-      Esa misma visión es la que ofrecemos a quienes quieran dar vida a un proyecto propio: desde la idea inicial hasta la puesta en marcha, acompañando cada etapa del proceso con criterio, experiencia y sensibilidad.
+      {t('home.consultoria_p2')}
     </p>
   </div>
   <div className="flex flex-col items-center gap-3">
@@ -175,7 +175,7 @@ export default function Home() {
       className="hover:opacity-70 transition-opacity"
       style={{ fontSize: '16px', fontWeight: '400', color: '#411F10', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
     >
-      Contáctanos
+      {t('home.contactanos')}
     </a>
     <a
       href="mailto:cuatrouvassl@gmail.com"
@@ -225,7 +225,7 @@ export default function Home() {
             className="text-center"
             style={{ fontSize: 'clamp(11px, 2vw, 14px)', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '120%' }}
           >
-            DEJA TU EMAIL PARA RECIBIR NUESTRAS NOVEDADES
+            {t('home.newsletter_text')}
           </p>
           <form
             className="flex items-center w-full"
@@ -243,7 +243,7 @@ export default function Home() {
               className="hover:opacity-90 transition-opacity"
               style={{ height: '42px', backgroundColor: '#C65427', color: '#FFFFFF', fontSize: '13px', fontWeight: '600', letterSpacing: '0.25em', padding: '0 24px', whiteSpace: 'nowrap' }}
             >
-              ENVIAR
+              {t('home.newsletter_btn')}
             </button>
           </form>
         </div>

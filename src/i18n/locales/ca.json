@@ -3,17 +3,37 @@
     "home": "Inici",
     "menu": "Carta",
     "events": "Esdeveniments",
-    "contact": "Contacte"
-  },
-  "home": {
-    "hero_subtitle": "Bar de vins",
-    "menu_preview": "La nostra Carta",
-    "menu_link": "Veure carta completa",
-    "history_title": "Casa Vèndrell",
-    "contact_title": "Contacta'ns",
-    "whatsapp_btn": "Reservar per WhatsApp",
-    "email_btn": "Reservar per email"
-  },
+    "contact": "Contacte",
+    "el_bar": "EL BAR",
+  "nuestra_carta": "LA NOSTRA CARTA",
+  "reservas": "RESERVES",
+  "carta_btn": "CARTA"
+},
+"hero": {
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "schedule": "DILLUNS - DISSABTES",
+  "instagram": "@CASAVENDRELL"
+},
+ "home": {
+  "hero_subtitle": "BAR DE VINS",
+  "casa_vendrell_title": "CASA VENDRELL",
+  "historia_p1": "Casa Vendrell neix en un antic celler de 1934 restaurat, on cada decisió va buscar preservar l'essència i els elements originals de l'espai. El resultat és un lloc amb història pròpia, al cor de l'Eixample.",
+  "historia_p2": "Un bar de vins atès pels seus propis amos, apassionats i enfocats a guiar l'experiència en cada visita. Una gran selecció de vins i una carta de tapes on cada plat acompanya i complementa el protagonista.",
+  "nuestra_carta_title": "LA NOSTRA CARTA",
+  "vinos_por_copa": "VINS PER COPA",
+  "carta_completa": "CARTA COMPLETA",
+  "address": "DIPUTACIÓ 110. 08015 BARCELONA",
+  "phone": "+34 634 938 879",
+  "email": "RESERVAS.CASAVENDRELL@GMAIL.COM",
+  "consultoria_title": "CONSULTORIA",
+  "consultoria_p1": "Casa Vèndrell sorgeix de la suma de mirades diferents sobre un mateix objectiu.",
+  "consultoria_p2": "Aquesta mateixa visió és la que oferim a qui vulgui donar vida a un projecte propi: des de la idea inicial fins a la posada en marxa, acompanyant cada etapa del procés amb criteri, experiència i sensibilitat.",
+  "contactanos": "Contacteu-nos",
+  "newsletter_text": "DEIXA EL TEU EMAIL PER REBRE LES NOSTRES NOVETATS",
+  "newsletter_btn": "ENVIAR",
+  "cta_text": "Vols fer una reserva?",
+  "whatsapp_btn": "Reservar per WhatsApp"
+},
   "menu": {
     "title": "La Carta",
     "categories": {
@@ -57,8 +77,23 @@
   "duplicate": "Aquest email ja està subscrit."
 },
   "footer": {
-    "rights": "Tots els drets reservats"
-  },
+  "rights": "®2026 Casa Vèndrell",
+  "contacto": "CONTACTE",
+  "siguenos": "SEGUEIX-NOS",
+  "el_bar": "EL BAR",
+  "consultoria": "CONSULTORIA",
+  "nuestra_carta": "LA NOSTRA CARTA",
+  "reservas": "RESERVES"
+},
+"carta": {
+  "titulo": "CARTA",
+  "per_copa": "PER COPA",
+  "per_botella": "PER AMPOLLA",
+  "vinos_por_copa": "VINS PER COPA",
+  "buscar_placeholder": "Celler, D.O., raïm...",
+  "cargando": "CARREGANT...",
+  "error": "ERROR EN CARREGAR LA CARTA"
+},
   "admin": {
     "title": "Panel d'Administració",
     "login": "Accedir",

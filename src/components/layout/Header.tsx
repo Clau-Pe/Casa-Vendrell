@@ -10,13 +10,6 @@ const LANGUAGES: { code: Language; label: string }[] = [
   { code: 'es', label: 'ES' },
   { code: 'fr', label: 'FR' },
 ]
-
-const NAV_LINKS = [
-  { path: '/', label: 'EL BAR', external: false, href: null },
-  { path: '/carta', label: 'NUESTRA CARTA', external: false, href: null },
-  { path: '/contacto', label: 'RESERVAS', external: true, href: 'https://wa.me/34634938879' },
-]
-
 function LanguageSelector({ language, changeLanguage }: {
   language: Language
   changeLanguage: (lang: Language) => void
@@ -83,6 +76,12 @@ export default function Header() {
   const location = useLocation()
   const isHome = location.pathname === '/'
   const isMenu = location.pathname === '/carta'
+
+const NAV_LINKS = [
+  { path: '/', label: t('nav.el_bar'), external: false, href: null },
+  { path: '/carta', label: t('nav.nuestra_carta'), external: false, href: null },
+  { path: '/contacto', label: t('nav.reservas'), external: true, href: 'https://wa.me/34634938879' },
+]
 
   return (
     <header style={{ backgroundColor: '#411F10' }} className="w-full text-white">
@@ -247,7 +246,7 @@ export default function Header() {
     lineHeight: '120%',
   }}
 >
-  CARTA
+  {t('nav.carta_btn')}
 </Link>
 <a
   href="https://wa.me/34634938879"
@@ -263,7 +262,7 @@ export default function Header() {
     lineHeight: '120%',
   }}
 >
-  RESERVAS
+  {t('nav.reservas')}
 </a>
     </div>
 
@@ -289,7 +288,7 @@ export default function Header() {
   }}
   className="hover:text-white transition-colors"
 >
-  DIPUTACIÓ 110. 08015 BARCELONA
+   {t('hero.address')}
 </a>
       <p
         style={{
@@ -299,7 +298,7 @@ export default function Header() {
           letterSpacing: '0.05em',
         }}
       >
-        LUNES - SÁBADOS
+      {t('hero.schedule')}
       </p>
       <a
         href="https://www.instagram.com/casavendrell/"
@@ -313,7 +312,7 @@ export default function Header() {
           marginTop: '8px',
         }}
       >
-        @CASAVENDRELL
+         {t('hero.instagram')}
       </a>
     </div>
 
