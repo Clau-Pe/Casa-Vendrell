@@ -15,15 +15,15 @@ export default function Home() {
       >
         <img
           src="/images/hero/body1.png"
-          alt="Casa Vèndrell interior"
+          alt="Casa Vendrell interior"
           className="w-full object-cover"
           style={{ aspectRatio: '836/1024' }}
         />
         <img
           src="/images/hero/bODY2.png"
-          alt="Casa Vèndrell vinos"
+          alt="Casa Vendrell vinos"
           className="w-full object-cover"
-          style={{ aspectRatio: '830/1024' }}
+          style={{ aspectRatio: '836/1024' }}
         />
       </section>
 
@@ -37,6 +37,8 @@ export default function Home() {
       color: '#411F10',
       letterSpacing: '0.25em',
       lineHeight: '120%',
+      paddingTop: '170px', 
+      paddingBottom: '96px'
     }}
   >
     {t('home.casa_vendrell_title')}
@@ -48,17 +50,17 @@ export default function Home() {
     style={{ aspectRatio: '1061/569', maxWidth: '1061px' }}
   />
   <div className="w-full max-w-xl px-4 mt-12 md:mt-16 text-center">
-    <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%' }}>
+    <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%',  marginTop: '65px'}}>
       {t('home.historia_p1')}
     </p>
-    <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%', marginTop: '24px' }}>
+    <p style={{ fontSize: '16px', fontWeight: '500', color: '#000000', lineHeight: '160%', marginTop: '24px', paddingBottom: '338px' }}>
       {t('home.historia_p2')}
     </p>
   </div>
 </section>
 
 {/* ===== NUESTRA CARTA ===== */}
-<section className="w-full flex flex-col items-center bg-white px-4" style={{ paddingBottom: '96px' }}>
+<section className="w-full flex flex-col items-center bg-white px-4" style={{ paddingBottom: '490px' }}>
   <h2
     className="text-center mb-10"
     style={{
@@ -67,27 +69,34 @@ export default function Home() {
       color: '#411F10',
       letterSpacing: '0.25em',
       lineHeight: '120%',
+      marginBottom: '66px'
     }}
   >
     {t('home.nuestra_carta_title')}
   </h2>
-  <div className="flex flex-col items-center gap-4">
-    <Link
-      to="/carta"
-      state={{ openCategory: 'vinos_por_copa' }}
-      className="hover:opacity-70 transition-opacity flex items-center gap-1"
-      style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-    >
-      {t('home.vinos_por_copa')} <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
-    </Link>
-    <Link
-      to="/carta"
-      className="hover:opacity-70 transition-opacity flex items-center gap-1"
-      style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-    >
-      {t('home.carta_completa')} <span style={{ display: 'inline-block', transform: 'rotate(-45deg)' }}>↑</span>
-    </Link>
-  </div>
+<div className="flex flex-col items-center" style={{ gap: '44px' }}>
+  <Link
+    to="/carta"
+    state={{ openCategory: 'vinos_por_copa' }}
+    className="hover:opacity-70 transition-opacity flex items-center gap-1"
+    style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'none' }}
+  >
+    <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+      {t('home.vinos_por_copa')}
+    </span>
+    <span style={{ display: 'inline-block', transform: 'rotate(45deg)' }}>↑</span>
+  </Link>
+  <Link
+    to="/carta"
+    className="hover:opacity-70 transition-opacity flex items-center gap-1"
+    style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'none' }}
+  >
+    <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+      {t('home.carta_completa')}
+    </span>
+    <span style={{ display: 'inline-block', transform: 'rotate(45deg)' }}>↑</span>
+  </Link>
+</div>
 </section>
 
 {/* ===== MAPA ===== */}

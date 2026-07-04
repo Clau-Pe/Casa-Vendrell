@@ -95,7 +95,7 @@ const NAV_LINKS = [
         <Link to="/" className="mt-1">
         <img
         src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
-        alt="Casa Vèndrell"
+        alt="Casa Vendrell"
         style={{ height: '16px', marginTop: '28px'}}
         />
         </Link>
@@ -170,7 +170,7 @@ const NAV_LINKS = [
   <Link to="/">
     <img
       src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
-      alt="Casa Vèndrell"
+      alt="Casa Vendrell"
       style={{ height: '16px' }}
     />
   </Link>
@@ -284,7 +284,8 @@ const NAV_LINKS = [
     fontSize: '13px',
     fontWeight: '600',
     color: '#D9D9D9',
-    letterSpacing: '0.05em',
+    letterSpacing: '0.25em',
+    whiteSpace: 'nowrap', 
   }}
   className="hover:text-white transition-colors"
 >
@@ -295,7 +296,7 @@ const NAV_LINKS = [
           fontSize: '13px',
           fontWeight: '600',
           color: '#D9D9D9',
-          letterSpacing: '0.05em',
+          letterSpacing: '0.25em',
         }}
       >
       {t('hero.schedule')}
@@ -308,7 +309,7 @@ const NAV_LINKS = [
           fontSize: '13px',
           fontWeight: '600',
           color: '#D9D9D9',
-          letterSpacing: '0.05em',
+          letterSpacing: '0.25em',
           marginTop: '8px',
         }}
       >
