@@ -8,7 +8,7 @@ import { supabase } from '../../lib/supabase'
 import { translateProduct } from '../../utils/translate'
 import { translateText } from '../../utils/translate'
 
-type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'
+type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'| 'perfil'
 
 export default function AdminIndex() {
   const navigate = useNavigate()
@@ -72,7 +72,7 @@ const tabStyle = (active: boolean) => ({
   fontFamily: 'Nunito Sans, sans-serif',
   fontSize: '12px',
   fontWeight: '400' as const,
-  color: active ? '#C65427' : '#9A8878',
+  color: active ? '#C65427' : '#333333',
   letterSpacing: '0.2em',
   textTransform: 'uppercase' as const,
   paddingBottom: '8px',
@@ -134,14 +134,14 @@ const handleToggleBottle = async (id: number, current: boolean) => {
             PANEL DE ADMINISTRACIÓN
           </p>
           <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '300', color: 'rgba(217,217,217,0.6)', letterSpacing: '0.15em', marginTop: '2px' }}>
-            CASA VÈNDRELL — {adminNombre}
+            CASA VENDRELL — {adminNombre}
           </p>
         </div>
         <div className="flex items-center gap-6">
-          <Link to="/" style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', color: 'rgba(217,217,217,0.5)', letterSpacing: '0.15em', textDecoration: 'none' }} className="hover:opacity-70 transition-opacity">
+          <Link to="/" style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', color: '#411F10', letterSpacing: '0.15em', textDecoration: 'none' }} className="hover:opacity-70 transition-opacity">
             ← Web
           </Link>
-          <button onClick={handleLogout} style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', color: 'rgba(217,217,217,0.5)', letterSpacing: '0.15em', background: 'none', border: 'none', cursor: 'pointer' }} className="hover:opacity-70 transition-opacity">
+          <button onClick={handleLogout} style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', color: '#411F10', letterSpacing: '0.15em', background: 'none', border: 'none', cursor: 'pointer' }} className="hover:opacity-70 transition-opacity">
             Cerrar sesión
           </button>
         </div>
@@ -164,6 +164,9 @@ const handleToggleBottle = async (id: number, current: boolean) => {
     <button style={tabStyle(tab === 'añadir')} onClick={() => setTab('añadir')}>+ AÑADIR</button>
     <button style={tabStyle(tab === 'categorias')} onClick={() => setTab('categorias')}>+ SECCIÓN</button>
     <button style={tabStyle(tab === 'traducciones')} onClick={() => setTab('traducciones')}>TRADUCCIONES</button>
+    <button style={tabStyle(tab === 'perfil')} onClick={() => setTab('perfil')}>
+    PERFIL
+    </button>
   </div>
 
         {/* ===== TAB PRODUCTOS ===== */}
@@ -475,6 +478,10 @@ const handleToggleBottle = async (id: number, current: boolean) => {
   </div>
 )}
 
+{/* ===== TAB PERFIL ===== */}
+{tab === 'perfil' && (
+  <PerfilForm />
+)}
         {/* ===== TAB TRADUCCIONES ===== */}
         {tab === 'traducciones' && (
           <div className="flex flex-col items-center justify-center py-20">
@@ -821,6 +828,118 @@ function AddCategoryForm({
 >
   {loading ? 'TRADUCIENDO...' : saving ? 'GUARDANDO...' : 'CREAR SECCIÓN'}
 </button>
+      </div>
+    </div>   
+  )
+}
+
+function PerfilForm() {
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'mismatch'>('idle')
+  const [loading, setLoading] = useState(false)
+
+  const inputStyle = {
+    width: '100%', padding: '10px 14px',
+    fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px',
+    color: '#333333', border: '1px solid #D9D9D9',
+    backgroundColor: '#FFFFFF', outline: 'none',
+    boxSizing: 'border-box' as const,
+  }
+
+  const labelStyle = {
+    fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px',
+    fontWeight: '600' as const, color: '#9A8878',
+    letterSpacing: '0.25em', textTransform: 'uppercase' as const,
+    display: 'block', marginBottom: '6px',
+  }
+
+  const handleChangePassword = async () => {
+    if (!newPassword || !confirmPassword) return
+    if (newPassword !== confirmPassword) {
+      setStatus('mismatch')
+      return
+    }
+    if (newPassword.length < 6) {
+      setStatus('error')
+      return
+    }
+
+    setLoading(true)
+    const { error } = await supabase.auth.updateUser({ password: newPassword })
+    setLoading(false)
+
+    if (error) {
+      setStatus('error')
+    } else {
+      setStatus('success')
+      setNewPassword('')
+      setConfirmPassword('')
+    }
+  }
+
+  return (
+    <div>
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.1em', marginBottom: '24px' }}>
+        Cambia tu contraseña de acceso al panel.
+      </p>
+
+      <div className="flex flex-col" style={{ gap: '20px', maxWidth: '400px' }}>
+
+        <div>
+          <span style={labelStyle}>Nueva contraseña</span>
+          <input
+            type="password"
+            value={newPassword}
+            onChange={e => { setNewPassword(e.target.value); setStatus('idle') }}
+            placeholder="Mínimo 6 caracteres"
+            style={inputStyle}
+          />
+        </div>
+
+        <div>
+          <span style={labelStyle}>Confirmar contraseña</span>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={e => { setConfirmPassword(e.target.value); setStatus('idle') }}
+            placeholder="Repite la contraseña"
+            style={inputStyle}
+          />
+        </div>
+
+        {status === 'mismatch' && (
+          <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#C65427', letterSpacing: '0.1em' }}>
+            Las contraseñas no coinciden.
+          </p>
+        )}
+        {status === 'error' && (
+          <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#C65427', letterSpacing: '0.1em' }}>
+            Error al cambiar la contraseña. Mínimo 6 caracteres.
+          </p>
+        )}
+        {status === 'success' && (
+          <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#C65427', letterSpacing: '0.1em' }}>
+            ✓ Contraseña actualizada correctamente.
+          </p>
+        )}
+
+        <button
+          onClick={handleChangePassword}
+          disabled={loading}
+          style={{
+            padding: '14px',
+            fontFamily: 'Nunito Sans, sans-serif',
+            fontSize: '13px', fontWeight: '600',
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            border: 'none',
+            backgroundColor: loading ? '#9A8878' : '#C65427',
+            color: '#FFFFFF',
+            cursor: loading ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {loading ? 'GUARDANDO...' : 'CAMBIAR CONTRASEÑA'}
+        </button>
       </div>
     </div>
   )

@@ -244,6 +244,7 @@ if (view === 'index') {
     placeholder={t('carta.buscar_placeholder')}
   />
 </div>
+
 <div className="w-full flex flex-col items-center">
   {searchQuery ? (
     // Vista búsqueda global
@@ -273,10 +274,12 @@ if (view === 'index') {
               }}>
                 <div className="flex justify-between gap-4">
                   <span style={{
-                    fontFamily: 'Playfair Display, serif',
+                   fontFamily: 'Nunito Sans, sans-serif',
                     fontSize: '14px',
                     fontWeight: '700',
-                    color: '#1A1A1A',
+                    color: '#411F10',
+                    lineHeight: '120%',
+                    letterSpacing: '0.01em',
                     flex: 1,
                   }}>
                     {getItemName(item)}
@@ -293,10 +296,13 @@ if (view === 'index') {
                 </div>
                 {item.vintage_cellar_do && (
                   <p style={{
-                    fontFamily: 'Playfair Display, serif',
-                    fontSize: '11px',
-                    color: '#9A8878',
-                    marginTop: '2px',
+                    fontFamily: 'Nunito Sans, sans-serif',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      color: '#000000',
+                      lineHeight: '120%',
+                      letterSpacing: '0.01em',
+                      marginTop: '3px',
                   }}>
                     {item.vintage_cellar_do}
                   </p>
@@ -316,15 +322,16 @@ if (view === 'index') {
             onClick={() => handleCategoryClick(cat.id)}
             className="w-full text-center transition-opacity hover:opacity-60"
             style={{
-              fontFamily: 'Nunito Sans, sans-serif',
-              fontSize: '13px',
-              fontWeight: '600',
-              color: '#333333',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              padding: 'clamp(14px, 3vw, 18px) 0',
-              borderBottom: '1px dashed rgba(0,0,0,0.15)',
-              width: '100%',
+             fontFamily: 'Nunito Sans, sans-serif',
+             fontSize: '14px',
+            fontWeight: '600',
+            color: '#411F10',
+            letterSpacing: '0.25em',
+            lineHeight: '120%',
+             textTransform: 'uppercase',
+             padding: 'clamp(14px, 3vw, 18px) 0',
+            borderBottom: '1px dashed rgba(0,0,0,0.15)',
+             width: '100%',
             }}
           >
             {getCategoryName(cat)}
@@ -336,10 +343,11 @@ if (view === 'index') {
               className="w-full flex items-center justify-center gap-3 transition-opacity hover:opacity-60"
               style={{
                 fontFamily: 'Nunito Sans, sans-serif',
-                fontSize: '13px',
+                fontSize: '14px',
                 fontWeight: '600',
-                color: '#333333',
-                letterSpacing: '0.15em',
+                color: '#411F10',
+                letterSpacing: '0.25em',
+                lineHeight: '120%',
                 textTransform: 'uppercase',
                 padding: 'clamp(14px, 3vw, 18px) 0',
                 borderBottom: '1px dashed rgba(0,0,0,0.15)',
@@ -380,11 +388,11 @@ if (view === 'index') {
 
           {/* VOLVER */}
           <button
-  onClick={() => {
-    setView('index')
-    setActiveCategory('')
-    setSearchParams({})
-  }}
+          onClick={() => {
+          setView('index')
+          setActiveCategory('')
+           setSearchParams({})
+          }}
             aria-label="Volver al índice"
             style={{ fontSize: '22px', color: '#6A6A6A', justifySelf: 'start'}}
           >
@@ -431,9 +439,17 @@ if (view === 'index') {
     <div style={{ height: '28px' }} />
           )}
 
-  {/* DERECHA — vacío */}
-  <div /> 
-        </div>
+  {/* LUPA — derecha, misma altura que la flecha */}
+  <div style={{ justifySelf: 'end' }}>
+    <SearchBar
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      searchOpen={searchOpen}
+      setSearchOpen={setSearchOpen}
+      placeholder={t('carta.buscar_placeholder')}
+    />
+  </div>
+  </div>
 
         {/* ===== VINOS POR COPA — agrupado por categoría ===== */}
         {isVinosPorCopa ? (
@@ -498,11 +514,12 @@ if (view === 'index') {
                       >
                         <div className="flex items-start justify-between gap-4">
                           <span style={{
-                            fontFamily: 'Playfair Display, serif',
-                            fontSize: '15px',
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '14px',
                             fontWeight: '700',
-                            color: '#1A1A1A',
-                            lineHeight: '140%',
+                            color: '#411F10',
+                            lineHeight: '120%',
+                            letterSpacing: '0.01em',
                             flex: 1,
                           }}>
                             {getItemName(item)}
@@ -510,31 +527,39 @@ if (view === 'index') {
                           <span style={{
                             width: '56px',
                             textAlign: 'center',
-                            fontFamily: 'Playfair Display, serif',
-                            fontSize: '14px',
-                            color: '#1A1A1A',
-                            flexShrink: 0,
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            color: '#411F10',
+                            lineHeight: '120%',
+                            letterSpacing: '0.01em',
+                            display: 'block',
                           }}>
                             {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
                           </span>
                         </div>
                         {item.vintage_cellar_do && (
                           <p style={{
-                            fontFamily: 'Playfair Display, serif',
-                            fontSize: '12px',
-                            color: '#9A8878',
-                            marginTop: '3px',
+                              fontFamily: 'Nunito Sans, sans-serif',
+                              fontSize: '12px',
+                              fontWeight: '400',
+                              color: '#000000',
+                              lineHeight: '120%',
+                              letterSpacing: '0.01em',
+                              marginTop: '3px',
                           }}>
                             {item.vintage_cellar_do}
                           </p>
                         )}
                         {getItemDescription(item) && (
                           <p style={{
-                            fontFamily: 'Playfair Display, serif',
-                            fontSize: '12px',
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '11px',
+                            fontWeight: '400',
                             fontStyle: 'italic',
-                            color: '#9A8878',
-                            lineHeight: '160%',
+                            color: '#333333',
+                            lineHeight: '120%',
+                            letterSpacing: '0em',
                             marginTop: '6px',
                           }}>
                             {getItemDescription(item)}
@@ -573,7 +598,7 @@ if (view === 'index') {
                 {currentTitle}
               </h2>
 
-         {/* Iconos + lupa derecha */}
+         {/* Iconos */}
   <div className="flex items-center shrink-0" style={{ gap: '8px' }}>
     {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
       <div
@@ -601,13 +626,6 @@ if (view === 'index') {
           style={{ height: '24px', objectFit: 'contain' }} />
       </div>
     )}
-    <SearchBar
-      searchQuery={searchQuery}
-      setSearchQuery={setSearchQuery}
-      searchOpen={searchOpen}
-      setSearchOpen={setSearchOpen}
-      placeholder={t('carta.buscar_placeholder')}
-    />
   </div>
 </div>
 
@@ -641,9 +659,15 @@ if (view === 'index') {
                     {/* Copa */}
                     {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
                       <span style={{
-                        width: '56px', textAlign: 'center',
-                        fontFamily: 'Playfair Display, serif',
-                        fontSize: '14px', color: '#1A1A1A', display: 'block',
+                        width: '56px',
+                            textAlign: 'center',
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            color: '#411F10',
+                            lineHeight: '120%',
+                            letterSpacing: '0.01em',
+                            display: 'block',
                       }}>
                         {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
                       </span>
@@ -651,9 +675,14 @@ if (view === 'index') {
                     {/* Botella */}
                     {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
                       <span style={{
-                        width: '56px', textAlign: 'center',
-                        fontFamily: 'Playfair Display, serif',
-                        fontSize: '14px', color: '#1A1A1A', display: 'block',
+                        textAlign: 'center',
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            color: '#411F10',
+                            lineHeight: '120%',
+                            letterSpacing: '0.01em',
+                            display: 'block',
                       }}>
                         {item.price_bottle !== null ? formatPrice(item.price_bottle) : ''}
                       </span>
@@ -661,8 +690,14 @@ if (view === 'index') {
                     {/* Precio único */}
                     {!showCopa && !showBottle && (
                       <span style={{
-                        fontFamily: 'Playfair Display, serif',
-                        fontSize: '14px', color: '#1A1A1A',
+                            textAlign: 'center',
+                            fontFamily: 'Nunito Sans, sans-serif',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            color: '#411F10',
+                            lineHeight: '120%',
+                            letterSpacing: '0.01em',
+                            display: 'block',
                       }}>
                         {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
                       </span>
@@ -672,9 +707,13 @@ if (view === 'index') {
 
                 {item.vintage_cellar_do && (
                   <p style={{
-                    fontFamily: 'Playfair Display, serif',
-                    fontSize: '12px', color: '#9A8878',
-                    marginTop: '3px', lineHeight: '150%',
+                      fontFamily: 'Nunito Sans, sans-serif',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      color: '#000000',
+                      lineHeight: '120%',
+                      letterSpacing: '0.01em',
+                      marginTop: '3px',
                   }}>
                     {item.vintage_cellar_do}
                   </p>
@@ -682,9 +721,14 @@ if (view === 'index') {
 
                 {getItemDescription(item) && (
                   <p style={{
-                    fontFamily: 'Playfair Display, serif',
-                    fontSize: '12px', fontStyle: 'italic',
-                    color: '#9A8878', lineHeight: '160%', marginTop: '8px',
+                    fontFamily: 'Nunito Sans, sans-serif',
+                    fontSize: '11px',
+                    fontWeight: '400',
+                    fontStyle: 'italic',
+                    color: '#333333',
+                    lineHeight: '120%',
+                    letterSpacing: '0em',
+                    marginTop: '6px',
                   }}>
                     {getItemDescription(item)}
                   </p>

@@ -1,29 +1,35 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
-const ADMINS = [
-  { nombre: 'Admin 1', usuario: 'admin1', password: 'casavendrell2026' },
-  { nombre: 'Admin 2', usuario: 'admin2', password: 'vendrell2026' },
-]
+import { supabase } from '../../lib/supabase'
 
 export default function Login() {
-  const [usuario, setUsuario] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleLogin = () => {
-    const admin = ADMINS.find(
-      a => a.usuario === usuario && a.password === password
-    )
-    if (admin) {
-      localStorage.setItem('admin_auth', 'true')
-      localStorage.setItem('admin_nombre', admin.nombre)
-      navigate('/admin')
-    } else {
+  const handleLogin = async () => {
+    if (!email || !password) return
+    setLoading(true)
+    setError(false)
+
+    const { data, error: authError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    setLoading(false)
+
+    if (authError || !data.user) {
       setError(true)
       setPassword('')
+      return
     }
+
+    localStorage.setItem('admin_auth', 'true')
+    localStorage.setItem('admin_nombre', data.user.email ?? 'Admin')
+    navigate('/admin')
   }
 
   const inputStyle = {
@@ -57,47 +63,26 @@ export default function Login() {
       className="min-h-screen w-full flex flex-col items-center justify-center"
       style={{ backgroundColor: '#411F10' }}
     >
-      {/* LOGO È */}
-      <img
-        src="/images/hero/E.png"
-        alt="È"
-        style={{
-          height: '80px',
-          objectFit: 'contain',
-          marginBottom: '16px',
-        }}
-      />
+      <img src="/images/hero/E.png" alt="È" style={{ height: '80px', objectFit: 'contain', marginBottom: '16px' }} />
 
-      {/* ADMINISTRACIÓN */}
-      <p style={{
-        fontFamily: 'Nunito Sans, sans-serif',
-        fontSize: '12px',
-        fontWeight: '300',
-        color: '#C65427',
-        letterSpacing: '0.4em',
-        textTransform: 'uppercase',
-        marginBottom: '40px',
-      }}>
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', fontWeight: '300', color: '#C65427', letterSpacing: '0.4em', textTransform: 'uppercase', marginBottom: '40px' }}>
         ADMINISTRACIÓN
       </p>
 
-            {/* FORMULARIO */}
       <div style={{ width: '280px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
-        {/* USUARIO */}
         <div>
-          <span style={labelStyle}>USUARIO</span>
+          <span style={labelStyle}>EMAIL</span>
           <input
-            type="text"
-            value={usuario}
-            onChange={e => { setUsuario(e.target.value); setError(false) }}
+            type="email"
+            value={email}
+            onChange={e => { setEmail(e.target.value); setError(false) }}
             onKeyDown={e => e.key === 'Enter' && handleLogin()}
             style={inputStyle}
             autoFocus
           />
         </div>
 
-        {/* CONTRASEÑA */}
         <div>
           <span style={labelStyle}>CONTRASEÑA</span>
           <input
@@ -110,53 +95,22 @@ export default function Login() {
         </div>
 
         {error && (
-          <p style={{
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '10px',
-            color: '#C65427',
-            letterSpacing: '0.2em',
-            textAlign: 'center',
-          }}>
-            USUARIO O CONTRASEÑA INCORRECTOS
+          <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', color: '#C65427', letterSpacing: '0.2em', textAlign: 'center' }}>
+            EMAIL O CONTRASEÑA INCORRECTOS
           </p>
         )}
 
-        {/* ACCEDER */}
         <button
           onClick={handleLogin}
+          disabled={loading}
           className="w-full hover:opacity-90 transition-opacity"
-          style={{
-            backgroundColor: '#C65427',
-            color: '#FFFFFF',
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '13px',
-            fontWeight: '600',
-            letterSpacing: '0.3em',
-            textTransform: 'uppercase',
-            padding: '14px',
-            border: 'none',
-            cursor: 'pointer',
-            width: '100%',
-            marginTop: '4px',
-          }}
+          style={{ backgroundColor: loading ? '#9A8878' : '#C65427', color: '#FFFFFF', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.3em', textTransform: 'uppercase', padding: '14px', border: 'none', cursor: loading ? 'not-allowed' : 'pointer', width: '100%', marginTop: '4px' }}
         >
-          ACCEDER
+          {loading ? 'ACCEDIENDO...' : 'ACCEDER'}
         </button>
 
-        {/* VOLVER */}
         <div className="flex justify-center mt-2">
-          <Link
-            to="/"
-            style={{
-              fontFamily: 'Nunito Sans, sans-serif',
-              fontSize: '11px',
-              fontWeight: '300',
-              color: 'rgba(217,217,217,0.4)',
-              letterSpacing: '0.2em',
-              textDecoration: 'none',
-            }}
-            className="hover:opacity-70 transition-opacity"
-          >
+          <Link to="/" style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '300', color: 'rgba(217,217,217,0.4)', letterSpacing: '0.2em', textDecoration: 'none' }} className="hover:opacity-70 transition-opacity">
             ← Volver a la web
           </Link>
         </div>
