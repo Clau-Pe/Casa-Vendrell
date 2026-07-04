@@ -234,26 +234,16 @@ if (view === 'index') {
         style={{ maxWidth: '480px', padding: '0 24px', margin: '0 auto' }}
       >
         {/* TÍTULO + LUPA */}
-        <div className="w-full flex items-center justify-between" style={{ marginTop: '32px', marginBottom: '24px' }}>
-          <div style={{ width: '26px' }} />
-          <p style={{
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '11px',
-            fontWeight: '300',
-            color: '#6A6A6A',
-            letterSpacing: '0.4em',
-            textTransform: 'uppercase',
-          }}>
-           {t('carta.titulo')}
-          </p>
-          <SearchBar
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            searchOpen={searchOpen}
-            setSearchOpen={setSearchOpen}
-            placeholder={t('carta.buscar_placeholder')} 
-          />
-        </div>
+        {/* LUPA */}
+<div className="w-full flex items-center justify-end" style={{ marginTop: '32px', marginBottom: '24px' }}>
+  <SearchBar
+    searchQuery={searchQuery}
+    setSearchQuery={setSearchQuery}
+    searchOpen={searchOpen}
+    setSearchOpen={setSearchOpen}
+    placeholder={t('carta.buscar_placeholder')}
+  />
+</div>
 <div className="w-full flex flex-col items-center">
   {searchQuery ? (
     // Vista búsqueda global

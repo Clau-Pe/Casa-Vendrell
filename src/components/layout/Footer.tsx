@@ -2,71 +2,107 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 export default function Footer() {
-   const { t } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <footer style={{ backgroundColor: '#411F10' }} className="w-full">
 
       {/* CONTENIDO PRINCIPAL */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-8 px-6 md:px-16 py-12">
+      <div style={{ maxWidth: '930px', margin: '0 auto', padding: '72px 24px 56px 24px' }}>
 
-        {/* COLUMNA 1 — Logo + Contacto */}
-        <div className="flex flex-col gap-4">
+        {/* LOGO */}
+        <div style={{ marginBottom: '40px' }}>
           <img src="/images/hero/Nom-log.png" alt="Casa Vèndrell" className="h-5 object-contain object-left" />
-          <p style={{ fontSize: '14px', fontWeight: '400', color: '#D9D9D9', letterSpacing: '0.25em', lineHeight: '160%', marginTop: '16px' }}>
-            {t('footer.contacto')}
-          </p>
-          <div className="flex flex-col gap-1">
-            <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z" target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%' }} className="hover:text-white transition-colors">Diputació 110. 08015 Barcelona</a>
-            <a href="tel:+34634938879" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%' }} className="hover:text-white transition-colors">+34 634 938 879</a>
-            <a href="mailto:reservas.casavendrell@gmail.com" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%' }} className="hover:text-white transition-colors">info@casavendrell.com</a>
-          </div>
         </div>
 
-        {/* COLUMNA 2 — vacía en desktop, oculta en móvil */}
-        <div className="hidden md:block" />
+        {/* COLUMNAS — apiladas en móvil, en fila en desktop */}
+        <div className="flex flex-col md:flex-row md:justify-between items-start gap-10 md:gap-0">
 
-        {/* COLUMNA 3 — Síguenos */}
-        <div className="flex flex-col gap-4">
-          <p style={{ fontSize: '14px', fontWeight: '400', color: '#D9D9D9', letterSpacing: '0.25em', lineHeight: '160%' }}>{t('footer.siguenos')}</p>
-          <div className="flex flex-col gap-1">
-            <a href="https://www.instagram.com/casavendrell/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%', textDecoration: 'underline' }} className="hover:text-white transition-colors">Instagram</a>
-            <a href="https://www.facebook.com/profile.php?id=61581610967847" target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%', textDecoration: 'underline' }} className="hover:text-white transition-colors">Facebook</a>
-            <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z" target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '160%', textDecoration: 'underline' }} className="hover:text-white transition-colors">Google Maps</a>
-          </div>
-        </div>
-
-         {/* COLUMNA 4 — Nav */}
-        <div className="flex flex-col gap-4">
-          <p style={{ fontSize: '14px', fontWeight: '400', color: '#D9D9D9', letterSpacing: '0.25em', lineHeight: '160%' }}>
-            {t('footer.el_bar')}
-          </p>
-          <div className="flex flex-col gap-1">
-            <Link to="/contacto" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', lineHeight: '160%' }} className="hover:text-white transition-colors">
-              {t('footer.consultoria')}
-            </Link>
-            <Link to="/carta" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', lineHeight: '160%' }} className="hover:text-white transition-colors">
-              {t('footer.nuestra_carta')}
-            </Link>
-            <a href="https://wa.me/34634938879" target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.1em', lineHeight: '160%' }} className="hover:text-white transition-colors">
-              {t('footer.reservas')}
+          {/* IZQUIERDA — Contacto */}
+          <div className="flex flex-col gap-2">
+            <p style={{ fontSize: '13px', color: '#D9D9D9', letterSpacing: '0.2em', lineHeight: '160%', marginBottom: '8px' }}>
+              {t('footer.contacto')}
+            </p>
+            <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z"
+              target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%' }}
+              className="hover:text-white transition-colors">
+              Diputació 110. 08015 Barcelona
             </a>
+            <a href="tel:+34634938879"
+              style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%' }}
+              className="hover:text-white transition-colors">
+              +34 634 938 879
+            </a>
+            <a href="mailto:info@casavendrell.com"
+              style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%' }}
+              className="hover:text-white transition-colors">
+              info@casavendrell.com
+            </a>
+          </div>
+
+          {/* DERECHA — Síguenos + El Bar */}
+          <div className="flex gap-16">
+
+            {/* Síguenos */}
+            <div className="flex flex-col gap-2">
+              <p style={{ fontSize: '13px', color: '#D9D9D9', letterSpacing: '0.2em', lineHeight: '160%', marginBottom: '8px' }}>
+                {t('footer.siguenos')}
+              </p>
+              <a href="https://www.instagram.com/casavendrell/" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%', textDecoration: 'underline' }}
+                className="hover:text-white transition-colors">Instagram</a>
+              <a href="https://www.facebook.com/profile.php?id=61581610967847" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%', textDecoration: 'underline' }}
+                className="hover:text-white transition-colors">Facebook</a>
+              <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', lineHeight: '180%', textDecoration: 'underline' }}
+                className="hover:text-white transition-colors">Google Maps</a>
+            </div>
+
+            {/* El Bar */}
+            <div className="flex flex-col gap-2">
+              <a
+                href="/"
+                style={{ fontSize: '14px', color: '#D9D9D9', letterSpacing: '0.2em', lineHeight: '180%', textDecoration: 'none' }}>
+                {t('footer.el_bar')}
+              </a>
+              <a
+                href="/#consultoria"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.2em', lineHeight: '180%' }}
+                className="hover:text-white transition-colors">
+                {t('footer.consultoria')}
+              </a>
+              <Link to="/carta"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.2em', lineHeight: '180%' }}
+                className="hover:text-white transition-colors">
+                {t('footer.nuestra_carta')}
+              </Link>
+              <a href="https://wa.me/34634938879" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.2em', lineHeight: '180%' }}
+                className="hover:text-white transition-colors">
+                {t('footer.reservas')}
+              </a>
+            </div>
+
           </div>
         </div>
       </div>
 
-      {/* SEPARADOR */}
-      <div style={{ borderTop: '1px solid rgba(217,217,217,0.2)', margin: '0 24px' }} className="md:mx-16" />
+      {/* SEPARADOR — ancho completo */}
+      <div style={{ borderTop: '1px solid rgba(217,217,217,0.2)' }} />
 
       {/* COPYRIGHT */}
-      <div className="flex items-center justify-between px-6 md:px-16 py-4">
-        <p style={{ fontSize: '14px', fontWeight: '500', color: 'rgba(217,217,217,0.7)', lineHeight: '160%' }}>
+      <div style={{ maxWidth: '930px', margin: '0 auto', padding: '20px 24px' }}
+        className="flex items-center justify-between">
+        <p style={{ fontSize: '13px', color: 'rgba(217,217,217,0.6)', lineHeight: '160%' }}>
           {t('footer.rights')}
         </p>
         <Link to="/admin/login" title="Administración" className="hover:opacity-100 transition-opacity">
           <img src="/images/hero/Icon-Admin.png" alt="Administración" style={{ width: '26px', height: '26px' }} />
         </Link>
       </div>
+
     </footer>
   )
 }
