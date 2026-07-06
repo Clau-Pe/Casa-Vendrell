@@ -19,7 +19,7 @@ export default function Login() {
       password,
     })
 
-    setLoading(false)
+   
 
     if (authError || !data.user) {
       setError(true)
@@ -35,6 +35,8 @@ await supabase.from('activity_log').insert({
   entidad: 'session',
   detalle: { email: data.user.email, timestamp: new Date().toISOString() }
 })
+
+ setLoading(false)
 
     localStorage.setItem('admin_auth', 'true')
     localStorage.setItem('admin_nombre', data.user.email ?? 'Admin')
