@@ -259,6 +259,7 @@ export type MenuItem = {
   name_ca: string | null
   name_en: string | null
   name_fr: string | null
+  year: string | null
   vintage_cellar_do: string | null
   description_es: string | null
   description_ca: string | null

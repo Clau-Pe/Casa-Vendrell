@@ -23,20 +23,21 @@ export default function AdminIndex() {
   useEffect(() => {
     let cancelled = false
     async function checkAuth() {
-      const auth = localStorage.getItem('admin_auth')
-      if (!auth) { navigate('/admin/login'); return }
-      const nombre = localStorage.getItem('admin_nombre') ?? ''
-      if (!cancelled) setAdminNombre(nombre)
+      const { data: { user } } = await supabase.auth.getUser()
+    if (!user) { navigate('/admin/login'); return }
+    const nombre = user.email?.split('@')[0] ?? 'Admin'
+    if (!cancelled) setAdminNombre(nombre)
     }
     checkAuth()
     return () => { cancelled = true }
   }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem('admin_auth')
-    localStorage.removeItem('admin_nombre')
-    navigate('/admin/login')
-  }
+  const handleLogout = async () => {
+  await supabase.auth.signOut()
+  localStorage.removeItem('admin_auth')
+  localStorage.removeItem('admin_nombre')
+  navigate('/admin/login')
+}
 
   const allItems = categories.flatMap(cat =>
     cat.items.map(item => ({ ...item, categoryName: cat.name_es, categoryId: cat.id }))
@@ -514,12 +515,30 @@ function AddEditForm({
   const [form, setForm] = useState({
     category_id: editingItem?.category_id ?? categories[0]?.id ?? '',
     name_es: editingItem?.name_es ?? '',
+    year: editingItem?.year ?? '',
     vintage_cellar_do: editingItem?.vintage_cellar_do ?? '',
     description_es: editingItem?.description_es ?? '',
     price_copa: editingItem?.price_copa?.toString() ?? '',
     price_bottle: editingItem?.price_bottle?.toString() ?? '',
     available: editingItem?.available ?? true,
   })
+
+  const handleSaveOnly = async () => {
+  if (!form.name_es || !form.category_id) return
+  await onSave({
+    category_id: form.category_id,
+    name_es: form.name_es,
+    year: form.year || null,
+    vintage_cellar_do: form.vintage_cellar_do || null,
+    description_es: form.description_es || null,
+    price_copa: form.price_copa ? parseFloat(form.price_copa) : null,
+    price_bottle: form.price_bottle ? parseFloat(form.price_bottle) : null,
+    available: form.available,
+    copa_available: true,
+    bottle_available: true,
+    sort_order: 0,
+  })
+}
 
   const inputStyle = {
     width: '100%', padding: '10px 14px',
@@ -560,6 +579,7 @@ setTranslating(true)
     name_ca: translations.name_ca,
     name_en: translations.name_en,
     name_fr: translations.name_fr,
+    year: form.year || null,
     vintage_cellar_do: form.vintage_cellar_do || null,
     description_es: form.description_es || null,
     description_ca: translations.description_ca,
@@ -598,11 +618,29 @@ setTranslating(true)
           <input type="text" value={form.name_es} onChange={e => setForm({ ...form, name_es: e.target.value })} placeholder="Ej: El Veïnat" style={inputStyle} />
         </div>
 
-        {/* AÑADA */}
-        <div>
-          <span style={labelStyle}>Añada · Bodega · D.O.</span>
-          <input type="text" value={form.vintage_cellar_do} onChange={e => setForm({ ...form, vintage_cellar_do: e.target.value })} placeholder="Ej: 2023 · Viñedos Singulares · Montsant" style={inputStyle} />
-        </div>
+        {/* AÑO */}
+<div>
+  <span style={labelStyle}>Año</span>
+  <input
+    type="text"
+    value={form.year}
+    onChange={e => setForm({ ...form, year: e.target.value })}
+    placeholder="Ej: 2023"
+    style={inputStyle}
+  />
+</div>
+
+{/* BODEGA · D.O. */}
+<div>
+  <span style={labelStyle}>Bodega · D.O.</span>
+  <input
+    type="text"
+    value={form.vintage_cellar_do}
+    onChange={e => setForm({ ...form, vintage_cellar_do: e.target.value })}
+    placeholder="Ej: Viñedos Singulares · Montsant"
+    style={inputStyle}
+  />
+</div>
 
         {/* DESCRIPCIÓN */}
         <div>
@@ -643,31 +681,29 @@ setTranslating(true)
           </span>
         </div>
 
-        {/* BOTONES */}
-        <div className="flex gap-4">
-          <button
-            onClick={onCancel}
-            style={{ flex: 1, padding: '14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid #D9D9D9', backgroundColor: 'transparent', color: '#6A6A6A', cursor: 'pointer' }}
-          >
-            CANCELAR
-          </button>
-          
-       <button
-  onClick={handleSubmit}
-  disabled={saving || translating || !form.name_es }
-  style={{
-    flex: 2, padding: '14px',
-    fontFamily: 'Nunito Sans, sans-serif',
-    fontSize: '13px', fontWeight: '600',
-    letterSpacing: '0.2em', textTransform: 'uppercase',
-    border: 'none',
-    backgroundColor: saving || translating ? '#9A8878' : '#C65427',
-    color: '#FFFFFF',
-    cursor: saving || translating ? 'not-allowed' : 'pointer',
-  }}
->
-  {translating ? 'TRADUCIENDO...' : saving ? 'GUARDANDO...' : editingItem ? 'GUARDAR CAMBIOS' : 'AÑADIR Y TRADUCIR'}
-</button>
+      {/* BOTONES */}
+<div className="flex gap-4">
+  <button
+    onClick={onCancel}
+    style={{ flex: 1, padding: '14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid #D9D9D9', backgroundColor: 'transparent', color: '#6A6A6A', cursor: 'pointer' }}
+  >
+    CANCELAR
+  </button>
+  <button
+    onClick={handleSaveOnly}
+    disabled={saving}
+    style={{ flex: 1, padding: '14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: saving ? '#9A8878' : '#6A6A6A', color: '#FFFFFF', cursor: saving ? 'not-allowed' : 'pointer' }}
+  >
+    {saving ? 'GUARDANDO...' : 'GUARDAR'}
+  </button>
+  <button
+    onClick={handleSubmit}
+    disabled={saving || translating}
+    style={{ flex: 2, padding: '14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: saving || translating ? '#9A8878' : '#C65427', color: '#FFFFFF', cursor: saving || translating ? 'not-allowed' : 'pointer' }}
+  >
+    {translating ? 'TRADUCIENDO...' : saving ? 'GUARDANDO...' : editingItem ? 'GUARDAR Y TRADUCIR' : 'AÑADIR Y TRADUCIR'}
+  </button>
+</div>
 
 {translated && !saving && (
   <p style={{
@@ -681,9 +717,9 @@ setTranslating(true)
         </div>
       </div>
       
-    </div>
-
     
+
+
   )
 }
 

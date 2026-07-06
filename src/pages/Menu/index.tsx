@@ -24,6 +24,7 @@ const adaptCategory = (cat: CategoryWithItems) => ({
       name_ca: item.name_ca,
       name_en: item.name_en,
       name_fr: item.name_fr,
+      year: item.year,
       vintage_cellar_do: item.vintage_cellar_do,
       description_es: item.description_es,
       description_ca: item.description_ca,
@@ -294,19 +295,32 @@ if (view === 'index') {
                     {item.price_bottle !== null ? formatPrice(item.price_bottle) : ''}
                   </span>
                 </div>
-                {item.vintage_cellar_do && (
-                  <p style={{
-                    fontFamily: 'Nunito Sans, sans-serif',
-                      fontSize: '12px',
-                      fontWeight: '400',
-                      color: '#000000',
-                      lineHeight: '120%',
-                      letterSpacing: '0.01em',
-                      marginTop: '3px',
-                  }}>
-                    {item.vintage_cellar_do}
-                  </p>
-                )}
+                {item.year && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '3px',
+  }}>
+    {item.year}
+  </p>
+)}
+{item.vintage_cellar_do && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '2px',
+  }}>
+    {item.vintage_cellar_do}
+  </p>
+)}
               </div>
             ))}
           </div>
@@ -538,19 +552,32 @@ if (view === 'index') {
                             {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
                           </span>
                         </div>
-                        {item.vintage_cellar_do && (
-                          <p style={{
-                              fontFamily: 'Nunito Sans, sans-serif',
-                              fontSize: '12px',
-                              fontWeight: '400',
-                              color: '#000000',
-                              lineHeight: '120%',
-                              letterSpacing: '0.01em',
-                              marginTop: '3px',
-                          }}>
-                            {item.vintage_cellar_do}
-                          </p>
-                        )}
+                        {item.year && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '3px',
+  }}>
+    {item.year}
+  </p>
+)}
+{item.vintage_cellar_do && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '2px',
+  }}>
+    {item.vintage_cellar_do}
+  </p>
+)}
                         {getItemDescription(item) && (
                           <p style={{
                             fontFamily: 'Nunito Sans, sans-serif',
@@ -705,19 +732,32 @@ if (view === 'index') {
                   </div>
                 </div>
 
-                {item.vintage_cellar_do && (
-                  <p style={{
-                      fontFamily: 'Nunito Sans, sans-serif',
-                      fontSize: '12px',
-                      fontWeight: '400',
-                      color: '#000000',
-                      lineHeight: '120%',
-                      letterSpacing: '0.01em',
-                      marginTop: '3px',
-                  }}>
-                    {item.vintage_cellar_do}
-                  </p>
-                )}
+               {item.year && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '3px',
+  }}>
+    {item.year}
+  </p>
+)}
+{item.vintage_cellar_do && (
+  <p style={{
+    fontFamily: 'Nunito Sans, sans-serif',
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#000000',
+    lineHeight: '120%',
+    letterSpacing: '0.01em',
+    marginTop: '2px',
+  }}>
+    {item.vintage_cellar_do}
+  </p>
+)}
 
                 {getItemDescription(item) && (
                   <p style={{

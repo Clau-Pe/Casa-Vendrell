@@ -14,7 +14,7 @@ export type CategoryDB = {
   name_fr: string | null
   show_price_columns: 'both' | 'copa_only' | 'none'
   sort_order: number
-  available: boolean  // ← AÑADE
+  available: boolean  
   created_at: string
 }
 
@@ -25,6 +25,7 @@ export type MenuItemDB = {
   name_ca: string | null
   name_en: string | null
   name_fr: string | null
+   year: string | null  
   vintage_cellar_do: string | null
   description_es: string | null
   description_ca: string | null

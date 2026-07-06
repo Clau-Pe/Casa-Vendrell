@@ -27,6 +27,15 @@ export default function Login() {
       return
     }
 
+
+    // Registrar inicio de sesión
+await supabase.from('activity_log').insert({
+  admin_nombre: data.user.email?.split('@')[0] ?? 'Admin',
+  accion: 'LOGIN',
+  entidad: 'session',
+  detalle: { email: data.user.email, timestamp: new Date().toISOString() }
+})
+
     localStorage.setItem('admin_auth', 'true')
     localStorage.setItem('admin_nombre', data.user.email ?? 'Admin')
     navigate('/admin')
