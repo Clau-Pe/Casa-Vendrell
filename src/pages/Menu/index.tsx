@@ -177,19 +177,29 @@ const currentItems = isVinosPorCopa
     return items
   }
 
- const sortByPrice = (items: MenuItem[]) => {
+const sortByPrice = (items: MenuItem[]) => {
   return [...items].sort((a, b) => {
-    // Precio de referencia — copa si tiene, si no botella
-    const priceA = a.price_copa ?? a.price_bottle ?? 0
-    const priceB = b.price_copa ?? b.price_bottle ?? 0
+    const copaA = Number(a.price_copa ?? 0)
+    const copaB = Number(b.price_copa ?? 0)
+    const bottleA = Number(a.price_bottle ?? 0)
+    const bottleB = Number(b.price_bottle ?? 0)
 
-    if (priceA !== priceB) return priceA - priceB
+    // Si ambos tienen copa, ordenar por copa
+    if (a.price_copa !== null && b.price_copa !== null) {
+      return copaA - copaB
+    }
 
-    // Si tienen el mismo precio de referencia, copa antes que solo botella
-    if (a.price_copa !== null && b.price_copa === null) return -1
-    if (a.price_copa === null && b.price_copa !== null) return 1
+    // Si solo uno tiene copa, comparar precio copa con precio botella del otro
+    if (a.price_copa !== null && b.price_copa === null) {
+      return bottleA - bottleB // compara botella de A con botella de B
+    }
 
-    return 0
+    if (a.price_copa === null && b.price_copa !== null) {
+      return bottleA - bottleB
+    }
+
+    // Si ninguno tiene copa, ordenar por botella
+    return bottleA - bottleB
   })
 }
 
