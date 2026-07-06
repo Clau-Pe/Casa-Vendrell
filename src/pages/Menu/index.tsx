@@ -645,7 +645,7 @@ if (view === 'index') {
 
                 <div className="flex items-start justify-between gap-4">
                   <span style={{
-                    fontFamily: 'Playfair Display, serif',
+                    fontFamily: 'Nunito Sans, sans-serif',
                     fontSize: '15px',
                     fontWeight: '700',
                     color: '#1A1A1A',
