@@ -19,6 +19,7 @@ export default function AdminIndex() {
   const [searchAdmin, setSearchAdmin] = useState('')
   const { categories, loading, refetch } = useSupabaseMenu()
   const { toggleItem, addItem, updateItem, deleteItem, logActivity, saving, addCategory } = useSupabaseAdmin()
+  const [editingCategory, setEditingCategory] = useState<CategoryWithItems | null>(null)
 
   useEffect(() => {
     let cancelled = false
@@ -410,36 +411,134 @@ const handleToggleBottle = async (id: number, current: boolean) => {
     </p>
     <div className="flex flex-col mb-8" style={{ gap: '2px' }}>
       {categories.map(cat => (
-        <div
-          key={cat.id}
-          className="flex items-center justify-between"
-          style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
-        >
-          <span style={{
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '13px',
-            color: cat.available ? '#1A1A1A' : '#9A8878',
-          }}>
-            {cat.name_es}
-          </span>
-          <div
-            onClick={() => handleToggleCategory(cat.id, cat.available)}
-            style={{
-              width: '40px', height: '22px', borderRadius: '11px',
-              backgroundColor: cat.available ? '#C65427' : '#D9D9D9',
-              position: 'relative', cursor: 'pointer',
-              transition: 'background-color 0.2s',
-            }}
-          >
-            <div style={{
-              width: '18px', height: '18px', borderRadius: '50%',
-              backgroundColor: '#FFFFFF', position: 'absolute', top: '2px',
-              left: cat.available ? '20px' : '2px', transition: 'left 0.2s',
-            }} />
-          </div>
-        </div>
-      ))}
+  <div
+    key={cat.id}
+    className="flex items-center justify-between"
+    style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
+  >
+    <span style={{
+      fontFamily: 'Nunito Sans, sans-serif',
+      fontSize: '13px',
+      color: cat.available ? '#1A1A1A' : '#9A8878',
+      flex: 1,
+    }}>
+      {cat.name_es}
+    </span>
+
+    {/* Botón editar */}
+    <button
+      onClick={() => setEditingCategory(cat)}
+      style={{
+        fontFamily: 'Nunito Sans, sans-serif',
+        fontSize: '11px',
+        fontWeight: '600',
+        color: '#6A6A6A',
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        padding: '6px 12px',
+        border: '1px solid #D9D9D9',
+        backgroundColor: 'transparent',
+        cursor: 'pointer',
+        marginRight: '12px',
+      }}
+    >
+      EDITAR
+    </button>
+
+    {/* Toggle */}
+    <div
+      onClick={() => handleToggleCategory(cat.id, cat.available)}
+      style={{
+        width: '40px', height: '22px', borderRadius: '11px',
+        backgroundColor: cat.available ? '#C65427' : '#D9D9D9',
+        position: 'relative', cursor: 'pointer',
+        transition: 'background-color 0.2s',
+      }}
+    >
+      <div style={{
+        width: '18px', height: '18px', borderRadius: '50%',
+        backgroundColor: '#FFFFFF', position: 'absolute', top: '2px',
+        left: cat.available ? '20px' : '2px', transition: 'left 0.2s',
+      }} />
     </div>
+  </div>
+))}
+    </div>
+
+{editingCategory && (
+  <div className="flex flex-col mt-8" style={{ gap: '20px', padding: '20px', backgroundColor: '#FFFFFF', border: '1px solid #D9D9D9' }}>
+    <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.1em' }}>
+      Editando: <strong>{editingCategory.name_es}</strong>
+    </p>
+
+    {/* Nombre */}
+    <div>
+      <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
+        Nombre (castellano)
+      </span>
+      <input
+        type="text"
+        defaultValue={editingCategory.name_es}
+        id="edit-cat-name"
+        style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none', boxSizing: 'border-box' as const }}
+      />
+    </div>
+
+    {/* Tipo precio */}
+    <div>
+      <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
+        Tipo de precio
+      </span>
+      <select
+        id="edit-cat-price"
+        defaultValue={editingCategory.show_price_columns}
+        style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none' }}
+      >
+        <option value="none">Precio único</option>
+        <option value="copa_only">Solo copa</option>
+        <option value="both">Copa y botella</option>
+      </select>
+    </div>
+
+    {/* Botones */}
+    <div className="flex gap-4">
+      <button
+        onClick={() => setEditingCategory(null)}
+        style={{ flex: 1, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid #D9D9D9', backgroundColor: 'transparent', color: '#6A6A6A', cursor: 'pointer' }}
+      >
+        CANCELAR
+      </button>
+      <button
+        onClick={async () => {
+          const name = (document.getElementById('edit-cat-name') as HTMLInputElement).value
+          const price = (document.getElementById('edit-cat-price') as HTMLSelectElement).value
+
+          // Traduce el nombre
+          const [name_ca, name_en, name_fr] = await Promise.all([
+            translateText(name, 'ca'),
+            translateText(name, 'en'),
+            translateText(name, 'fr'),
+          ])
+
+          await supabase.from('categories').update({
+            name_es: name,
+            name_ca,
+            name_en,
+            name_fr,
+            show_price_columns: price,
+          }).eq('id', editingCategory.id)
+
+          await logActivity(adminNombre, 'UPDATE', 'category', undefined, { id: editingCategory.id, name_es: name })
+          refetch()
+          setEditingCategory(null)
+        }}
+        style={{ flex: 2, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: '#C65427', color: '#FFFFFF', cursor: 'pointer' }}
+      >
+        GUARDAR Y TRADUCIR
+      </button>
+    </div>
+  </div>
+)}
 
     {/* SEPARADOR */}
     <p style={{
