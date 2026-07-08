@@ -14,3 +14,4 @@ Aplicación web fullstack para el bar de vinos Casa Vèndrell en Barcelona.
 ## Documentación
 Toda la documentación del proyecto se encuentra en la carpeta `docs/`.
 
+a ver si esto funciona
