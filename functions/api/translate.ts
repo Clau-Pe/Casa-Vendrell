@@ -1,6 +1,7 @@
-interface Env {}
-
-export const onRequestPost: PagesFunction = async (context) => {
+export const onRequestPost = async (context: {
+  request: Request
+  env: { ANTHROPIC_API_KEY: string }
+}) => {
   const body = await context.request.json() as { text: string, targetLang: string }
   const { text, targetLang } = body
 
