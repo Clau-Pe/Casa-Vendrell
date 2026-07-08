@@ -1,7 +1,8 @@
 interface Env {}
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-  const { text, targetLang } = await context.request.json() as { text: string, targetLang: string }
+export const onRequestPost: PagesFunction = async (context) => {
+  const body = await context.request.json() as { text: string, targetLang: string }
+  const { text, targetLang } = body
 
   const langName = targetLang === 'ca' ? 'catalan'
     : targetLang === 'en' ? 'english'
@@ -12,7 +13,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': context.env.ANTHROPIC_API_KEY,
+        'x-api-key': (context.env as { ANTHROPIC_API_KEY: string }).ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
