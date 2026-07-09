@@ -7,9 +7,79 @@ import type { MenuItemDB } from '../../lib/supabase'
 import { supabase } from '../../lib/supabase'
 import { translateProduct } from '../../utils/translate'
 import { translateText } from '../../utils/translate'
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core'
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 
 type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'| 'perfil'
+
+function SortableCategoryItem({
+  cat,
+  onToggle,
+  onEdit,
+}: {
+  cat: CategoryWithItems
+  onToggle: (id: string, available: boolean) => void
+  onEdit: (cat: CategoryWithItems) => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: cat.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  }
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center justify-between"
+      style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
+    >
+      {/* Handle drag */}
+      <span
+        {...attributes}
+        {...listeners}
+        style={{ color: '#D9D9D9', marginRight: '12px', cursor: 'grab', fontSize: '16px', touchAction: 'none' }}
+      >
+        ⠿
+      </span>
+
+      <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: cat.available ? '#1A1A1A' : '#9A8878', flex: 1 }}>
+        {cat.name_es}
+      </span>
+
+      <button
+        onClick={() => onEdit(cat)}
+        style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.15em', textTransform: 'uppercase', padding: '6px 12px', border: '1px solid #D9D9D9', backgroundColor: 'transparent', cursor: 'pointer', marginRight: '12px' }}
+      >
+        EDITAR
+      </button>
+
+      <div
+        onClick={() => onToggle(cat.id, cat.available)}
+        style={{ width: '40px', height: '22px', borderRadius: '11px', backgroundColor: cat.available ? '#C65427' : '#D9D9D9', position: 'relative', cursor: 'pointer', transition: 'background-color 0.2s' }}
+      >
+        <div style={{ width: '18px', height: '18px', borderRadius: '50%', backgroundColor: '#FFFFFF', position: 'absolute', top: '2px', left: cat.available ? '20px' : '2px', transition: 'left 0.2s' }} />
+      </div>
+    </div>
+  )
+}
 
 export default function AdminIndex() {
   const navigate = useNavigate()
@@ -21,6 +91,25 @@ export default function AdminIndex() {
   const { categories, loading, refetch } = useSupabaseMenu()
   const { toggleItem, addItem, updateItem, deleteItem, logActivity, saving, addCategory } = useSupabaseAdmin()
   const [editingCategory, setEditingCategory] = useState<CategoryWithItems | null>(null)
+  const sensors = useSensors(
+  useSensor(PointerSensor),
+  useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+)
+
+const handleDragEndCategories = async (event: DragEndEvent) => {
+  const { active, over } = event
+  if (!over || active.id === over.id) return
+
+  const oldIndex = categories.findIndex(c => c.id === active.id)
+  const newIndex = categories.findIndex(c => c.id === over.id)
+  const newOrder = arrayMove(categories, oldIndex, newIndex)
+
+  const updates = newOrder.map((cat, index) =>
+    supabase.from('categories').update({ sort_order: index + 1 }).eq('id', cat.id)
+  )
+  await Promise.all(updates)
+  refetch()
+}
   
 
   useEffect(() => {
@@ -399,7 +488,7 @@ const handleToggleBottle = async (id: number, current: boolean) => {
           />
         )}
 
-       {/* ===== TAB CATEGORÍAS ===== */}
+tsx{/* ===== TAB CATEGORÍAS ===== */}
 {tab === 'categorias' && (
   <div>
     {/* SECCIONES EXISTENTES */}
@@ -411,136 +500,71 @@ const handleToggleBottle = async (id: number, current: boolean) => {
     }}>
       SECCIONES EXISTENTES
     </p>
-    <div className="flex flex-col mb-8" style={{ gap: '2px' }}>
-      {categories.map(cat => (
-  <div
-    key={cat.id}
-    className="flex items-center justify-between"
-    style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
-  >
-    <span style={{
-      fontFamily: 'Nunito Sans, sans-serif',
-      fontSize: '13px',
-      color: cat.available ? '#1A1A1A' : '#9A8878',
-      flex: 1,
-    }}>
-      {cat.name_es}
-    </span>
 
-    {/* Botón editar */}
-    <button
-      onClick={() => setEditingCategory(cat)}
-      style={{
-        fontFamily: 'Nunito Sans, sans-serif',
-        fontSize: '11px',
-        fontWeight: '600',
-        color: '#6A6A6A',
-        letterSpacing: '0.15em',
-        textTransform: 'uppercase',
-        padding: '6px 12px',
-        border: '1px solid #D9D9D9',
-        backgroundColor: 'transparent',
-        cursor: 'pointer',
-        marginRight: '12px',
-      }}
-    >
-      EDITAR
-    </button>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEndCategories}>
+      <SortableContext items={categories.map(c => c.id)} strategy={verticalListSortingStrategy}>
+        <div className="flex flex-col mb-8" style={{ gap: '2px' }}>
+          {categories.map(cat => (
+            <SortableCategoryItem
+              key={cat.id}
+              cat={cat}
+              onToggle={handleToggleCategory}
+              onEdit={setEditingCategory}
+            />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
 
-    {/* Toggle */}
-    <div
-      onClick={() => handleToggleCategory(cat.id, cat.available)}
-      style={{
-        width: '40px', height: '22px', borderRadius: '11px',
-        backgroundColor: cat.available ? '#C65427' : '#D9D9D9',
-        position: 'relative', cursor: 'pointer',
-        transition: 'background-color 0.2s',
-      }}
-    >
-      <div style={{
-        width: '18px', height: '18px', borderRadius: '50%',
-        backgroundColor: '#FFFFFF', position: 'absolute', top: '2px',
-        left: cat.available ? '20px' : '2px', transition: 'left 0.2s',
-      }} />
-    </div>
-  </div>
-))}
-    </div>
-
-{editingCategory && (
-  <div className="flex flex-col mt-8" style={{ gap: '20px', padding: '20px', backgroundColor: '#FFFFFF', border: '1px solid #D9D9D9' }}>
-    <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.1em' }}>
-      Editando: <strong>{editingCategory.name_es}</strong>
-    </p>
-
-    {/* Nombre */}
-    <div>
-      <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
-        Nombre (castellano)
-      </span>
-      <input
-        type="text"
-        defaultValue={editingCategory.name_es}
-        id="edit-cat-name"
-        style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none', boxSizing: 'border-box' as const }}
-      />
-    </div>
-
-    {/* Tipo precio */}
-    <div>
-      <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
-        Tipo de precio
-      </span>
-      <select
-        id="edit-cat-price"
-        defaultValue={editingCategory.show_price_columns}
-        style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none' }}
-      >
-        <option value="none">Precio único</option>
-        <option value="copa_only">Solo copa</option>
-        <option value="both">Copa y botella</option>
-      </select>
-    </div>
-
-    {/* Botones */}
-    <div className="flex gap-4">
-      <button
-        onClick={() => setEditingCategory(null)}
-        style={{ flex: 1, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid #D9D9D9', backgroundColor: 'transparent', color: '#6A6A6A', cursor: 'pointer' }}
-      >
-        CANCELAR
-      </button>
-      <button
-        onClick={async () => {
-          const name = (document.getElementById('edit-cat-name') as HTMLInputElement).value
-          const price = (document.getElementById('edit-cat-price') as HTMLSelectElement).value
-
-          // Traduce el nombre
-          const [name_ca, name_en, name_fr] = await Promise.all([
-            translateText(name, 'ca'),
-            translateText(name, 'en'),
-            translateText(name, 'fr'),
-          ])
-
-          await supabase.from('categories').update({
-            name_es: name,
-            name_ca,
-            name_en,
-            name_fr,
-            show_price_columns: price,
-          }).eq('id', editingCategory.id)
-
-          await logActivity(adminNombre, 'UPDATE', 'category', undefined, { id: editingCategory.id, name_es: name })
-          refetch()
-          setEditingCategory(null)
-        }}
-        style={{ flex: 2, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: '#C65427', color: '#FFFFFF', cursor: 'pointer' }}
-      >
-        GUARDAR Y TRADUCIR
-      </button>
-    </div>
-  </div>
-)}
+    {/* FORMULARIO EDICIÓN */}
+    {editingCategory && (
+      <div className="flex flex-col mt-8" style={{ gap: '20px', padding: '20px', backgroundColor: '#FFFFFF', border: '1px solid #D9D9D9' }}>
+        <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.1em' }}>
+          Editando: <strong>{editingCategory.name_es}</strong>
+        </p>
+        <div>
+          <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
+            Nombre (castellano)
+          </span>
+          <input type="text" defaultValue={editingCategory.name_es} id="edit-cat-name"
+            style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none', boxSizing: 'border-box' as const }} />
+        </div>
+        <div>
+          <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>
+            Tipo de precio
+          </span>
+          <select id="edit-cat-price" defaultValue={editingCategory.show_price_columns}
+            style={{ width: '100%', padding: '10px 14px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', color: '#333333', border: '1px solid #D9D9D9', backgroundColor: '#FFFFFF', outline: 'none' }}>
+            <option value="none">Precio único</option>
+            <option value="copa_only">Solo copa</option>
+            <option value="both">Copa y botella</option>
+          </select>
+        </div>
+        <div className="flex gap-4">
+          <button onClick={() => setEditingCategory(null)}
+            style={{ flex: 1, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: '1px solid #D9D9D9', backgroundColor: 'transparent', color: '#6A6A6A', cursor: 'pointer' }}>
+            CANCELAR
+          </button>
+          <button
+            onClick={async () => {
+              const name = (document.getElementById('edit-cat-name') as HTMLInputElement).value
+              const price = (document.getElementById('edit-cat-price') as HTMLSelectElement).value
+              const [name_ca, name_en, name_fr] = await Promise.all([
+                translateText(name, 'ca'),
+                translateText(name, 'en'),
+                translateText(name, 'fr'),
+              ])
+              await supabase.from('categories').update({ name_es: name, name_ca, name_en, name_fr, show_price_columns: price }).eq('id', editingCategory.id)
+              await logActivity(adminNombre, 'UPDATE', 'category', undefined, { id: editingCategory.id, name_es: name })
+              refetch()
+              setEditingCategory(null)
+            }}
+            style={{ flex: 2, padding: '12px', fontFamily: 'Nunito Sans, sans-serif', fontSize: '13px', fontWeight: '600', letterSpacing: '0.2em', textTransform: 'uppercase', border: 'none', backgroundColor: '#C65427', color: '#FFFFFF', cursor: 'pointer' }}>
+            GUARDAR Y TRADUCIR
+          </button>
+        </div>
+      </div>
+    )}
 
     {/* SEPARADOR */}
     <p style={{
@@ -560,12 +584,7 @@ const handleToggleBottle = async (id: number, current: boolean) => {
         try {
           const updates = categories
             .filter(c => c.sort_order >= newCat.sort_order)
-            .map(c =>
-              supabase
-                .from('categories')
-                .update({ sort_order: c.sort_order + 1 })
-                .eq('id', c.id)
-            )
+            .map(c => supabase.from('categories').update({ sort_order: c.sort_order + 1 }).eq('id', c.id))
           await Promise.all(updates)
           await addCategory(newCat)
           await logActivity(adminNombre, 'CREATE', 'category', undefined, newCat)
