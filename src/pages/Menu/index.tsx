@@ -238,27 +238,28 @@ const currentItems = isVinosPorCopa
 )
 const sortByPrice = (items: MenuItem[]) => {
   return [...items].sort((a, b) => {
-    const copaA = Number(a.price_copa ?? 0)
-    const copaB = Number(b.price_copa ?? 0)
-    const bottleA = Number(a.price_bottle ?? 0)
-    const bottleB = Number(b.price_bottle ?? 0)
+    const copaA = a.price_copa !== null ? Number(a.price_copa) : null
+    const copaB = b.price_copa !== null ? Number(b.price_copa) : null
+    const bottleA = a.price_bottle !== null ? Number(a.price_bottle) : null
+    const bottleB = b.price_bottle !== null ? Number(b.price_bottle) : null
 
-    // Si ambos tienen copa, ordenar por copa
-    if (a.price_copa !== null && b.price_copa !== null) {
-      return copaA - copaB
+    // Ambos tienen copa → ordenar por copa
+    if (copaA !== null && copaB !== null) return copaA - copaB
+
+    // Solo A tiene copa → comparar copa de A con botella de B
+    if (copaA !== null && copaB === null) {
+      const refB = bottleB ?? 0
+      return copaA - refB
     }
 
-    // Si solo uno tiene copa, comparar precio copa con precio botella del otro
-    if (a.price_copa !== null && b.price_copa === null) {
-      return bottleA - bottleB // compara botella de A con botella de B
+    // Solo B tiene copa → comparar botella de A con copa de B
+    if (copaA === null && copaB !== null) {
+      const refA = bottleA ?? 0
+      return refA - copaB
     }
 
-    if (a.price_copa === null && b.price_copa !== null) {
-      return bottleA - bottleB
-    }
-
-    // Si ninguno tiene copa, ordenar por botella
-    return bottleA - bottleB
+    // Ninguno tiene copa → ordenar por botella
+    return (bottleA ?? 0) - (bottleB ?? 0)
   })
 }
 
