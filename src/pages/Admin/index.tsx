@@ -615,6 +615,7 @@ function AddEditForm({
     category_id: editingItem?.category_id ?? categories[0]?.id ?? '',
     name_es: editingItem?.name_es ?? '',
     year: editingItem?.year ?? '',
+    subcategory: editingItem?.subcategory ?? '',
     vintage_cellar_do: editingItem?.vintage_cellar_do ?? '',
     description_es: editingItem?.description_es ?? '',
     price_copa: editingItem?.price_copa?.toString() ?? '',
@@ -628,6 +629,7 @@ function AddEditForm({
     category_id: form.category_id,
     name_es: form.name_es,
     year: form.year || null,
+    subcategory: form.subcategory || null,
     vintage_cellar_do: form.vintage_cellar_do || null,
     description_es: form.description_es || null,
     price_copa: form.price_copa ? parseFloat(form.price_copa) : null,
@@ -679,6 +681,7 @@ setTranslating(true)
     name_en: translations.name_en,
     name_fr: translations.name_fr,
     year: form.year || null,
+    subcategory: form.subcategory || null, 
     vintage_cellar_do: form.vintage_cellar_do || null,
     description_es: form.description_es || null,
     description_ca: translations.description_ca,
@@ -725,6 +728,18 @@ setTranslating(true)
     value={form.year}
     onChange={e => setForm({ ...form, year: e.target.value })}
     placeholder="Ej: 2023"
+    style={inputStyle}
+  />
+</div>
+
+{/* SUBCATEGORÍA */}
+<div>
+  <span style={labelStyle}>Subcategoría (opcional)</span>
+  <input
+    type="text"
+    value={form.subcategory}
+    onChange={e => setForm({ ...form, subcategory: e.target.value })}
+    placeholder="Ej: Barril, Botella"
     style={inputStyle}
   />
 </div>

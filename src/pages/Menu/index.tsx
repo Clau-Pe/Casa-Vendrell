@@ -25,6 +25,7 @@ const adaptCategory = (cat: CategoryWithItems) => ({
       name_en: item.name_en,
       name_fr: item.name_fr,
       year: item.year,
+      subcategory: item.subcategory,
       vintage_cellar_do: item.vintage_cellar_do,
       description_es: item.description_es,
       description_ca: item.description_ca,
@@ -177,6 +178,64 @@ const currentItems = isVinosPorCopa
     return items
   }
 
+  const renderItem = (item: MenuItem, index: number, arr: MenuItem[]) => (
+  <div
+    key={item.id}
+    style={{
+      paddingTop: '23px',
+      paddingBottom: '23px',
+      borderBottom: index < arr.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none',
+    }}
+  >
+    <div className="flex items-start justify-between gap-4">
+      <span style={{
+        fontFamily: 'Nunito Sans, sans-serif',
+        fontSize: '14px',
+        fontWeight: '700',
+        color: '#411F10',
+        lineHeight: '120%',
+        letterSpacing: '0.01em',
+        flex: 1,
+      }}>
+        {getItemName(item)}
+      </span>
+
+      <div className="flex shrink-0">
+        {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
+          <span style={{ width: '56px', textAlign: 'center', fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '700', color: '#411F10', lineHeight: '120%', letterSpacing: '0.01em', display: 'block' }}>
+            {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
+          </span>
+        )}
+        {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
+          <span style={{ textAlign: 'center', fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '700', color: '#411F10', lineHeight: '120%', letterSpacing: '0.01em', display: 'block' }}>
+            {item.price_bottle !== null ? formatPrice(item.price_bottle) : ''}
+          </span>
+        )}
+        {!showCopa && !showBottle && (
+          <span style={{ textAlign: 'center', fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '700', color: '#411F10', lineHeight: '120%', letterSpacing: '0.01em', display: 'block' }}>
+            {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
+          </span>
+        )}
+      </div>
+    </div>
+
+    {item.year && (
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', fontWeight: '400', color: '#000000', lineHeight: '120%', letterSpacing: '0.01em', marginTop: '3px' }}>
+        {item.year}
+      </p>
+    )}
+    {item.vintage_cellar_do && (
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', fontWeight: '400', color: '#000000', lineHeight: '120%', letterSpacing: '0.01em', marginTop: '2px' }}>
+        {item.vintage_cellar_do}
+      </p>
+    )}
+    {getItemDescription(item) && (
+      <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '400', fontStyle: 'italic', color: '#333333', lineHeight: '120%', letterSpacing: '0em', marginTop: '6px' }}>
+        {getItemDescription(item)}
+      </p>
+    )}
+  </div>
+)
 const sortByPrice = (items: MenuItem[]) => {
   return [...items].sort((a, b) => {
     const copaA = Number(a.price_copa ?? 0)
@@ -675,124 +734,42 @@ if (view === 'index') {
 </div>
 
             {/* Items */}
-            {sortByPrice(searchItems(filteredItems(currentItems))).map((item, index, arr) => (
-              <div
-                key={item.id}
-                style={{
-                  paddingTop: '23px',
-                  paddingBottom: '23px',
-                  borderBottom: index < arr.length - 1
-                    ? '1px solid rgba(0,0,0,0.08)'
-                    : 'none',
-                }}
-              >
+{(() => {
+  const items = sortByPrice(searchItems(filteredItems(currentItems)))
+  const subcats = [...new Set(items.map(i => i.subcategory).filter(Boolean))] as string[]
 
+  if (subcats.length === 0) {
+    return items.map((item, index, arr) => renderItem(item, index, arr))
+  }
 
-                <div className="flex items-start justify-between gap-4">
-                  <span style={{
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    fontSize: '15px',
-                    fontWeight: '700',
-                    color: '#1A1A1A',
-                    lineHeight: '140%',
-                    flex: 1,
-                  }}>
-                    {getItemName(item)}
-                  </span>
-
-                  <div className="flex shrink-0">
-                    {/* Copa */}
-                    {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
-                      <span style={{
-                        width: '56px',
-                            textAlign: 'center',
-                            fontFamily: 'Nunito Sans, sans-serif',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            color: '#411F10',
-                            lineHeight: '120%',
-                            letterSpacing: '0.01em',
-                            display: 'block',
-                      }}>
-                        {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
-                      </span>
-                    )}
-                    {/* Botella */}
-                    {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
-                      <span style={{
-                        textAlign: 'center',
-                            fontFamily: 'Nunito Sans, sans-serif',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            color: '#411F10',
-                            lineHeight: '120%',
-                            letterSpacing: '0.01em',
-                            display: 'block',
-                      }}>
-                        {item.price_bottle !== null ? formatPrice(item.price_bottle) : ''}
-                      </span>
-                    )}
-                    {/* Precio único */}
-                    {!showCopa && !showBottle && (
-                      <span style={{
-                            textAlign: 'center',
-                            fontFamily: 'Nunito Sans, sans-serif',
-                            fontSize: '11px',
-                            fontWeight: '700',
-                            color: '#411F10',
-                            lineHeight: '120%',
-                            letterSpacing: '0.01em',
-                            display: 'block',
-                      }}>
-                        {item.price_copa !== null ? formatPrice(item.price_copa) : ''}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-               {item.year && (
-  <p style={{
-    fontFamily: 'Nunito Sans, sans-serif',
-    fontSize: '12px',
-    fontWeight: '400',
-    color: '#000000',
-    lineHeight: '120%',
-    letterSpacing: '0.01em',
-    marginTop: '3px',
-  }}>
-    {item.year}
-  </p>
-)}
-{item.vintage_cellar_do && (
-  <p style={{
-    fontFamily: 'Nunito Sans, sans-serif',
-    fontSize: '12px',
-    fontWeight: '400',
-    color: '#000000',
-    lineHeight: '120%',
-    letterSpacing: '0.01em',
-    marginTop: '2px',
-  }}>
-    {item.vintage_cellar_do}
-  </p>
-)}
-
-                {getItemDescription(item) && (
-                  <p style={{
-                    fontFamily: 'Nunito Sans, sans-serif',
-                    fontSize: '11px',
-                    fontWeight: '400',
-                    fontStyle: 'italic',
-                    color: '#333333',
-                    lineHeight: '120%',
-                    letterSpacing: '0em',
-                    marginTop: '6px',
-                  }}>
-                    {getItemDescription(item)}
-                  </p>
-                )}
-              </div>
-            ))}
+  return (
+    <>
+      {items.filter(i => !i.subcategory).map((item, index, arr) => renderItem(item, index, arr))}
+      {subcats.map(sub => {
+        const subItems = items.filter(i => i.subcategory === sub)
+        return (
+          <div key={sub}>
+            <p style={{
+              fontFamily: 'Nunito Sans, sans-serif',
+              fontSize: '11px',
+              fontWeight: '600',
+              color: '#C65427',
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              marginTop: '24px',
+              marginBottom: '8px',
+              paddingBottom: '6px',
+              borderBottom: '1px solid rgba(196,98,45,0.2)',
+            }}>
+              {sub}
+            </p>
+            {subItems.map((item, index, arr) => renderItem(item, index, arr))}
+          </div>
+        )
+      })}
+    </>
+  )
+})()}
 
           </div>
         )}

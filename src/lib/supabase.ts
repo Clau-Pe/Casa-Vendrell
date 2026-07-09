@@ -21,6 +21,7 @@ export type CategoryDB = {
 export type MenuItemDB = {
   id: number
   category_id: string
+  subcategory: string | null 
   name_es: string
   name_ca: string | null
   name_en: string | null

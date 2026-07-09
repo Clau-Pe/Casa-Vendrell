@@ -255,6 +255,7 @@ export const menuData = {
 
 export type MenuItem = {
   id: number
+  subcategory: string | null 
   name_es: string
   name_ca: string | null
   name_en: string | null
