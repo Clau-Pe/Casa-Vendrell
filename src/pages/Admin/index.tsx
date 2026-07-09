@@ -492,7 +492,7 @@ const handleToggleBottle = async (id: number, current: boolean) => {
           />
         )}
 
-tsx{/* ===== TAB CATEGORÍAS ===== */}
+{/* ===== TAB CATEGORÍAS ===== */}
 {tab === 'categorias' && (
   <div>
     {/* SECCIONES EXISTENTES */}
