@@ -45,12 +45,16 @@ function SortableCategoryItem({
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="flex items-center justify-between"
-      style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: '1px solid rgba(0,0,0,0.06)' }}
-    >
+   <div
+  ref={setNodeRef}
+  style={{
+    ...style,
+    padding: '10px 14px',
+    backgroundColor: '#FFFFFF',
+    borderBottom: '1px solid rgba(0,0,0,0.06)',
+  }}
+  className="flex items-center justify-between"
+>
       {/* Handle drag */}
       <span
         {...attributes}
