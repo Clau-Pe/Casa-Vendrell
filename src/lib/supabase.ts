@@ -21,13 +21,19 @@ export type CategoryDB = {
 export type MenuItemDB = {
   id: number
   category_id: string
-  subcategory: string | null 
+  subcategory: string | null
+  subcategory_ca: string | null
+  subcategory_en: string | null
+  subcategory_fr: string | null
   name_es: string
   name_ca: string | null
   name_en: string | null
   name_fr: string | null
-   year: string | null  
+  year: string | null
   vintage_cellar_do: string | null
+  vintage_cellar_do_ca: string | null
+  vintage_cellar_do_en: string | null
+  vintage_cellar_do_fr: string | null
   description_es: string | null
   description_ca: string | null
   description_en: string | null

@@ -8,6 +8,7 @@ import { supabase } from '../../lib/supabase'
 import { translateProduct } from '../../utils/translate'
 import { translateText } from '../../utils/translate'
 
+
 type Tab = 'productos' | 'añadir' | 'categorias' | 'traducciones'| 'perfil'
 
 export default function AdminIndex() {
@@ -20,6 +21,7 @@ export default function AdminIndex() {
   const { categories, loading, refetch } = useSupabaseMenu()
   const { toggleItem, addItem, updateItem, deleteItem, logActivity, saving, addCategory } = useSupabaseAdmin()
   const [editingCategory, setEditingCategory] = useState<CategoryWithItems | null>(null)
+  
 
   useEffect(() => {
     let cancelled = false
@@ -658,21 +660,40 @@ function AddEditForm({
 
   const [translating, setTranslating] = useState(false)
   const [translated, setTranslated] = useState(false)
+  const [translateName, setTranslateName] = useState(false)
+  const [translateDescription, setTranslateDescription] = useState(true)
+  const [translateVintage, setTranslateVintage] = useState(false)
+  const [translateSubcategory, setTranslateSubcategory] = useState(false)
+    
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
   if (!form.name_es || !form.category_id) return
 
-setTranslating(true)
-  
-  // Traduce automáticamente
-  const translations = await translateProduct({
-    name_es: form.name_es,
-    description_es: form.description_es || null,
-  })
+  setTranslating(true)
+
+  const langs: ('ca' | 'en' | 'fr')[] = ['ca', 'en', 'fr']
+  const translations: Record<string, string | null> = {}
+
+  for (const lang of langs) {
+    translations[`name_${lang}`] = translateName
+      ? await translateText(form.name_es, lang)
+      : form.name_es
+
+    translations[`description_${lang}`] = translateDescription && form.description_es
+      ? await translateText(form.description_es, lang)
+      : form.description_es || null
+
+    translations[`vintage_cellar_do_${lang}`] = translateVintage && form.vintage_cellar_do
+      ? await translateText(form.vintage_cellar_do, lang)
+      : form.vintage_cellar_do || null
+
+    translations[`subcategory_${lang}`] = translateSubcategory && form.subcategory
+      ? await translateText(form.subcategory, lang)
+      : form.subcategory || null
+  }
 
   setTranslating(false)
   setTranslated(true)
-
 
   await onSave({
     category_id: form.category_id,
@@ -681,8 +702,14 @@ setTranslating(true)
     name_en: translations.name_en,
     name_fr: translations.name_fr,
     year: form.year || null,
-    subcategory: form.subcategory || null, 
+    subcategory: form.subcategory || null,
+    subcategory_ca: translations.subcategory_ca,
+    subcategory_en: translations.subcategory_en,
+    subcategory_fr: translations.subcategory_fr,
     vintage_cellar_do: form.vintage_cellar_do || null,
+    vintage_cellar_do_ca: translations.vintage_cellar_do_ca,
+    vintage_cellar_do_en: translations.vintage_cellar_do_en,
+    vintage_cellar_do_fr: translations.vintage_cellar_do_fr,
     description_es: form.description_es || null,
     description_ca: translations.description_ca,
     description_en: translations.description_en,
@@ -695,7 +722,6 @@ setTranslating(true)
     sort_order: 0,
   })
 }
-
   return (
     <div>
       <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#9A8878', letterSpacing: '0.1em', marginBottom: '24px' }}>
@@ -794,6 +820,29 @@ setTranslating(true)
             {form.available ? 'Disponible en carta' : 'No disponible'}
           </span>
         </div>
+
+{/* OPCIONES DE TRADUCCIÓN */}
+<div className="flex flex-col gap-2" style={{ padding: '12px', backgroundColor: '#F9F9F9', border: '1px solid #E9E9E9' }}>
+  <p style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '10px', fontWeight: '600', color: '#9A8878', letterSpacing: '0.25em', textTransform: 'uppercase', marginBottom: '4px' }}>
+    Traducir automáticamente
+  </p>
+  <label className="flex items-center gap-2" style={{ cursor: 'pointer' }}>
+    <input type="checkbox" checked={translateName} onChange={e => setTranslateName(e.target.checked)} />
+    <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#6A6A6A' }}>Nombre del producto</span>
+  </label>
+  <label className="flex items-center gap-2" style={{ cursor: 'pointer' }}>
+    <input type="checkbox" checked={translateDescription} onChange={e => setTranslateDescription(e.target.checked)} />
+    <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#6A6A6A' }}>Descripción</span>
+  </label>
+  <label className="flex items-center gap-2" style={{ cursor: 'pointer' }}>
+    <input type="checkbox" checked={translateVintage} onChange={e => setTranslateVintage(e.target.checked)} />
+    <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#6A6A6A' }}>Bodega · D.O.</span>
+  </label>
+  <label className="flex items-center gap-2" style={{ cursor: 'pointer' }}>
+    <input type="checkbox" checked={translateSubcategory} onChange={e => setTranslateSubcategory(e.target.checked)} />
+    <span style={{ fontFamily: 'Nunito Sans, sans-serif', fontSize: '12px', color: '#6A6A6A' }}>Subcategoría</span>
+  </label>
+</div>
 
       {/* BOTONES */}
 <div className="flex gap-4">

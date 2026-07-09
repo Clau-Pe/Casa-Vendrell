@@ -9,7 +9,7 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 // Adapta CategoryWithItems de Supabase al formato que usa el componente
-const adaptCategory = (cat: CategoryWithItems) => ({
+const adaptCategory = (cat: CategoryWithItems, lang: string) => ({
   id: cat.id,
   name_es: cat.name_es,
   name_ca: cat.name_ca ?? cat.name_es,
@@ -19,14 +19,14 @@ const adaptCategory = (cat: CategoryWithItems) => ({
   items: cat.items
   .filter(item => item.available)
   .map(item => ({
-    id: item.id,
-    name_es: item.name_es,
+      id: item.id,
+      name_es: item.name_es,
       name_ca: item.name_ca,
       name_en: item.name_en,
       name_fr: item.name_fr,
       year: item.year,
-      subcategory: item.subcategory,
-      vintage_cellar_do: item.vintage_cellar_do,
+      subcategory: item[`subcategory_${lang}` as keyof typeof item] as string ?? item.subcategory,
+vintage_cellar_do: item[`vintage_cellar_do_${lang}` as keyof typeof item] as string ?? item.vintage_cellar_do,
       description_es: item.description_es,
       description_ca: item.description_ca,
       description_en: item.description_en,
@@ -132,7 +132,7 @@ const { t } = useTranslation()
   // ← AQUÍ dentro del componente
   const adaptedCategories = dbCategories
     .filter((cat: CategoryWithItems) => cat.available)
-    .map(adaptCategory)
+    .map(cat => adaptCategory(cat, lang))
 
   useState(() => {
   const state = location.state as { openCategory?: string } | null
