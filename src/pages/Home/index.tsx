@@ -25,11 +25,11 @@ export default function Home() {
   }
 
   return (
-    <main style={{ backgroundColor: '#FAFAFA' }}>
+    <main style={{ backgroundColor: '#411F10' }}>
 
       {/* ===== GRID FOTOS HERO ===== */}
       <section
-        style={{ backgroundColor: '#411F10' }}
+        style={{ backgroundColor: '#411F10', marginTop: 'clamp(48px, 8vw, 120px)' }}
         className="w-full grid grid-cols-2 gap-1 px-1"
       >
         <img src="/images/hero/body1.png" alt="Casa Vèndrell interior" className="w-full object-cover" style={{ aspectRatio: '836/1024' }} />
@@ -108,11 +108,11 @@ export default function Home() {
       <section className="w-full flex flex-col items-center bg-white px-4" style={{ paddingTop: 'clamp(32px, 5vw, 96px)', paddingBottom: '0' }}>
         <div
           className="w-full"
-          style={{ maxWidth: '1061px', height: 'clamp(200px, 40vw, 569px)' }}
+          style={{ maxWidth: '1061px', height: 'clamp(200px, 40vw, 569px)', position: 'relative'  }}
         >
           <iframe
             title="Ubicación Casa Vèndrell"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.8!2d2.1529301!3d41.3815743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3bce7b09e63%3A0x39566abfb8e426fb!2sCasa%20Vendrell!5e0!3m2!1ses!2ses!4v1"
+           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.4776!2d2.1529301!3d41.3815743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3bce7b09e63%3A0x39566abfb8e426fb!2sCasa%20Vendrell%2C%20Carrer%20de%20la%20Diputaci%C3%B3%2C%20110%2C%20L&#39;Eixample%2C%2008015%20Barcelona!5e0!3m2!1ses!2ses!4v1720000000000!5m2!1ses!2ses"
             width="100%"
             height="100%"
             style={{ border: 0, display: 'block', filter: 'grayscale(70%)' }}
@@ -120,6 +120,24 @@ export default function Home() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
+         {/* Overlay clicable */}
+  
+    <a 
+    href="https://www.google.com/maps/place/Casa+Vendrell/@41.3815743,2.1555104,17z/data=!3m1!4b1!4m6!3m5!1s0x12a4a3bce7b09e63:0x39566abfb8e426fb!8m2!3d41.3815743!4d2.1555104!16s%2Fg%2F11xhbhpkvy"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      display: 'block',
+      zIndex: 1,
+    }}
+    aria-label="Abrir en Google Maps"
+  />
+    
         </div>
         <div
           className="flex flex-col items-center text-center gap-3"

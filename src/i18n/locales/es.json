@@ -76,8 +76,8 @@
   "error": "Ha ocurrido un error. Por favor inténtalo de nuevo.",
   "duplicate": "Este email ya está suscrito."
 },
-  "footer": {
-  "rights": "®2026 Casa Vendrell",
+  "footer": { 
+  "rights": "® 2026 Casa Vendrell",
   "contacto": "CONTACTO",
   "siguenos": "SÍGUENOS",
   "el_bar": "EL BAR",

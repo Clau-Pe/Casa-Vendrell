@@ -237,13 +237,14 @@ const NAV_LINKS = [
 <Link
   to="/carta"
   className="btn-hero flex items-center justify-center transition-all duration-200 border border-[#D9D9D9] text-[#D9D9D9]"
-  style={{
-    width: '150px',
+   style={{
+    minWidth: '150px',
     height: '39px',
     fontSize: '14px',
     fontWeight: '400',
     letterSpacing: '0.25em',
     lineHeight: '120%',
+    padding: '0 24px',
   }}
 >
   {t('nav.carta_btn')}
@@ -254,12 +255,13 @@ const NAV_LINKS = [
   rel="noopener noreferrer"
   className="btn-hero flex items-center justify-center transition-all duration-200 border border-[#D9D9D9] text-[#D9D9D9]"
   style={{
-    width: '150px',
+  minWidth: '150px',
     height: '39px',
     fontSize: '14px',
     fontWeight: '400',
     letterSpacing: '0.25em',
     lineHeight: '120%',
+    padding: '0 24px',
   }}
 >
   {t('nav.reservas')}
