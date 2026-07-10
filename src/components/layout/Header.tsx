@@ -327,16 +327,17 @@ const NAV_LINKS = [
   style={{
     backgroundColor: '#411F10',
     position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: 0, left: 0, right: 0, bottom: 0,
     zIndex: 9999,
     transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
     transition: 'transform 0.35s ease-in-out',
     visibility: menuOpen ? 'visible' : 'hidden',
+    paddingLeft: '40px',
+    paddingRight: '40px',
+    paddingTop: '32px',
+    paddingBottom: '32px',
   }}
-  className="md:hidden flex flex-col px-8 py-8"
+  className="md:hidden flex flex-col"
 >
   {/* Header con cerrar */}
 <div className="flex justify-between items-center" style={{ marginBottom: '60px' }}>
@@ -356,49 +357,45 @@ const NAV_LINKS = [
   </button>
 </div>
 
-  {/* Links */}
-  <nav className="flex flex-col" style={{ gap: '32px' }}>
-    {NAV_LINKS.map(link => (
-      <Link
-        key={link.path}
-        to={link.path}
-        onClick={() => setMenuOpen(false)}
-        style={{
-          fontSize: '22px',
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: location.pathname === link.path ? '#C65427' : '#D9D9D9',
-          paddingBottom: '16px',
-          borderBottom: '1px solid rgba(217,217,217,0.15)',
-        }}
-      >
-        {link.label}
-      </Link>
-    ))}
-  </nav>
+ <nav className="flex flex-col" style={{ gap: '32px' }}>
+  {NAV_LINKS.map(link =>
+    link.external
+      ? 
+      <a
+          key={link.label}
+          href={link.href!}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
+          style={{
+            fontSize: '22px',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: '#D9D9D9',
+            paddingBottom: '16px',
+            borderBottom: '1px solid rgba(217,217,217,0.15)',
+          }}
+        >
+          {link.label}
+        </a>
+      : <Link
+          key={link.path}
+          to={link.path}
+          onClick={() => setMenuOpen(false)}
+          style={{
+            fontSize: '22px',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: location.pathname === link.path ? '#C65427' : '#D9D9D9',
+            paddingBottom: '16px',
+            borderBottom: '1px solid rgba(217,217,217,0.15)',
+          }}
+        >
+          {link.label}
+        </Link>
+  )}
+</nav>
 
-  {/* Idiomas */}
-  <div
-    className="flex gap-8"
-    style={{ marginTop: 'auto', paddingTop: '32px', borderTop: '1px solid rgba(217,217,217,0.2)' }}
-  >
-    {LANGUAGES.map(lang => (
-      <button
-        key={lang.code}
-        onClick={() => {
-          changeLanguage(lang.code)
-          setMenuOpen(false)
-        }}
-        style={{
-          fontSize: '14px',
-          letterSpacing: '0.15em',
-          color: language === lang.code ? '#C65427' : 'rgba(217,217,217,0.6)',
-        }}
-      >
-        {lang.label}
-      </button>
-    ))}
-  </div>
 </div>
     </header>
   )

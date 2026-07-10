@@ -146,9 +146,15 @@ export default function Home() {
           <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z" target="_blank" rel="noopener noreferrer" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
             {t('home.address')}
           </a>
-          <a href="tel:+34634938879" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
-            {t('home.phone')}
-          </a>
+          <a 
+           href="https://wa.me/34634938879" 
+           target="_blank"
+           rel="noopener noreferrer"
+           className="hover:text-[#411F10] transition-colors" 
+          style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}
+          >
+  {t('home.phone')}
+</a>
           <a href="mailto:reservas.casavendrell@gmail.com" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
             {t('home.email')}
           </a>

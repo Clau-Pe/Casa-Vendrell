@@ -207,7 +207,7 @@ const currentItems = isVinosPorCopa
           </span>
         )}
         {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
-          <span style={{ textAlign: 'center', fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '700', color: '#411F10', lineHeight: '120%', letterSpacing: '0.01em', display: 'block' }}>
+          <span style={{ width: '56px',textAlign: 'center', fontFamily: 'Nunito Sans, sans-serif', fontSize: '11px', fontWeight: '700', color: '#411F10', lineHeight: '120%', letterSpacing: '0.01em', display: 'block' }}>
             {item.price_bottle !== null ? formatPrice(item.price_bottle) : ''}
           </span>
         )}
@@ -241,13 +241,7 @@ const sortByPrice = (items: MenuItem[]) => {
     const bottleA = Number(a.price_bottle ?? a.price_copa ?? 0)
     const bottleB = Number(b.price_bottle ?? b.price_copa ?? 0)
 
-    if (bottleA !== bottleB) return bottleA - bottleB
-
-    // Si tienen el mismo precio botella, copa antes que solo botella
-    if (a.price_copa !== null && b.price_copa === null) return -1
-    if (a.price_copa === null && b.price_copa !== null) return 1
-
-    return 0
+    return bottleA - bottleB
   })
 }
 
@@ -663,64 +657,52 @@ if (view === 'index') {
                   </div>
                 )
               })}
-          </div>
+            </div>
 
-        ) : (
-          // ===== VISTA CATEGORÍA NORMAL =====
-          <div className="flex flex-col">
+          ) : (
+    
+  <div className="flex flex-col">
 
-            {/* Título + iconos */}
-            <div className="flex items-end justify-between"
-            style={{ marginTop: '30px', marginBottom: '30px' }}
-            >
+    {/* Título — centrado */}
+    <h2 style={{
+      fontFamily: 'Nunito Sans, sans-serif',
+      fontSize: '14px',
+      fontWeight: '400',
+      color: '#411F10',
+    letterSpacing: '0.5em',
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    width: '100%',
+    marginTop: '30px',
+    marginBottom: '16px',
+  }}>
+    {currentTitle}
+  </h2>
 
-                {/* Espacio izquierda */}
-              <div style={{ width: '26px' }} />
-
-              {/* Título centro */}
-              <h2 style={{
-                fontFamily: 'Nunito Sans, sans-serif',
-                fontSize: '14px',
-                fontWeight: '400',
-                color: '#411F10',
-                letterSpacing: '0.5em',
-                textTransform: 'uppercase',
-                flex: 1,
-                textAlign: 'center',
-              }}>
-                {currentTitle}
-              </h2>
-
-         {/* Iconos */}
-  <div className="flex items-center shrink-0" style={{ gap: '8px' }}>
-    {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
-      <div
-        onClick={() => showBottle && setPriceFilter(priceFilter === 'copa' ? 'all' : 'copa')}
-        style={{
-          width: '40px', display: 'flex', justifyContent: 'center',
-          cursor: showBottle ? 'pointer' : 'default',
-          opacity: priceFilter === 'copa' || !showBottle ? 1 : 0.4,
-        }}
-      >
-        <img src="/images/hero/copa.png" alt="Copa"
-          style={{ height: '24px', objectFit: 'contain' }} />
-      </div>
-    )}
-    {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
-      <div
-        onClick={() => setPriceFilter(priceFilter === 'bottle' ? 'all' : 'bottle')}
-        style={{
-          width: '40px', display: 'flex', justifyContent: 'center',
-          cursor: 'pointer',
-          opacity: priceFilter === 'bottle' ? 1 : 0.4,
-        }}
-      >
-        <img src="/images/hero/botella.png" alt="Botella"
-          style={{ height: '24px', objectFit: 'contain' }} />
-      </div>
-    )}
+{/* Iconos — alineados a la derecha */}
+{(showCopa || showBottle) && (
+  <div className="flex items-start justify-between gap-4 mb-4">
+    <div style={{ flex: 1 }} />
+    <div className="flex shrink-0">
+      {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
+        <div
+          onClick={() => showBottle && setPriceFilter(priceFilter === 'copa' ? 'all' : 'copa')}
+          style={{ width: '56px', display: 'flex', justifyContent: 'center', cursor: showBottle ? 'pointer' : 'default', opacity: priceFilter === 'copa' || !showBottle ? 1 : 0.4 }}
+        >
+          <img src="/images/hero/copa.png" alt="Copa" style={{ height: '28px', objectFit: 'contain' }} />
+        </div>
+      )}
+      {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
+        <div
+          onClick={() => setPriceFilter(priceFilter === 'bottle' ? 'all' : 'bottle')}
+          style={{ width: '56px', display: 'flex', justifyContent: 'center', cursor: 'pointer', opacity: priceFilter === 'bottle' ? 1 : 0.4 }}
+        >
+          <img src="/images/hero/botella.png" alt="Botella" style={{ height: '28px', objectFit: 'contain' }} />
+        </div>
+      )}
+    </div>
   </div>
-</div>
+)}
 
             {/* Items */}
 {(() => {
