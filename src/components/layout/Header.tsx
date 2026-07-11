@@ -343,7 +343,7 @@ const NAV_LINKS = [
 <div className="flex justify-between items-center" style={{ marginBottom: '60px' }}>
   <Link to="/" onClick={() => setMenuOpen(false)}>
     <img
-      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq4.png'}
       alt="Casa Vèndrell"
       style={{ height: '16px' }}
     />

@@ -62,36 +62,46 @@ function SearchBar({
   placeholder: string
 }) {
   return (
-    <div className="flex items-center justify-end" style={{ gap: '8px' }}>
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
       {searchOpen && (
-        <input
-          autoFocus
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder={placeholder} 
-          style={{
-            fontFamily: 'Nunito Sans, sans-serif',
-            fontSize: '12px',
-            fontWeight: '300',
-            color: '#333333',
-            letterSpacing: '0.05em',
-            backgroundColor: 'transparent',
-            border: 'none',
-            borderBottom: '1px solid rgba(0,0,0,0.2)',
-            outline: 'none',
-            width: '160px',
-            paddingBottom: '2px',
-          }}
-        />
-      )}
-      {searchOpen && searchQuery && (
-        <button
-          onClick={() => setSearchQuery('')}
-          style={{ color: '#9A8878', fontSize: '12px' }}
-        >
-          ✕
-        </button>
+        <div style={{
+          position: 'absolute',
+          right: '24px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: '#FAFAFA',
+          zIndex: 10,
+        }}>
+          <input
+            autoFocus
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder={placeholder}
+            style={{
+              fontFamily: 'Nunito Sans, sans-serif',
+              fontWeight: '300',
+              color: '#333333',
+              letterSpacing: '0.05em',
+              backgroundColor: '#FAFAFA',
+              border: 'none',
+              borderBottom: '1px solid rgba(0,0,0,0.2)',
+              outline: 'none',
+              width: '120px',
+              paddingBottom: '2px',
+            }}
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              style={{ color: '#9A8878', fontSize: '12px', marginLeft: '4px' }}
+            >
+              ✕
+            </button>
+          )}
+        </div>
       )}
       <button
         onClick={() => {
@@ -115,7 +125,6 @@ function SearchBar({
     </div>
   )
 }
-
 export default function Menu() {
 const { language, changeLanguage } = useLanguage()
 const lang = language
