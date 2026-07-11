@@ -80,6 +80,14 @@ function SearchBar({
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
             placeholder={placeholder}
+            onFocus={() => {
+  const viewport = document.querySelector('meta[name=viewport]')
+  if (viewport) viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0')
+}}
+onBlur={() => {
+  const viewport = document.querySelector('meta[name=viewport]')
+  if (viewport) viewport.setAttribute('content', 'width=device-width, initial-scale=1.0')
+}}
             style={{
               fontFamily: 'Nunito Sans, sans-serif',
               fontWeight: '300',
@@ -91,6 +99,7 @@ function SearchBar({
               outline: 'none',
               width: '120px',
               paddingBottom: '2px',
+              fontSize: '12px',
             }}
           />
           {searchQuery && (
