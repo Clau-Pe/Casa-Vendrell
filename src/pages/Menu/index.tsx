@@ -461,7 +461,7 @@ if (view === 'index') {
     <div className="min-h-screen w-full flex flex-col" style={{ backgroundColor: '#FAFAFA' }}>
       <div
         className="w-full flex flex-col"
-        style={{ maxWidth: '600px', padding: '0 24px', margin: '0 auto', width: '100%' }}
+        style={{ maxWidth: '600px', padding: '0 24px', margin: '0 auto', width: '100%', paddingBottom: '80px' }}
       >
 
         {/* FILA SUPERIOR */}
