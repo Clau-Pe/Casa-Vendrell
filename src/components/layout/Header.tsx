@@ -94,7 +94,7 @@ const NAV_LINKS = [
         {/* LOGO IZQUIERDA */}
         <Link to="/" className="mt-1">
         <img
-        src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+        src={isMenu ? '/images/hero/Nom-log1.svg' : '/images/hero/Logo-Izq1.svg'}
         alt="Casa Vendrell"
         style={{ height: '16px', marginTop: '28px'}}
         />
@@ -169,7 +169,7 @@ const NAV_LINKS = [
 <div className="md:hidden flex items-center justify-between" style={{ padding: '16px' }}>
   <Link to="/">
     <img
-      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq.png'}
+      src={isMenu ? '/images/hero/Nom-log1.svg' : '/images/hero/Logo-Izq1.svg'}
       alt="Casa Vendrell"
       style={{ height: '16px' }}
     />
@@ -194,7 +194,7 @@ const NAV_LINKS = [
 
     {/* È LOGO */}
     <img
-      src="/images/hero/E.png"
+      src="/images/hero/E1.svg"
       alt="È"
       style={{
         width: '82.44px',
@@ -206,7 +206,7 @@ const NAV_LINKS = [
 
     {/* CASA VÈNDRELL */}
     <img
-      src="/images/hero/Nom-log.png"
+      src="/images/hero/Nom-log1.svg"
       alt="Casa Vèndrell"
       style={{
         width: '235.07px',
@@ -343,7 +343,7 @@ const NAV_LINKS = [
 <div className="flex justify-between items-center" style={{ marginBottom: '60px' }}>
   <Link to="/" onClick={() => setMenuOpen(false)}>
     <img
-      src={isMenu ? '/images/hero/Nom-log.png' : '/images/hero/Logo-Izq4.png'}
+      src={isMenu ? '/images/hero/Nom-log1.svg' : '/images/hero/Logo-Izq1.svg'}
       alt="Casa Vèndrell"
       style={{ height: '16px' }}
     />
