@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getConsultoriaMailLink } from '../../utils/contact'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
 export default function Home() {
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'duplicate'>('idle')
+
+  useEffect(() => {
+    document.title = 'Casa Vendrell - Home'
+  }, [])  
 
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,7 +57,7 @@ export default function Home() {
           {t('home.casa_vendrell_title')}
         </h2>
         <img
-          src="/images/hero/bODY3.png"
+          src="/images/hero/body3.png"
           alt="Casa Vèndrell"
           className="w-full object-cover"
           style={{ aspectRatio: '1061/569', maxWidth: '1061px' }}
@@ -158,7 +162,7 @@ export default function Home() {
           <a href="mailto:reservas@casavendrell.com" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
             {t('home.email')}
           </a>
-        </div>
+        </div>  
       </section>
 
       {/* ===== GALERÍA ===== */}

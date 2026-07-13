@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLanguage } from '../../hooks/useLanguage'
 import type { Language } from '../../context/LanguageContext'
 import { menuData } from '../../data/menuData'
@@ -146,6 +146,10 @@ const [searchOpen, setSearchOpen] = useState<boolean>(false)
 const location = useLocation()
 const { categories: dbCategories, loading, error } = useSupabaseMenu()
 const { t } = useTranslation()
+
+useEffect(() => {
+    document.title = 'Casa Vendrell - Menú'
+  }, []) 
 
   // ← AQUÍ dentro del componente
   const adaptedCategories = dbCategories
@@ -705,7 +709,7 @@ if (view === 'index') {
 {(showCopa || showBottle) && (
   <div className="flex items-start justify-between gap-4 mb-4">
     <div style={{ flex: 1 }} />
-    <div className="flex shrink-0" style={{ alignItems: 'flex-end' }}>
+    <div className="flex items-end shrink-0" style={{ height: '39.75px' }}>
       {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
         <div
           onClick={() => showBottle && setPriceFilter(priceFilter === 'copa' ? 'all' : 'copa')}

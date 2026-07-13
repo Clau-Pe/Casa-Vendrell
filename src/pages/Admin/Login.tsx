@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 
@@ -8,6 +8,10 @@ export default function Login() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    document.title = 'Casa Vendrell - Admin'
+  }, [])
 
   const handleLogin = async () => {
     if (!email || !password) return
@@ -19,9 +23,7 @@ export default function Login() {
       password,
     })
 
-   
-
-    if (authError || !data.user) {
+      if (authError || !data.user) {
       setError(true)
       setPassword('')
       return

@@ -152,6 +152,7 @@ const NAV_LINKS = [
       : <Link
           key={link.path}
           to={link.path}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
           className="transition-colors whitespace-nowrap"
           style={{
             fontSize: '14px',
@@ -239,6 +240,7 @@ const NAV_LINKS = [
 <Link
   to="/carta"
   className="btn-hero flex items-center justify-center transition-all duration-200 border border-[#D9D9D9] text-[#D9D9D9]"
+  onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
    style={{
     minWidth: '150px',
     height: '39px',
@@ -383,7 +385,10 @@ const NAV_LINKS = [
       : <Link
           key={link.path}
           to={link.path}
-          onClick={() => setMenuOpen(false)}
+          onClick={() => {
+            setMenuOpen(false)
+          window.scrollTo({ top: 0, behavior: 'instant' })
+          }}
           style={{
             fontSize: '22px',
             letterSpacing: '0.15em',
