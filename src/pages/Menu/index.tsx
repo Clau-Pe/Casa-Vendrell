@@ -476,7 +476,7 @@ if (view === 'index') {
         {/* FILA SUPERIOR */}
         <div
        className="grid mt-10 mb-8"
-        style={{ gridTemplateColumns: '1fr auto 1fr', alignItems: 'center' }}
+        style={{ gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', marginTop: '32px' }}
         >
 
           {/* VOLVER */}
@@ -506,7 +506,7 @@ if (view === 'index') {
                   textTransform: 'uppercase',
                   textDecoration: priceFilter === 'copa' ? 'underline' : 'none',
                   textUnderlineOffset: '4px',
-                  padding: '4px 8px',
+                  padding: '12px 16px',
                 }}
               >
                 {t('carta.per_copa')}

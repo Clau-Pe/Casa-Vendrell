@@ -22,11 +22,12 @@ function LanguageSelector({ language, changeLanguage }: {
       <button
         onClick={() => setOpen(!open)}
         style={{
-          fontSize: '12px',
+          fontSize: '13px',
           fontWeight: '600',
           color: '#C65427',
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
+          padding: '8px',
         }}
       >
         {language.toUpperCase()} ▾
@@ -58,6 +59,7 @@ function LanguageSelector({ language, changeLanguage }: {
                 color: 'rgba(217,217,217,0.7)',
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
+                padding: '4px 6px', 
               }}
             >
               {l.toUpperCase()}
