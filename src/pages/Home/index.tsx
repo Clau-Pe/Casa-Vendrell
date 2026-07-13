@@ -112,7 +112,7 @@ export default function Home() {
         >
           <iframe
             title="Ubicación Casa Vèndrell"
-           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.4776!2d2.1529301!3d41.3815743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3bce7b09e63%3A0x39566abfb8e426fb!2sCasa%20Vendrell%2C%20Carrer%20de%20la%20Diputaci%C3%B3%2C%20110%2C%20L&#39;Eixample%2C%2008015%20Barcelona!5e0!3m2!1ses!2ses!4v1720000000000!5m2!1ses!2ses"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.6552519483666!2d2.152930112121831!3d41.38157427118095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3bce7b09e63%3A0x39566abfb8e426fb!2sCasa%20Vendrell!5e0!3m2!1ses-419!2ses!4v1783970990838!5m2!1ses-419!2ses" 
             width="100%"
             height="100%"
             style={{ border: 0, display: 'block', filter: 'grayscale(70%)' }}
@@ -143,7 +143,7 @@ export default function Home() {
           className="flex flex-col items-center text-center gap-3"
           style={{ marginTop: 'clamp(24px, 3vw, 47px)', marginBottom: 'clamp(48px, 10vw, 182px)' }}
         >
-          <a href="https://www.google.es/maps/place/Casa+Vendrell/@41.3815743,2.1529301,17z" target="_blank" rel="noopener noreferrer" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
+          <a href="https://www.google.com/maps/place/Casa+Vendrell/@41.3815743,2.1555104,17z/data=!3m1!4b1!4m6!3m5!1s0x12a4a3bce7b09e63:0x39566abfb8e426fb!8m2!3d41.3815743!4d2.1555104!16s%2Fg%2F11xhbhpkvy" target="_blank" rel="noopener noreferrer" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
             {t('home.address')}
           </a>
           <a 
