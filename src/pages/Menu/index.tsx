@@ -449,9 +449,9 @@ if (view === 'index') {
             >
               {vinosPorCopaLabel}
               <img
-                src="/images/hero/copa.png"
+                src="/images/hero/copa1.svg"
                 alt="Copa"
-                style={{ height: '16px', objectFit: 'contain', opacity: 0.6 }}
+                style={{ width: '10.5px', height: '23.25px', objectFit: 'contain' }}
               />
             </button>
           )}
@@ -588,8 +588,8 @@ if (view === 'index') {
                         {getCategoryName(cat)}
                       </p>
                       <div style={{ width: '56px', display: 'flex', justifyContent: 'center' }}>
-                        <img src="/images/hero/copa.png" alt="Copa"
-                          style={{ height: '22px', objectFit: 'contain', opacity: 0.5 }} />
+                        <img src="/images/hero/copa1.svg" alt="Copa"
+                          style={{ width: '10.5px', height: '23.25px', objectFit: 'contain' }} />
                       </div>
                     </div>
 
@@ -702,21 +702,21 @@ if (view === 'index') {
 {(showCopa || showBottle) && (
   <div className="flex items-start justify-between gap-4 mb-4">
     <div style={{ flex: 1 }} />
-    <div className="flex shrink-0">
+    <div className="flex shrink-0" style={{ alignItems: 'flex-end' }}>
       {showCopa && (priceFilter === 'all' || priceFilter === 'copa') && (
         <div
           onClick={() => showBottle && setPriceFilter(priceFilter === 'copa' ? 'all' : 'copa')}
-          style={{ width: '56px', display: 'flex', justifyContent: 'center', cursor: showBottle ? 'pointer' : 'default', opacity: priceFilter === 'copa' || !showBottle ? 1 : 0.4 }}
+          style={{ width: '56px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end',  cursor: showBottle ? 'pointer' : 'default', opacity: priceFilter === 'copa' || !showBottle ? 1 : 0.4 }}
         >
-          <img src="/images/hero/copa.png" alt="Copa" style={{ height: '28px', objectFit: 'contain' }} />
+          <img src="/images/hero/copa1.svg" alt="Copa" style={{ width: '10.5px', height: '23.25px', objectFit: 'contain' }} />
         </div>
       )}
       {showBottle && (priceFilter === 'all' || priceFilter === 'bottle') && (
         <div
           onClick={() => setPriceFilter(priceFilter === 'bottle' ? 'all' : 'bottle')}
-          style={{ width: '56px', display: 'flex', justifyContent: 'center', cursor: 'pointer', opacity: priceFilter === 'bottle' ? 1 : 0.4 }}
+          style={{ width: '56px', display: 'flex', justifyContent: 'center', alignItems: 'flex-end',cursor: 'pointer', opacity: priceFilter === 'bottle' ? 1 : 0.4 }}
         >
-          <img src="/images/hero/botella.png" alt="Botella" style={{ height: '28px', objectFit: 'contain' }} />
+          <img src="/images/hero/botella1.svg" alt="Botella" style={{ width: '9.75px', height: '39.75px', objectFit: 'contain' }} />
         </div>
       )}
     </div>
