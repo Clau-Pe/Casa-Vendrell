@@ -533,6 +533,8 @@ if (view === 'index') {
           )}
 
   {/* LUPA — derecha, misma altura que la flecha */}
+ {/* LUPA — solo si no tiene filtros copa/botella */}
+{!(showCopa && showBottle) && (
   <div style={{ justifySelf: 'end' }}>
     <SearchBar
       searchQuery={searchQuery}
@@ -542,6 +544,7 @@ if (view === 'index') {
       placeholder={t('carta.buscar_placeholder')}
     />
   </div>
+)}
   </div>
 
         {/* ===== VINOS POR COPA — agrupado por categoría ===== */}

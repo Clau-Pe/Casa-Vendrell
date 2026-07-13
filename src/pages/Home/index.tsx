@@ -87,19 +87,19 @@ export default function Home() {
           <Link
             to="/carta"
             state={{ openCategory: 'vinos_por_copa' }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
             className="hover:opacity-70 transition-opacity flex items-center gap-1"
             style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'none' }}
           >
             <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>{t('home.vinos_por_copa')}</span>
-            <span style={{ display: 'inline-block', transform: 'rotate(45deg)' }}>↑</span>
           </Link>
           <Link
             to="/carta"
             className="hover:opacity-70 transition-opacity flex items-center gap-1"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
             style={{ fontSize: '14px', fontWeight: '600', color: '#411F10', letterSpacing: '0.25em', lineHeight: '160%', textDecoration: 'none' }}
           >
             <span style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}>{t('home.carta_completa')}</span>
-            <span style={{ display: 'inline-block', transform: 'rotate(45deg)' }}>↑</span>
           </Link>
         </div>
       </section>
@@ -155,7 +155,7 @@ export default function Home() {
           >
   {t('home.phone')}
 </a>
-          <a href="mailto:reservas.casavendrell@gmail.com" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
+          <a href="mailto:reservas@casavendrell.com" className="hover:text-[#411F10] transition-colors" style={{ fontSize: '13px', fontWeight: '600', color: '#6A6A6A', letterSpacing: '0.25em' }}>
             {t('home.email')}
           </a>
         </div>
@@ -198,13 +198,6 @@ export default function Home() {
           </p>
         </div>
         <div className="flex flex-col items-center" style={{ gap: '16px', marginTop: 'clamp(24px, 2vw, 29px)' }}>
-          <a
-            href={getConsultoriaMailLink()}
-            className="hover:opacity-70 transition-opacity"
-            style={{ fontSize: '16px', fontWeight: '400', color: '#411F10', lineHeight: '160%', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-          >
-            {t('home.contactanos')}
-          </a>
           <a
             href="mailto:cuatrouvassl@gmail.com"
             className="hover:opacity-70 transition-opacity"

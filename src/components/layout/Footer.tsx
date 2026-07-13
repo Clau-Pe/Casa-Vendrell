@@ -12,7 +12,9 @@ export default function Footer() {
 
         {/* LOGO */}
         <div style={{ marginBottom: '40px' }}>
-          <img src="/images/hero/Nom-log.png" alt="Casa Vèndrell" className="h-5 object-contain object-left" />
+           <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}>
+          <img src="/images/hero/Nom-log1.svg" alt="Casa Vendrell" className="h-5 object-contain object-left" />
+        </Link>
         </div>
 
         {/* COLUMNAS — apiladas en móvil, en fila en desktop */}
@@ -75,6 +77,7 @@ export default function Footer() {
               </a>
               <Link to="/carta"
                 style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)', letterSpacing: '0.2em', lineHeight: '180%' }}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}
                 className="hover:text-white transition-colors">
                 {t('footer.nuestra_carta')}
               </Link>
