@@ -191,8 +191,10 @@ const currentItems = isVinosPorCopa
     : activeData ? getCategoryName(activeData) : ''
 
   const priceColumns = isVinosPorCopa ? 'copa_only' : (activeData?.showPriceColumns ?? 'none')
-  const showCopa = priceColumns === 'both' || priceColumns === 'copa_only'
-  const showBottle = priceColumns === 'both'
+ const hasCopa = currentItems.some(i => i.price_copa !== null)
+const hasBottle = currentItems.some(i => i.price_bottle !== null)
+const showCopa = (priceColumns === 'both' && hasCopa) || priceColumns === 'copa_only'
+const showBottle = priceColumns === 'both' && hasBottle
 
   const filteredItems = (items: MenuItem[]) => {
     if (priceFilter === 'copa') return items.filter(i => i.price_copa !== null)
