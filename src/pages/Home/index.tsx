@@ -9,13 +9,11 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'duplicate'>('idle')
 
-  useEffect(() => {
-    document.title = 'Casa Vendrell - Home'
-  }, [])  
-
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault()
-try {
+    if (!email) return
+
+    try {
     // 1. Guarda en Supabase
     const { error } = await supabase
       .from('newsletter_subscribers')
@@ -43,6 +41,13 @@ try {
     setStatus('error')
   }
 }
+
+  useEffect(() => {
+    document.title = 'Casa Vendrell - Home'
+  }, [])
+
+   return (
+    <main>
 
       {/* ===== GRID FOTOS HERO ===== */}
       <section
