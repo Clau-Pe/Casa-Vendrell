@@ -15,21 +15,34 @@ export default function Home() {
 
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email) return
+try {
+    // 1. Guarda en Supabase
     const { error } = await supabase
       .from('newsletter_subscribers')
       .insert({ email })
-    if (error) {
-      if (error.code === '23505') setStatus('duplicate')
-      else setStatus('error')
-    } else {
-      setStatus('success')
-      setEmail('')
-    }
-  }
 
-  return (
-    <main style={{ backgroundColor: '#411F10' }}>
+    if (error) {
+      if (error.code === '23505') {
+        setStatus('duplicate')
+        return
+      }
+      setStatus('error')
+      return
+    }
+
+    // 2. Llama a Cloudflare function para Brevo
+    await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    })
+
+    setStatus('success')
+    setEmail('')
+  } catch {
+    setStatus('error')
+  }
+}
 
       {/* ===== GRID FOTOS HERO ===== */}
       <section
