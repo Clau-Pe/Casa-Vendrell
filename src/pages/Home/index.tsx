@@ -80,14 +80,20 @@ export default function Home() {
           className="w-full object-cover"
           style={{ aspectRatio: '1061/569', maxWidth: '1061px' }}
         />
-        <div className="w-full max-w-xl px-4 text-center" style={{ marginTop: 'clamp(32px, 5vw, 65px)' }}>
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#000000', lineHeight: '160%' }}>
-            {t('home.historia_p1')}
-          </p>
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#000000', lineHeight: '160%', marginTop: '24px', marginBottom: 'clamp(48px, 18vw, 338px)' }}>
-            {t('home.historia_p2')}
-          </p>
-        </div>
+      <div style={{ 
+  width: '100%', 
+  maxWidth: '560px', 
+  padding: '0 clamp(9px, 4vw, 0px)',
+  marginTop: 'clamp(32px, 5vw, 65px)',
+  textAlign: 'center',
+}}>
+  <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#000000', lineHeight: '160%' }}>
+    {t('home.historia_p1')}
+  </p>
+  <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#000000', lineHeight: '160%', marginTop: '24px', marginBottom: 'clamp(48px, 18vw, 338px)' }}>
+    {t('home.historia_p2')}
+  </p>
+</div>
       </section>
 
       {/* ===== NUESTRA CARTA ===== */}
@@ -211,14 +217,19 @@ export default function Home() {
         >
           {t('home.consultoria_title')}
         </h2>
-        <div className="w-full max-w-xl text-center">
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#411F10', lineHeight: '160%' }}>
-            {t('home.consultoria_p1')}
-          </p>
-          <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#411F10', lineHeight: '160%', marginTop: '24px' }}>
-            {t('home.consultoria_p2')}
-          </p>
-        </div>
+       <div style={{ 
+  width: '100%', 
+  maxWidth: '640px', 
+  padding: '0 clamp(8px, 4vw, 4px)',
+  textAlign: 'center',
+}}>
+  <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#411F10', lineHeight: '160%' }}>
+    {t('home.consultoria_p1')}
+  </p>
+  <p style={{ fontSize: 'clamp(14px, 2vw, 16px)', fontWeight: '500', color: '#411F10', lineHeight: '160%', marginTop: '24px' }}>
+    {t('home.consultoria_p2')}
+  </p>
+</div>
         <div className="flex flex-col items-center" style={{ gap: '16px', marginTop: 'clamp(24px, 2vw, 29px)' }}>
           <a
             href="mailto:cuatrouvassl@gmail.com"
